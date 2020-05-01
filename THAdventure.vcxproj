@@ -21,10 +21,16 @@
   <ItemGroup>
     <ClCompile Include="cApp.cpp" />
     <ClCompile Include="cMain.cpp" />
+    <ClCompile Include="HelpFrame.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
+    <ClInclude Include="HelpFrame.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapNode.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

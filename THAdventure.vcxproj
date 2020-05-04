@@ -37,7 +37,7 @@
     <ResourceCompile Include="THAdventure.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Icon1.ico" />
+    <Image Include="tha.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

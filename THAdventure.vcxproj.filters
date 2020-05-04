@@ -57,7 +57,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Icon1.ico">
+    <Image Include="tha.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_BUTTON(tmID_CONTINUE, OnContinue)
+	EVT_MENU(wxID_EXIT, OnExit)
 
 
 wxEND_EVENT_TABLE()
@@ -15,7 +16,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	map = new Map();
 
 	Centre();
-	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(50, 451), wxSize(80, 35));
+	CreateMenu();
+	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
 }
 
 cMain::~cMain()
@@ -30,21 +32,26 @@ void cMain::OnContinue(wxCommandEvent& evt)
 	evt.Skip();
 }
 
+void cMain::OnExit(wxCommandEvent& evt)
+{
+	Close();
+}
+
 void cMain::CreateMenu()
 {
 	menuBar = new wxMenuBar();
 
 	fileMenu = new wxMenu();
 	// add items in the file menu
-	fileMenu->Append(wxID_NEW, _T("&New"));
+	fileMenu->Append(wxID_NEW, _T("&New game"));
 	fileMenu->Append(wxID_OPEN, _T("&Open"));
 	fileMenu->AppendSeparator();
 	fileMenu->Append(wxID_SAVE, _T("&Save"));
 	fileMenu->Append(wxID_SAVEAS, _T("Save &As"));
 	fileMenu->AppendSeparator();
-	fileMenu->Append(wxID_CLOSE, _T("&Close Map"));
+	
 	fileMenu->Append(wxID_EXIT, _T("E&xit"));
 
 	menuBar->Append(fileMenu, _T("&File"));
-	menuBar->Show();
+	SetMenuBar(menuBar);
 }

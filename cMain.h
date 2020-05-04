@@ -16,6 +16,7 @@ public:
 
 	// event functions
 	void OnContinue(wxCommandEvent& evt);
+	void OnExit(wxCommandEvent& evt);
 private:
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;

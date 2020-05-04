@@ -2,6 +2,8 @@
 #include "cMain.h"
 #include "wx/splash.h"
 #include "wx/bitmap.h"
+#include "wx/icon.h"
+
 
 wxIMPLEMENT_APP(cApp);
 
@@ -15,6 +17,7 @@ cApp::~cApp()
 
 bool cApp::OnInit()
 {// add a splash screen  id NOSPLASH isn't defined in cApp.h  Less of a pain during testing to not have to wait
+	
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;

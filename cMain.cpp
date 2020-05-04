@@ -9,7 +9,7 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
-	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500),);
+	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
 	
 	map = new Map();

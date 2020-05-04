@@ -31,6 +31,10 @@
     <ClInclude Include="HelpFrame.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapNode.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="THAdventure.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

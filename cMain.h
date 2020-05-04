@@ -3,6 +3,7 @@
 #include "Map.h"
 
 // definitions for the window events
+
 #define tmID_CONTINUE 200
 
 
@@ -20,6 +21,10 @@ private:
 	MapNode* CurrentMapNode = nullptr;
 	wxButton* btnContinue = nullptr;
 	std::string FileName = "";
+	wxPanel* panel = nullptr;
+	wxMenuBar* menuBar = nullptr;
+	wxMenu* fileMenu = nullptr;
+	void CreateMenu();
 	
 	wxDECLARE_EVENT_TABLE();
 

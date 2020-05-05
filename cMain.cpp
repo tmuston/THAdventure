@@ -2,8 +2,8 @@
 #include "Map.h"
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-	EVT_BUTTON(tmID_CONTINUE, OnContinue)
-	EVT_MENU(wxID_EXIT, OnExit)
+	EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
+	EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 
 
 wxEND_EVENT_TABLE()
@@ -37,6 +37,10 @@ void cMain::OnExit(wxCommandEvent& evt)
 	Close();
 }
 
+void cMain::OnSoundOptions(wxCommandEvent& evt)
+{//  Create a new SoundOptions wxFrame
+}
+
 void cMain::CreateMenu()
 {
 	menuBar = new wxMenuBar();
@@ -53,5 +57,10 @@ void cMain::CreateMenu()
 	fileMenu->Append(wxID_EXIT, _T("E&xit"));
 
 	menuBar->Append(fileMenu, _T("&File"));
+	soundMenu = new wxMenu();
+	soundMenu->Append(tmID_SOUNDOPTIONS, _T("Sound &Options"));
+	soundMenu->AppendSeparator();
+	soundMenu->AppendCheckItem(tmID_SOUNDOFF, _T("Silent Mode"));
+	menuBar->Append(soundMenu, _T("Sounds"));
 	SetMenuBar(menuBar);
 }

@@ -4,7 +4,7 @@
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
 	EVT_MENU(wxID_EXIT, OnExit)  // file>exit
-
+	EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 
 wxEND_EVENT_TABLE()
 
@@ -39,6 +39,9 @@ void cMain::OnExit(wxCommandEvent& evt)
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
+	soundWindow = new SoundOptions();
+	soundWindow->Show();
+	evt.Skip();
 }
 
 void cMain::CreateMenu()

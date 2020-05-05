@@ -1,6 +1,7 @@
 #pragma once
 #include "wx/wx.h"
 #include "Map.h"
+#include "SoundOptions.h"
 
 // definitions for the window events
 
@@ -29,6 +30,7 @@ private:
 	wxMenuBar* menuBar = nullptr;
 	wxMenu* fileMenu = nullptr;
 	wxMenu* soundMenu = nullptr;
+	SoundOptions* soundWindow = nullptr;
 	void CreateMenu();
 	
 	wxDECLARE_EVENT_TABLE();

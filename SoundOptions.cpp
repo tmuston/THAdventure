@@ -3,6 +3,7 @@
 wxBEGIN_EVENT_TABLE(SoundOptions,wxFrame)
 	EVT_BUTTON(tmID_CLOSEFORM, OnClose)
 
+	
 wxEND_EVENT_TABLE()
 
 SoundOptions::SoundOptions() : wxFrame(nullptr, 
@@ -21,7 +22,7 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 	lblSFX = new wxStaticText(panel, wxID_ANY, "Sounds Volume", wxPoint(15, 90), wxSize(40, 45));
 	SfxSlider = new wxSlider(panel, tmID_SFXSLIDER, 5, 0, 10, wxPoint(60, 90), wxSize(200, 50), wxSL_HORIZONTAL | wxSL_MIN_MAX_LABELS | wxSL_TOP);
 	//MusicSlider->Show();
-
+	
 	btnClose = new wxButton(panel, tmID_CLOSEFORM, "&Close", wxPoint(120, 150), wxSize(80, 35));
 
 }

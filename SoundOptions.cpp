@@ -2,7 +2,7 @@
 
 wxBEGIN_EVENT_TABLE(SoundOptions,wxFrame)
 	EVT_BUTTON(tmID_CLOSEFORM, OnClose)
-
+	EVT_SLIDER(tmID_MUSICSLIDER, OnChangeMusicSlider)
 	
 wxEND_EVENT_TABLE()
 
@@ -13,6 +13,8 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 								wxSize(320, 240), 
 								wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {//  throw up a wxFrame with options for music and sound effect volume
+	
+	
 	Centre();
 	panel = new wxPanel(this);
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
@@ -32,8 +34,29 @@ SoundOptions::~SoundOptions()
 
 }
 
+void SoundOptions::SetMusicVolume()
+{// friend
+	
+	int iSliderPos = MusicSlider->GetValue();
+	double v = iSliderPos / 10;
+		if (v < 0.01)
+			v = 0.0;
+		if (v > 0.95)
+			v = 1.0;
+		
+
+}
+
+
+
 void SoundOptions::OnClose(wxCommandEvent& evt)
 {
 	Close();
+	evt.Skip();
+}
+
+void SoundOptions::OnChangeMusicSlider(wxCommandEvent& evt)
+{
+	SetMusicVolume();
 	evt.Skip();
 }

@@ -6,14 +6,15 @@
 #include "wx/sound.h"
 
 // definitions for the window events
+enum
+{
+	tmID_CONTINUE = 1,
+	tmID_SOUNDOPTIONS,
+	tmID_SOUNDOFF,
+	tmID_MUSICLOADED,
+	tmID_MUSICFINISHED
 
-#define tmID_CONTINUE 200
-#define tmID_SOUNDOPTIONS 300
-#define tmID_SOUNDOFF 301
-#define tmID_MUSIC 302
-
-
-
+};
 
 
 class cMain : public wxFrame
@@ -28,6 +29,8 @@ public:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
+	void CreateMenu();
+	
 private:
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
@@ -39,8 +42,7 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
-	void CreateMenu();
-	
+			
 	wxDECLARE_EVENT_TABLE();
 
 };

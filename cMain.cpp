@@ -5,7 +5,8 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
 	EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 	EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
-	EVT_MEDIA_LOADED(tmID_MUSIC, OnWAVLoaded)
+	EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
+	EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 	
 wxEND_EVENT_TABLE()
 
@@ -13,14 +14,14 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 {
 	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
+	SetIcon(wxIcon("icon.ico"));
 	
 	map = new Map();
-	Music = new wxMediaCtrl(this, tmID_MUSIC,wxEmptyString,wxDefaultPosition,wxDefaultSize, 0,wxMEDIABACKEND_DIRECTSHOW);
+	Music = new wxMediaCtrl(this, tmID_MUSICLOADED,wxEmptyString,wxDefaultPosition,wxDefaultSize, 0,wxMEDIABACKEND_WMP10);
+		
+	Music->SetVolume(0.0);
 	Music->Load(wxT("game.wav"));
-	//wxSound Sound;
-	//Sound.Play(wxT("game.wav"));
-
-	
+		
 	Centre();
 	CreateMenu();
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
@@ -53,14 +54,16 @@ void cMain::OnSoundOptions(wxCommandEvent& evt)
 
 void cMain::OnWAVLoaded(wxMediaEvent& evt)
 {
+	Music->SetVolume(1.0);
 	
 	Music->Play();
+	
 	evt.Skip();
 }
 
 void cMain::OnWAVFinished(wxMediaEvent& evt)
 {
-//	Music->Play();
+	Music->Play();
 	evt.Skip();
 }
 
@@ -87,3 +90,5 @@ void cMain::CreateMenu()
 	menuBar->Append(soundMenu, _T("Sounds"));
 	SetMenuBar(menuBar);
 }
+
+

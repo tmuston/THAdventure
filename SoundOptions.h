@@ -18,16 +18,17 @@ public:
 
 	void OnClose(wxCommandEvent& evt);
 	void OnChangeMusicSlider(wxCommandEvent& evt);
+	inline double GetMusicVol() { return dMusicVol; }
 
 private:
-	
+	double dMusicVol = 0.5;
 	wxPanel* panel = nullptr;
 	wxSlider* MusicSlider = nullptr;
 	wxSlider* SfxSlider = nullptr;
 	wxStaticText* lblMusic = nullptr;
 	wxStaticText* lblSFX = nullptr;
 	wxButton* btnClose = nullptr;
-	double MusicVolume = 0.5;
+	
 	
 
 	wxDECLARE_EVENT_TABLE();

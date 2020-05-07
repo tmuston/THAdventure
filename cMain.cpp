@@ -21,6 +21,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		
 	Music->SetVolume(0.0);
 	Music->Load(wxT("game.wav"));
+	SetMusicVol(dMusicVolume);
 		
 	Centre();
 	CreateMenu();
@@ -49,6 +50,14 @@ void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
 	soundWindow->Show();
+	double v;
+	while (soundWindow!=nullptr)
+	{
+		v = soundWindow->GetMusicVol();
+		SetMusicVol(v);
+		wxYield();
+	} 
+	SetMusicVol(v);
 	evt.Skip();
 }
 
@@ -57,6 +66,7 @@ void cMain::OnWAVLoaded(wxMediaEvent& evt)
 	Music->SetVolume(1.0);
 	
 	Music->Play();
+	SetMusicVol(dMusicVolume);
 	
 	evt.Skip();
 }
@@ -89,6 +99,11 @@ void cMain::CreateMenu()
 	soundMenu->AppendCheckItem(tmID_SOUNDOFF, _T("Silent Mode"));
 	menuBar->Append(soundMenu, _T("Sounds"));
 	SetMenuBar(menuBar);
+}
+
+void cMain::SetMusicVol(double dVal)
+{
+	Music->SetVolume(dVal);
 }
 
 

@@ -30,7 +30,7 @@ public:
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
 	void CreateMenu();
-	
+	void SetMusicVol(double dVal);
 private:
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
@@ -42,6 +42,8 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
+	double dMusicVolume = 0.2;
+	
 			
 	wxDECLARE_EVENT_TABLE();
 

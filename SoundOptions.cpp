@@ -12,7 +12,7 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 								wxDefaultPosition, 
 								wxSize(320, 240), 
 								wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
-{//  throw up a wxFrame with options for music and sound effect volume
+{//  display a wxFrame with options for music and sound effect volume
 	
 	
 	Centre();

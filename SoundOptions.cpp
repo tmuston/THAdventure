@@ -30,7 +30,7 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 }
 
 SoundOptions::~SoundOptions()
-{// destructor
+{
 	
 }
 

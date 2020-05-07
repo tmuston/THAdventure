@@ -31,19 +31,19 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 
 SoundOptions::~SoundOptions()
 {// destructor
-
+	
 }
 
 void SoundOptions::SetMusicVolume()
 {// friend
 	
 	int iSliderPos = MusicSlider->GetValue();
-	double v = iSliderPos / 10;
+	double v = (double)iSliderPos / 10;
 		if (v < 0.01)
 			v = 0.0;
 		if (v > 0.95)
 			v = 1.0;
-		
+		dMusicVol = v;
 
 }
 
@@ -51,6 +51,7 @@ void SoundOptions::SetMusicVolume()
 
 void SoundOptions::OnClose(wxCommandEvent& evt)
 {
+	
 	Close();
 	evt.Skip();
 }

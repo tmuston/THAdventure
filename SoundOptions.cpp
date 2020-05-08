@@ -1,11 +1,11 @@
 #include "SoundOptions.h"
 
-wxBEGIN_EVENT_TABLE(SoundOptions,wxFrame)
-	EVT_BUTTON(tmID_CLOSEFORM, OnClose)
-	EVT_SLIDER(tmID_MUSICSLIDER, OnChangeMusicSlider)
-	
-wxEND_EVENT_TABLE()
+wxBEGIN_EVENT_TABLE(SoundOptions, wxFrame)
+EVT_BUTTON(tmID_CLOSEFORM, OnClose)
+EVT_SLIDER(tmID_MUSICSLIDER, OnChangeMusicSlider)
 
+wxEND_EVENT_TABLE()
+extern double gdMusicVolume;
 SoundOptions::SoundOptions() : wxFrame(nullptr, 
 								wxID_ANY, 
 								"Sound Options",	
@@ -34,20 +34,6 @@ SoundOptions::~SoundOptions()
 	
 }
 
-void SoundOptions::SetMusicVolume()
-{// friend
-	
-	int iSliderPos = MusicSlider->GetValue();
-	double v = (double)iSliderPos / 10;
-		if (v < 0.01)
-			v = 0.0;
-		if (v > 0.95)
-			v = 1.0;
-		dMusicVol = v;
-
-}
-
-
 
 void SoundOptions::OnClose(wxCommandEvent& evt)
 {
@@ -58,6 +44,12 @@ void SoundOptions::OnClose(wxCommandEvent& evt)
 
 void SoundOptions::OnChangeMusicSlider(wxCommandEvent& evt)
 {
-	SetMusicVolume();
+	int iSliderPos = MusicSlider->GetValue();
+	double v = (double)iSliderPos / 10;
+	if (v < 0.01)
+		v = 0.0;
+	if (v > 0.95)
+		v = 1.0;
+	gdMusicVolume = v;
 	evt.Skip();
 }

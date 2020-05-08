@@ -42,9 +42,8 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
-	double dMusicVolume = 0.2;
-	
-			
+	bool GameLoop();
+	bool bComplete = false;
 	wxDECLARE_EVENT_TABLE();
 
 };

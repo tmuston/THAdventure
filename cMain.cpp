@@ -2,16 +2,19 @@
 #include "Map.h"
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-	EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
-	EVT_MENU(wxID_EXIT, OnExit)  // file>exit
-	EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
-	EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
-	EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
-	
-wxEND_EVENT_TABLE()
+EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
+EVT_MENU(wxID_EXIT, OnExit)  // file>exit
+EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
+EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
+EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 
+
+wxEND_EVENT_TABLE()
+double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+	// set the initial music volume - eventually will read the value from a wxConfig
+	gdMusicVolume = 0.2;
 	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
 	SetIcon(wxIcon("icon.ico"));
@@ -21,11 +24,12 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		
 	Music->SetVolume(0.0);
 	Music->Load(wxT("game.wav"));
-	SetMusicVol(dMusicVolume);
+	SetMusicVol(gdMusicVolume);
 		
 	Centre();
 	CreateMenu();
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
+	
 }
 
 cMain::~cMain()
@@ -37,12 +41,13 @@ cMain::~cMain()
 void cMain::OnContinue(wxCommandEvent& evt)
 {
 	wxMessageBox("Hello there", "Message");
-	
+	GameLoop();
 	evt.Skip();
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
+	bComplete = true;  // exit the game loop
 	Close();
 }
 
@@ -50,14 +55,7 @@ void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
 	soundWindow->Show();
-	double v;
-	while (soundWindow!=nullptr)
-	{
-		v = soundWindow->GetMusicVol();
-		SetMusicVol(v);
-		wxYield();
-	} 
-	SetMusicVol(v);
+	
 	evt.Skip();
 }
 
@@ -66,7 +64,7 @@ void cMain::OnWAVLoaded(wxMediaEvent& evt)
 	Music->SetVolume(1.0);
 	
 	Music->Play();
-	SetMusicVol(dMusicVolume);
+	SetMusicVol(gdMusicVolume);
 	
 	evt.Skip();
 }
@@ -104,6 +102,17 @@ void cMain::CreateMenu()
 void cMain::SetMusicVol(double dVal)
 {
 	Music->SetVolume(dVal);
+}
+
+bool cMain::GameLoop()
+{
+	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
+	while(!bComplete)
+	{ 
+		wxYield();
+		Music->SetVolume(gdMusicVolume);
+	}
+	return bComplete;
 }
 
 

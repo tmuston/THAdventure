@@ -14,14 +14,10 @@ public:
 	SoundOptions();
 	~SoundOptions();
 	
-	void SetMusicVolume();
-
 	void OnClose(wxCommandEvent& evt);
 	void OnChangeMusicSlider(wxCommandEvent& evt);
-	inline double GetMusicVol() { return dMusicVol; }
-
+	
 private:
-	double dMusicVol = 0.5;
 	wxPanel* panel = nullptr;
 	wxSlider* MusicSlider = nullptr;
 	wxSlider* SfxSlider = nullptr;
@@ -29,8 +25,6 @@ private:
 	wxStaticText* lblSFX = nullptr;
 	wxButton* btnClose = nullptr;
 	
-	
-
 	wxDECLARE_EVENT_TABLE();
 };
 

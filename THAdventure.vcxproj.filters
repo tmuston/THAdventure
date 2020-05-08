@@ -33,6 +33,12 @@
     <ClCompile Include="SoundOptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cApp.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="cApp.cpp" />
     <ClCompile Include="cMain.cpp" />
+    <ClCompile Include="GameObjects.cpp" />
     <ClCompile Include="HelpFrame.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapNode.cpp" />
     <ClCompile Include="SoundOptions.cpp" />
@@ -29,7 +31,9 @@
   <ItemGroup>
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
+    <ClInclude Include="GameObjects.h" />
     <ClInclude Include="HelpFrame.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapNode.h" />
     <ClInclude Include="resource.h" />

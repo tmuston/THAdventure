@@ -4,6 +4,8 @@
 #include "SoundOptions.h"
 #include "wx/mediactrl.h"
 #include "wx/sound.h"
+#include "wx/config.h"
+#include "wx/fileconf.h"
 
 // definitions for the window events
 enum
@@ -27,8 +29,10 @@ public:
 	void OnContinue(wxCommandEvent& evt);
 	void OnExit(wxCommandEvent& evt);
 	void OnSoundOptions(wxCommandEvent& evt);
+	void OnSoundOnOff(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
+	void OnIdle(wxIdleEvent& evt);
 	void CreateMenu();
 	void SetMusicVol(double dVal);
 private:
@@ -42,6 +46,7 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
+	wxFileConfig* IniConfig = nullptr;
 	bool GameLoop();
 	bool bComplete = false;
 	wxDECLARE_EVENT_TABLE();

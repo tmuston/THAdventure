@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include "Item.h"
 class GameObjects
@@ -9,6 +10,6 @@ public:
 private:
 	std::vector<Item> Objects;
 	
-
+	
 };
 

@@ -4,7 +4,6 @@
 #include "MapNode.h"
 
 
-
 class Map
 {
 public:

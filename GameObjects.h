@@ -7,6 +7,7 @@ class GameObjects
 public:
 	GameObjects();
 	~GameObjects();
+
 private:
 	std::vector<Item> Objects;
 	

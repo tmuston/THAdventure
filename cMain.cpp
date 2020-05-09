@@ -60,6 +60,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		IniConfig->Write(wxT("SoundOn"),true);  // No entry in ini file
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
 	
+
 }
 
 cMain::~cMain()

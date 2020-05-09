@@ -15,7 +15,7 @@ Nodes::~Nodes()
 ////////////////////////////////////////////////////////////////////////////
 
 MapNode::MapNode()
-{// Do nowt, as the default constructor makes no sense
+{// Do nowt, as the default constructor makes no sense.
 	ID = ++NodeID;
 }
 
@@ -32,6 +32,7 @@ MapNode::MapNode(uint16_t id, Nodes& n, std::string Caption, std::string Desc, b
 	Title = Caption;
 	Description = Desc;
 	ID = id;				// Create a unique Node ID (starting at 1)
+	NodeID = ID;
 	SetExits(n);
 }
 
@@ -60,7 +61,7 @@ void MapNode::SetExits(Nodes& node)
 	ExitIDs[5] = node.d; // Down
 }
 void MapNode::DescribeNode()
-{
+{// not used in production code
 	using std::cout;
 	cout << Title << std::endl << Description << std::endl << "Map Node " << NodeID << std::endl;
 	cout << std::endl << "Exits are:\n";
@@ -121,4 +122,9 @@ bool MapNode::SetExit(uint16_t exit, uint16_t value)
 void ZeroNodeId()
 {// revert the static NodeId to its original value.
 	NodeID = 0;
+}
+
+void SetNodeID(uint16_t id)
+{
+	NodeID = id;
 }

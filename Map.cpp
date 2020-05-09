@@ -13,7 +13,7 @@ Map::Map(const Map& obj)
 
 Map::~Map()
 {
-	ZeroNodeId();
+	//ZeroNodeId();
 }
 void Map::Add(MapNode m)
 {
@@ -163,8 +163,8 @@ bool Map::StringToMapNode(std::string s)
 	caption = vec[3];
 	description = vec[4];
 
-	//MapNode node(id, n, caption, description);
-	MapNode node(n, caption, description);
+	MapNode node(id, n, caption, description);
+	//MapNode node(n, caption, description);
 	this->Add(node);  // Add the node to the map
 	return true;
 }

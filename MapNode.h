@@ -10,15 +10,16 @@ static uint16_t NodeID = 0;
 // non member function Sue me!
 void ZeroNodeId();	//  resets the NodeID static variable to zero.  Has to be here, as a static variable
 					//  can't be altered from within another file.
-//enum Directions
-//{
-//	North = 1,
-//	East = 2,
-//	South = 4,
-//	West = 8,
-//	Up = 16,
-//	Down = 32
-//};
+void SetNodeID(uint16_t id);
+enum Directions
+{
+	North = 1,
+	East = 2,
+	South = 4,
+	West = 8,
+	Up = 16,
+	Down = 32
+};
 
 struct Nodes
 {
@@ -42,9 +43,9 @@ public:
 	MapNode(const MapNode& obj);
 	~MapNode();
 
-	/*bool AddItem();
+	bool AddItem();
 	bool DropItem();
-	bool Leave(Directions d);*/
+	bool Leave(Directions d);
 	void DescribeNode();
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }

@@ -62,6 +62,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
 	GameSetup* g = new GameSetup();
 	g->InitFirstRun();
+	delete g;
 
 }
 

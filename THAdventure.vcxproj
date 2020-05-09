@@ -45,6 +45,7 @@
     <ResourceCompile Include="THAdventure.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\WinMapMaker\Silly.ico" />
     <Image Include="tha.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

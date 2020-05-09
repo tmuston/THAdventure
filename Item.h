@@ -12,7 +12,7 @@ enum ItemProperty
 	Destroyable	= 16,
 	Carryable	= 32,
 	Usable		= 64,
-	Talkable = 128
+	Talkable	= 128
 };
 
 #define INVALID_LOCATION 65535
@@ -24,10 +24,8 @@ public:
 	
 	inline std::string GetName() { return Name; }
 	inline std::string GetDescription() { return Description; }
-	inline void SetCurrentLocation(uint16_t loc) { CurrentLocation = loc; }
-	inline uint16_t GetCurrentLocation() { return CurrentLocation; }
-	bool SetLocation(uint16_t loc);
 	inline uint16_t GetLocation() { return CurrentLocation; }
+	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
 	// get individual properties
 	inline bool GetEdible() { return Properties & Eatable; }

@@ -1,5 +1,6 @@
 #include "cMain.h"
 #include "Map.h"
+#include "GameSetup.h"
 
 
 
@@ -59,7 +60,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	else
 		IniConfig->Write(wxT("SoundOn"),true);  // No entry in ini file
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
-	
+	GameSetup* g = new GameSetup();
+	g->InitFirstRun();
 
 }
 

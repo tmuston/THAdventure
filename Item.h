@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ITEM_H
+#define ITEM_H
 #include <iostream>
 
 static uint16_t ItemID = 0;
@@ -53,4 +54,4 @@ private:
 	uint16_t CurrentLocation;
 
 };
-
+#endif // ITEM_H

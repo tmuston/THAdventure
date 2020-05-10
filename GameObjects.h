@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMEOBJECTS_H
+#define GAMEOBJECTS_H
 #include <iostream>
 #include <vector>
 #include "Item.h"
@@ -14,4 +15,5 @@ private:
 	
 	
 };
+#endif // GAMEOBJECTS_H
 

@@ -1,3 +1,5 @@
+#ifndef RESOURCE_H
+#define RESOURCE_H
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by THAdventure.rc
@@ -14,5 +16,6 @@
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
-#endif
-#endif
+#endif // APSTUDIO_READONLY_SYMBOLS
+#endif // APSTUDIO_INVOKED
+#endif // RESUORCE_H

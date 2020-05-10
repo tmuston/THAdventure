@@ -60,9 +60,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	else
 		IniConfig->Write(wxT("SoundOn"),true);  // No entry in ini file
 	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
-	GameSetup* g = new GameSetup();
+	std::unique_ptr<GameSetup> g(new GameSetup);  // trying out smart pointers
+	
 	g->InitFirstRun();
-	delete g;
+	
 
 }
 

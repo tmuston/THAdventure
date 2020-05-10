@@ -1,8 +1,11 @@
-#pragma once
+#ifndef MAPNODE_H
+#define MAPNODE_H
 #include <cstdint>
 #include <string>
 #include <iostream>
 #include <vector>
+#include <memory>
+
 
 
 
@@ -71,4 +74,6 @@ private:
 										// ExitIDs[4] = Up
 										// ExitIDs[5] = Down
 };
+
+#endif // MAPNODE_H
 

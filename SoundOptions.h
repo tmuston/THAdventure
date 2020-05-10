@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SOUNDOPTIONS_H
+#define SOUNDOPTIONS_H
+
 #include "wx/wx.h"
 #include "wx/frame.h"
 
@@ -27,4 +29,5 @@ private:
 	
 	wxDECLARE_EVENT_TABLE();
 };
+#endif // SOUNDOPTIONS_H
 

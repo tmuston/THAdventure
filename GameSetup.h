@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMESETUP_H
+#define GAMESETUP_H
 #include "GameObjects.h"
 #include "MapNode.h"
 #include "map.h"
@@ -17,4 +18,5 @@ private:
 	Item* thing = nullptr;
 
 };
+#endif // GAMESETUP_H
 

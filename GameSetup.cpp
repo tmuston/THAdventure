@@ -16,7 +16,7 @@
 #define MAIN_HALL		12
 #define	TOP_CORRIDOR	13
 
-// weightsof carryable objects
+// weights of carryable objects
 #define WEIGHTLESS		0  // things that can't be picked up.
 #define LIGHTWEIGHT		2
 #define MIDDLEWEIGHT	4
@@ -34,8 +34,8 @@ GameSetup::~GameSetup()
 bool GameSetup::InitFirstRun()
 {// allocates the default Items to the default rooms - called at the start of the game
 	// test code for Items
-	GameObjects* gObj = new GameObjects();
 	
+	std::unique_ptr<GameObjects> gObj(new GameObjects());
 	Item* newItem = new Item("Sandwich", "A shiny tool", LIGHTWEIGHT, Movable | Carryable | Usable | Eatable);
 	newItem->SetLocation(INNER_FOYER);
 	gObj->AddItem(*newItem);	
@@ -55,9 +55,7 @@ bool GameSetup::InitFirstRun()
 	newItem->SetLocation(INNER_FOYER);
 	gObj->AddItem(*newItem);
 	delete newItem;
-
-	//&game = gObj;
-	delete gObj;
+		
 	return true;
 }
 

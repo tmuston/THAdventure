@@ -1,7 +1,9 @@
-#pragma once
+#ifndef APP_H  // guard
+#define APP_H
+
 #include "wx/wx.h"
 #include "cMain.h"
-#define NOSPLASH
+//#define NOSPLASH
 class cApp : public wxApp
 {
 public:
@@ -11,4 +13,5 @@ public:
 private:
 	cMain* m_frame1 = nullptr;
 };
+#endif //APP_H
 

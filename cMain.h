@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MAIN_H
+#define MAIN_H
+
 #include "wx/wx.h"
 #include "Map.h"
 #include "SoundOptions.h"
@@ -6,6 +8,7 @@
 #include "wx/sound.h"
 #include "wx/config.h"
 #include "wx/fileconf.h"
+
 
 // definitions for the window events
 enum
@@ -52,4 +55,5 @@ private:
 	wxDECLARE_EVENT_TABLE();
 
 };
+#endif // MAIN_H
 

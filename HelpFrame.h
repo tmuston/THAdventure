@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HELPFRAME_H
+#define HELPFRAME_H
 #include "wx/wx.h"
 #include "wx/window.h"
 #include "wx/richtext/richtextctrl.h"
@@ -16,4 +17,5 @@ public:
 
 	wxDECLARE_EVENT_TABLE();
 };
+#endif // HELPFRAME_H
 

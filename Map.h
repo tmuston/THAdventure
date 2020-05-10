@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAP_H
+#define MAP_H
 #include <iostream>
 #include <fstream>
 #include "MapNode.h"
@@ -23,4 +24,5 @@ private:
 	std::vector<MapNode> currNode;
 	bool StringToMapNode(std::string s);
 };
+#endif //MAP_H
 

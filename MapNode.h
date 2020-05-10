@@ -49,7 +49,6 @@ public:
 	bool AddItem();
 	bool DropItem();
 	bool Leave(Directions d);
-	void DescribeNode();
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }
 	inline std::string GetDesc() { return Description; }

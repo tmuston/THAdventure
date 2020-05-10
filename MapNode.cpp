@@ -60,24 +60,7 @@ void MapNode::SetExits(Nodes& node)
 	ExitIDs[4] = node.u; // Up
 	ExitIDs[5] = node.d; // Down
 }
-void MapNode::DescribeNode()
-{// not used in production code
-	using std::cout;
-	cout << Title << std::endl << Description << std::endl << "Map Node " << NodeID << std::endl;
-	cout << std::endl << "Exits are:\n";
-	if (ExitIDs[0])
-		cout << "\tNorth " << std::endl;
-	if (ExitIDs[1])
-		cout << "\tEast " << std::endl;
-	if (ExitIDs[2])
-		cout << "\tSouth " << std::endl;
-	if (ExitIDs[3])
-		cout << "\tWest" << std::endl;
-	if (ExitIDs[4])
-		cout << "\tUp" << std::endl;
-	if (ExitIDs[5])
-		cout << "\tDown" << std::endl;
-}
+
 std::string MapNode::NodeToString()
 {
 	using std::string;

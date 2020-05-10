@@ -22,7 +22,6 @@ class Item
 public:
 	Item(std::string name, std::string desc, uint16_t weight, uint8_t props = 0);
 	~Item();
-	
 	inline std::string GetName() { return Name; }
 	inline std::string GetDescription() { return Description; }
 	inline uint16_t GetLocation() { return CurrentLocation; }

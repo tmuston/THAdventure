@@ -15,6 +15,7 @@ Item::~Item()
 {// Kill 'em all
 }
 
+
 bool Item::SetLocation(uint16_t loc)
 {
 	if(loc == INVALID_LOCATION)

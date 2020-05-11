@@ -6,7 +6,7 @@
 
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
+//EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
@@ -20,7 +20,7 @@ double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	// set the initial music volume - eventually will read the value from a wxConfig
-	gdMusicVolume = 0.5;
+	
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
 	// create a wxConfig object - in this case an ini file
@@ -30,13 +30,16 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	IniConfig->SetPath(wxT("/Sound"));
 	dReadVal = IniConfig->ReadDouble(wxT("MusicVol"), dReadVal);
 	if (dReadVal < 0.0)  //not changed.  write the default value
+	{
 		IniConfig->Write(wxT("MusicVol"), 0.5);
+		gdMusicVolume = 0.5;
+	}
 	else
 		gdMusicVolume = dReadVal;
 		
 	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
-		
+	
 	map = new Map();
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED,wxEmptyString,wxDefaultPosition,wxDefaultSize, 0,wxMEDIABACKEND_WMP10);
 		
@@ -59,7 +62,22 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	}
 	else
 		IniConfig->Write(wxT("SoundOn"),true);  // No entry in ini file
-	btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
+	//btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
+	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
+	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION,  "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
+	
+	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL,false, "Arial");
+	fntTitle->AddPrivateFont("England.ttf");
+	fntTitle->SetFaceName("England Hand DB");
+	txtTitle->SetFont(*fntTitle);
+	txtTitle->SetValue(wxT("Test Text"));
+
+	fntDesc = new wxFont(12, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial"); 
+	//bool bIsFontAdded = fntDesc->AddPrivateFont("ArchivoNarrow-regular.otf");
+	//bool bIsFontUsable = fntDesc->SetFaceName("Archivo Narrow Regular");
+	txtDesc->SetFont(*fntDesc);
+	
+	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
 	std::unique_ptr<GameSetup> g(new GameSetup);  // trying out smart pointers
 	
 	g->InitFirstRun();
@@ -73,13 +91,6 @@ cMain::~cMain()
 		delete map;
 	/*if(IniConfig != nullptr)
 		delete IniConfig;*/
-}
-
-void cMain::OnContinue(wxCommandEvent& evt)
-{
-	wxMessageBox("Hello there", "Message");
-	//GameLoop();
-	evt.Skip();
 }
 
 void cMain::OnExit(wxCommandEvent& evt)

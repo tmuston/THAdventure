@@ -341,3 +341,7 @@ healthchecksdb
 
 # Game music
 *.wav
+
+#Fonts
+*.ttf
+*.otf

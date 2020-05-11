@@ -8,16 +8,19 @@
 #include "wx/sound.h"
 #include "wx/config.h"
 #include "wx/fileconf.h"
+#include "wx/font.h"
 
 
 // definitions for the window events
 enum
 {
-	tmID_CONTINUE = 1,
-	tmID_SOUNDOPTIONS,
+
+	tmID_SOUNDOPTIONS = 1,
 	tmID_SOUNDOFF,
 	tmID_MUSICLOADED,
-	tmID_MUSICFINISHED
+	tmID_MUSICFINISHED,
+	tmID_TITLE,
+	tmID_DESCRIPTION
 
 };
 
@@ -29,7 +32,6 @@ public:
 	~cMain();
 
 	// event functions
-	void OnContinue(wxCommandEvent& evt);
 	void OnExit(wxCommandEvent& evt);
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -49,7 +51,12 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
-	wxFileConfig* IniConfig = nullptr;
+	wxFileConfig* IniConfig = nullptr; // the Ini file
+	wxTextCtrl* txtTitle = nullptr;
+	wxTextCtrl* txtDesc = nullptr;
+	wxFont* fntTitle = nullptr;
+	wxFont* fntDesc = nullptr;
+
 	bool GameLoop();
 	bool bComplete = false;
 	wxDECLARE_EVENT_TABLE();

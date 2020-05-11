@@ -3,7 +3,7 @@
 
 #include "wx/wx.h"
 #include "cMain.h"
-//#define NOSPLASH
+#define NOSPLASH
 class cApp : public wxApp
 {
 public:

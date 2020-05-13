@@ -80,7 +80,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
 	std::unique_ptr<GameSetup> g(new GameSetup);  // trying out smart pointers
 	
-	g->InitFirstRun();
+	//g->InitFirstRun();
 	
 
 }

@@ -107,6 +107,22 @@ MapNode Map::GetMapNode(uint16_t n)
 
 }
 
+bool Map::GetMapNodeByID(MapNode& node, uint16_t n)
+{
+	bool bAnswer = false;
+	for (uint16_t i = 0; i< currNode.size(); i++ )
+	{
+		if (currNode[i].GetID() == n)
+		{
+			node = currNode[i];
+			bAnswer = true;
+		}
+		if (true == bAnswer)
+			break;
+	}
+	return bAnswer;  // of there isn't a MapNode with the right ID
+}
+
 uint16_t Map::GetMapSize()
 {
 	uint16_t size = (uint16_t)currNode.size();

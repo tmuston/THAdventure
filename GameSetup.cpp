@@ -31,35 +31,35 @@ GameSetup::~GameSetup()
 {
 }
 
-bool GameSetup::InitFirstRun()
+bool GameSetup::InitFirstRun(Map& GameMap)
 {// allocates the default Items to the default rooms - called at the start of the game
-	// test code for Items
 	
-	std::unique_ptr<GameObjects> gObj(new GameObjects());
+	
 	Item* newItem = new Item("Sandwich", "A shiny tool", LIGHTWEIGHT, Movable | Carryable | Usable | Eatable);
 	newItem->SetLocation(INNER_FOYER);
-	gObj->AddItem(*newItem);	
+	
 	delete newItem;
-
+	MapNode n;
 	newItem = new Item("Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, Talkable);
 	newItem->SetLocation(TIC);
-	gObj->AddItem(*newItem);
+	GameMap.GetMapNodeByID(n, TIC);
+	n.AddItem(*newItem);
 	delete newItem;
 
 	newItem = new Item("Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, Usable);
 	newItem->SetLocation(INNER_FOYER);
-	gObj->AddItem(*newItem);
+	//gObj->AddItem(*newItem);
 	delete newItem;
 
 	newItem = new Item("Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, Usable | Carryable);
 	newItem->SetLocation(INNER_FOYER);
-	gObj->AddItem(*newItem);
+	//gObj->AddItem(*newItem);
 	delete newItem;
 		
 	return true;
 }
 
-bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)
-{
-	return false;
-}
+//bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)
+//{
+//	return false;
+//}

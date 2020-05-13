@@ -1,6 +1,6 @@
 #ifndef GAMESETUP_H
 #define GAMESETUP_H
-#include "GameObjects.h"
+//#include "GameObjects.h"
 #include "MapNode.h"
 #include "map.h"
 
@@ -11,10 +11,10 @@ class GameSetup
 public:
 	GameSetup();
 	~GameSetup();
-	bool InitFirstRun();
-	bool InitFromSavedGame(GameObjects& game, std::string fName);
+	bool InitFirstRun(Map& GameMap);
+	//bool InitFromSavedGame(GameObjects& game, std::string fName);
 private:
-	GameObjects* gamestate = nullptr;
+	//GameObjects* gamestate = nullptr;
 	Item* thing = nullptr;
 
 };

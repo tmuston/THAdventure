@@ -2,6 +2,7 @@
 #define MAP_H
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include "MapNode.h"
 
 
@@ -16,6 +17,7 @@ public:
 	bool SaveMap(std::string fName);
 	bool LoadMap(std::string fName);
 	MapNode GetMapNode(uint16_t n);
+	bool GetMapNodeByID(MapNode& node, uint16_t n);
 	uint16_t GetMapSize();
 	
 	

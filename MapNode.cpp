@@ -51,6 +51,16 @@ MapNode::~MapNode()
 
 }
 
+bool MapNode::AddItem(const Item& item)
+{// Add an item to the vector.  Could be on initialisation, or when a player drops it
+	return false;
+}
+
+bool MapNode::DropItem(const Item& item)
+{// remove an item, and leave it in the current room
+	return false;
+}
+
 void MapNode::SetExits(Nodes& node)
 {
 	ExitIDs[0] = node.n; // North

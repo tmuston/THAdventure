@@ -17,12 +17,15 @@ enum ItemProperty
 };
 
 #define INVALID_LOCATION 65535
+#define CARRIED_BY_PLAYER 0
 class Item
 {
 public:
 	Item(std::string name, std::string desc, uint16_t weight, uint8_t props = 0);
 	~Item();
 	inline std::string GetName() { return Name; }
+	inline uint16_t GetID() { return ID; }
+	inline void SetID(uint16_t id) { ID = id; }
 	inline std::string GetDescription() { return Description; }
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);

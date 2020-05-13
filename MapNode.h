@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include "Item.h"
 
 
 
@@ -46,8 +47,8 @@ public:
 	MapNode(const MapNode& obj);
 	~MapNode();
 
-	bool AddItem();
-	bool DropItem();
+	bool AddItem(const Item& item);
+	bool DropItem(const Item& item);
 	bool Leave(Directions d);
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }
@@ -62,7 +63,7 @@ public:
 private:
 	std::string Title;
 	std::string Description;
-	//std::vector<uint8_t> ItemsInNode;	// whatever items happen to be in the room
+	std::vector<Item> ItemsInNode;	// whatever items happen to be in the room
 	uint16_t ID;
 	uint16_t ExitIDs[6];				// needs to be populated by the class
 										// an ID of zero indicates no exit

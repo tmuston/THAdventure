@@ -33,14 +33,15 @@ public:
 
 	// event functions
 	void OnExit(wxCommandEvent& evt);
+	
+	void CreateMenu();
+	void SetMusicVol(double dVal);
+private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
-	void CreateMenu();
-	void SetMusicVol(double dVal);
-private:
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
 	wxButton* btnContinue = nullptr;
@@ -56,6 +57,13 @@ private:
 	wxTextCtrl* txtDesc = nullptr;
 	wxFont* fntTitle = nullptr;
 	wxFont* fntDesc = nullptr;
+
+	wxButton* btnN = nullptr;
+	wxButton* btnE = nullptr;
+	wxButton* btnS = nullptr;
+	wxButton* btnW = nullptr;
+	wxButton* btnU = nullptr;
+	wxButton* btnD = nullptr;
 
 	bool GameLoop();
 	bool bComplete = false;

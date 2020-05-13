@@ -183,9 +183,9 @@ bool cMain::GameLoop()
 {
 	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
 	while(!bComplete)
-	{ 
-		wxYield();
-		Music->SetVolume(gdMusicVolume);
+	{ // the entire game should happen here
+		wxSafeYield();
+		
 	}
 	return bComplete;
 }

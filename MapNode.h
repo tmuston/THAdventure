@@ -45,7 +45,7 @@ public:
 
 	bool AddItem(const Item& item);
 	bool DropItem(const Item& item);
-	bool Leave(Directions d);
+	//bool Leave(Directions d);
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }
 	inline std::string GetDesc() { return Description; }

@@ -21,7 +21,6 @@ MapNode::MapNode()
 
 MapNode::MapNode(Nodes& n, std::string Caption, std::string Desc, bool won)
 {
-
 	Title = Caption;
 	Description = Desc;
 	ID = ++NodeID;				// Create a unique Node ID (starting at 1)
@@ -45,10 +44,8 @@ MapNode::MapNode(const MapNode& obj)
 		ExitIDs[i] = obj.ExitIDs[i];
 }
 
-
 MapNode::~MapNode()
 {// do nowt - for the moment
-
 }
 
 bool MapNode::AddItem(const Item& item)

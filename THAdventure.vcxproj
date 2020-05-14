@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClCompile Include="cApp.cpp" />
     <ClCompile Include="cMain.cpp" />
-    <ClCompile Include="GameObjects.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -32,7 +31,6 @@
   <ItemGroup>
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
-    <ClInclude Include="GameObjects.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Map.h" />

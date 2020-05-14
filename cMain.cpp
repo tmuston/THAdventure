@@ -85,8 +85,6 @@ cMain::~cMain()
 {
 	if (map != nullptr)
 		delete map;
-	/*if(IniConfig != nullptr)
-		delete IniConfig;*/
 }
 
 void cMain::OnExit(wxCommandEvent& evt)

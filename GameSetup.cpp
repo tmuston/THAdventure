@@ -33,30 +33,19 @@ GameSetup::~GameSetup()
 
 bool GameSetup::InitFirstRun(Map& GameMap)
 {// allocates the default Items to the default rooms - called at the start of the game
-	
-	
-	Item* newItem = new Item("Sandwich", "A shiny tool", LIGHTWEIGHT, Movable | Carryable | Usable | Eatable);
-	newItem->SetLocation(INNER_FOYER);
-	
-	delete newItem;
-	MapNode n;
-	newItem = new Item("Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, Talkable);
-	newItem->SetLocation(TIC);
-	GameMap.GetMapNodeByID(n, TIC);
-	n.AddItem(*newItem);
-	delete newItem;
-
-	newItem = new Item("Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, Usable);
-	newItem->SetLocation(INNER_FOYER);
-	//gObj->AddItem(*newItem);
-	delete newItem;
-
-	newItem = new Item("Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, Usable | Carryable);
-	newItem->SetLocation(INNER_FOYER);
-	//gObj->AddItem(*newItem);
-	delete newItem;
-		
+	AddInfoToMap(GameMap, "Sandwich", "A shiny tool", LIGHTWEIGHT, INNER_FOYER, Movable | Carryable | Usable | Eatable);
+	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
+	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
+	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Carryable);
 	return true;
+}
+
+void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
+{
+	Item* newItem = new Item(title, desc, weight,props);
+	theMap.PlaceItemInNode(*newItem, location);
+	delete newItem;
+	
 }
 
 //bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)

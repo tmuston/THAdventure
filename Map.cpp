@@ -3,7 +3,6 @@
 
 Map::Map()
 {
-
 }
 
 Map::Map(const Map& obj)
@@ -27,7 +26,6 @@ bool Map::Replace(MapNode m)
 	{
 		if (currNode[i].GetID() == FindID)
 		{// found the right MapNode to modify
-
 			currNode[i].SetTitle(m.GetTitle());
 			currNode[i].SetDescription(m.GetDesc());
 			for (int j = 0; j < 6; j++)
@@ -39,7 +37,6 @@ bool Map::Replace(MapNode m)
 	}
 	return bFound;
 }
-
 
 bool Map::SaveMap(std::string fName)
 {
@@ -65,7 +62,6 @@ bool Map::SaveMap(std::string fName)
 	}
 	file.close();
 	return true;
-
 }
 
 bool Map::LoadMap(std::string fName)
@@ -102,25 +98,24 @@ bool Map::LoadMap(std::string fName)
 
 MapNode Map::GetMapNode(uint16_t n)
 {  // needs more work - possible crash
-
 	return this->currNode[n];
-
 }
 
-bool Map::GetMapNodeByID(MapNode& node, uint16_t n)
+bool Map::PlaceItemInNode(Item& item, uint16_t n)
 {
 	bool bAnswer = false;
-	for (uint16_t i = 0; i< currNode.size(); i++ )
+	for (uint16_t i = 0; i < currNode.size(); i++)
 	{
-		if (currNode[i].GetID() == n)
-		{
-			node = currNode[i];
+		uint16_t NodeID = currNode[i].GetID();
+		if (NodeID == n)
+		{//  should be at the right MapNode
+			currNode[i].AddItem(item);
 			bAnswer = true;
 		}
 		if (true == bAnswer)
 			break;
 	}
-	return bAnswer;  // of there isn't a MapNode with the right ID
+	return bAnswer;
 }
 
 uint16_t Map::GetMapSize()
@@ -130,11 +125,8 @@ uint16_t Map::GetMapSize()
 	return(size);
 }
 
-
-
 bool Map::StringToMapNode(std::string s)
 {
-
 	// a line of a map file takes the following form
 	// firstly there are two tilde characters
 	// then the NodeID
@@ -151,17 +143,14 @@ bool Map::StringToMapNode(std::string s)
 	uint16_t id;
 	std::string caption;
 	std::string description;
-	//uint16_t exits[6];
 
 	std::stringstream s_stream(s);
 	std::vector<std::string> vec;
 
 	while (s_stream.good())
 	{
-
 		std::string substr;
 		std::getline(s_stream, substr, '~'); //get first string delimited by comma
-
 		vec.push_back(substr);
 	}
 

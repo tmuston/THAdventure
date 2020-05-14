@@ -10,20 +10,16 @@
 #include "wx/fileconf.h"
 #include "wx/font.h"
 
-
 // definitions for the window events
 enum
 {
-
 	tmID_SOUNDOPTIONS = 1,
 	tmID_SOUNDOFF,
 	tmID_MUSICLOADED,
 	tmID_MUSICFINISHED,
 	tmID_TITLE,
 	tmID_DESCRIPTION
-
 };
-
 
 class cMain : public wxFrame
 {
@@ -33,7 +29,7 @@ public:
 
 	// event functions
 	void OnExit(wxCommandEvent& evt);
-	
+
 	void CreateMenu();
 	void SetMusicVol(double dVal);
 private:
@@ -44,7 +40,7 @@ private:
 	void OnIdle(wxIdleEvent& evt);
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
-	wxButton* btnContinue = nullptr;
+
 	std::string FileName = "";
 	wxPanel* panel = nullptr;
 	wxMenuBar* menuBar = nullptr;
@@ -68,7 +64,5 @@ private:
 	bool GameLoop();
 	bool bComplete = false;
 	wxDECLARE_EVENT_TABLE();
-
 };
 #endif // MAIN_H
-

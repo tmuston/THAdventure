@@ -1,6 +1,5 @@
 #include "Item.h"
 
-
 Item::Item(std::string name, std::string desc, uint16_t weight, uint8_t props)
 {// mainly just populating the item with values
 	ID = ++ItemID;
@@ -15,10 +14,9 @@ Item::~Item()
 {// Kill 'em all
 }
 
-
 bool Item::SetLocation(uint16_t loc)
 {
-	if(loc == INVALID_LOCATION)
+	if (loc == INVALID_LOCATION)
 		return false;
 	CurrentLocation = loc;
 	return true;

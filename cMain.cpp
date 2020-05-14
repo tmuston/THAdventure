@@ -2,8 +2,6 @@
 #include "Map.h"
 #include "GameSetup.h"
 
-
-
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 //EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
@@ -20,7 +18,7 @@ double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	// set the initial music volume - eventually will read the value from a wxConfig
-	
+
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
 	// create a wxConfig object - in this case an ini file
@@ -36,53 +34,51 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	}
 	else
 		gdMusicVolume = dReadVal;
-		
-	panel = new wxPanel(this, id_panel,wxPoint(0,0),wxSize(800,500));
+
+	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 500));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
-	
-	map = new Map();
-	Music = new wxMediaCtrl(this, tmID_MUSICLOADED,wxEmptyString,wxDefaultPosition,wxDefaultSize, 0,wxMEDIABACKEND_WMP10);
-		
+	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
+
 	Music->SetVolume(0.0);
 	Music->Load(wxT("game.wav"));
 	SetMusicVol(gdMusicVolume);
-		
+
 	Centre();
 	CreateMenu();
 	if (IniConfig->Exists(wxT("SoundOn")))
 	{
 		bSoundOn = IniConfig->ReadBool(wxT("SoundOn"), bSoundOn);
-		soundMenu->Check(tmID_SOUNDOFF,!bSoundOn);
-		if (bSoundOn)// the music shouldn't be running 
-		
+		soundMenu->Check(tmID_SOUNDOFF, !bSoundOn);
+		if (bSoundOn)// the music shouldn't be running
+
 			Music->Play();
 
 		else
 			Music->Stop();
 	}
 	else
-		IniConfig->Write(wxT("SoundOn"),true);  // No entry in ini file
-	//btnContinue = new wxButton(panel, tmID_CONTINUE, "Continue", wxPoint(360, 451), wxSize(80, 35));
-	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
-	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION,  "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
+		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
 	
-	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL,false, "Arial");
+	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
+	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
+
+	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 	fntTitle->AddPrivateFont("England.ttf");
 	fntTitle->SetFaceName("England Hand DB");
 	txtTitle->SetFont(*fntTitle);
 	txtTitle->SetValue(wxT("Test Text"));
 
-	fntDesc = new wxFont(12, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial"); 
+	fntDesc = new wxFont(12, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 	//bool bIsFontAdded = fntDesc->AddPrivateFont("ArchivoNarrow-regular.otf");
 	//bool bIsFontUsable = fntDesc->SetFaceName("Archivo Narrow Regular");
 	txtDesc->SetFont(*fntDesc);
-	
-	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
-	std::unique_ptr<GameSetup> g(new GameSetup);  // trying out smart pointers
-	
-	//g->InitFirstRun();
-	
 
+	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
+	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
+	 //Do all the map stuff
+	map = new Map();
+	map->LoadMap("tha.map");
+	gSetup->InitFirstRun(*map);
 }
 
 cMain::~cMain()
@@ -103,13 +99,12 @@ void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
 	soundWindow->Show();
-	
+
 	evt.Skip();
 }
 
 void cMain::OnSoundOnOff(wxCommandEvent& evt)
 {//Switch sounds globally on or off
-	
 	if (soundMenu->IsChecked(tmID_SOUNDOFF)) // the item is checked
 	{
 		Music->Stop();
@@ -125,10 +120,10 @@ void cMain::OnSoundOnOff(wxCommandEvent& evt)
 void cMain::OnWAVLoaded(wxMediaEvent& evt)
 {
 	Music->SetVolume(1.0);
-	
+
 	Music->Play();
 	SetMusicVol(gdMusicVolume);
-	
+
 	evt.Skip();
 }
 
@@ -139,7 +134,7 @@ void cMain::OnWAVFinished(wxMediaEvent& evt)
 }
 
 void cMain::OnIdle(wxIdleEvent& evt)
-{	// music volume 
+{	// music volume
 	double ldMusicVolume = Music->GetVolume();
 	if (fabs(ldMusicVolume - gdMusicVolume) > 0.05)
 	{
@@ -162,7 +157,7 @@ void cMain::CreateMenu()
 	fileMenu->Append(wxID_SAVE, _T("&Save"));
 	fileMenu->Append(wxID_SAVEAS, _T("Save &As"));
 	fileMenu->AppendSeparator();
-	
+
 	fileMenu->Append(wxID_EXIT, _T("E&xit"));
 
 	menuBar->Append(fileMenu, _T("&File"));
@@ -182,12 +177,9 @@ void cMain::SetMusicVol(double dVal)
 bool cMain::GameLoop()
 {
 	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
-	while(!bComplete)
+	while (!bComplete)
 	{ // the entire game should happen here
 		wxSafeYield();
-		
 	}
 	return bComplete;
 }
-
-

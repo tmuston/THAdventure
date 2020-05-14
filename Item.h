@@ -44,16 +44,16 @@ public:
 
 	bool SetProperty(uint8_t prop);
 private:
-	uint16_t ID;  // set in the constructor
+	uint16_t ID = 0;  // set in the constructor
 	std::string Name;
 	std::string Description;
 	// not really weight, but needed because there needs to be a means of not 
 	// allowing the player to carry every item - a weight limit, like at the airport
-	uint16_t Weight; 
+	uint16_t Weight = 0; 
 	uint8_t Properties = 0;
 	std::string Conversation = "";
 	// Which room is the item currently in (zero means it's being carried by the player)
-	uint16_t CurrentLocation;
+	uint16_t CurrentLocation = 0;
 
 };
 #endif // ITEM_H

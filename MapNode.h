@@ -7,9 +7,6 @@
 #include <memory>
 #include "Item.h"
 
-
-
-
 static uint16_t NodeID = 0;
 // non member function Sue me!
 void ZeroNodeId();	//  resets the NodeID static variable to zero.  Has to be here, as a static variable
@@ -36,13 +33,12 @@ public:
 	uint16_t w;
 	uint16_t u;
 	uint16_t d;
-
 };
 class MapNode
 {
 public:
 	MapNode();
-	MapNode( Nodes & n, std::string Title, std::string Desc, bool won = false);
+	MapNode(Nodes& n, std::string Title, std::string Desc, bool won = false);
 	MapNode(uint16_t id, Nodes& n, std::string Title, std::string Desc, bool won = false);
 	MapNode(const MapNode& obj);
 	~MapNode();
@@ -59,12 +55,12 @@ public:
 	uint16_t GetExit(int n);
 	bool SetExit(uint16_t exit, uint16_t value);
 	void SetExits(Nodes& node);
-	
+
 private:
 	std::string Title;
 	std::string Description;
 	std::vector<Item> ItemsInNode;	// whatever items happen to be in the room
-	uint16_t ID;
+	uint16_t ID = 0;
 	uint16_t ExitIDs[6];				// needs to be populated by the class
 										// an ID of zero indicates no exit
 										// ExitIDs[0] = North
@@ -76,4 +72,3 @@ private:
 };
 
 #endif // MAPNODE_H
-

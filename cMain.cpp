@@ -4,7 +4,6 @@
 
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-//EVT_BUTTON(tmID_CONTINUE, OnContinue)// temporary
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
@@ -23,6 +22,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	bool bSoundOn = true;
 	// create a wxConfig object - in this case an ini file
 	IniConfig = new wxFileConfig(wxT(""), wxT(""), wxT("tha.ini"), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
+
 	wxConfigBase::Set(IniConfig);
 	IniConfig->EnableAutoSave();
 	IniConfig->SetPath(wxT("/Sound"));
@@ -58,7 +58,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	}
 	else
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
-	
+
 	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
 	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
 
@@ -69,8 +69,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtTitle->SetValue(wxT("Test Text"));
 
 	fntDesc = new wxFont(12, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
-	//bool bIsFontAdded = fntDesc->AddPrivateFont("ArchivoNarrow-regular.otf");
-	//bool bIsFontUsable = fntDesc->SetFaceName("Archivo Narrow Regular");
+
 	txtDesc->SetFont(*fntDesc);
 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
@@ -84,20 +83,29 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 cMain::~cMain()
 {
 	if (map != nullptr)
+	{
 		delete map;
+
+		map = nullptr;
+	}
+
+	
+	
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
 	bComplete = true;  // exit the game loop
+	
 	Close();
+	
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
 	soundWindow->Show();
-
+	
 	evt.Skip();
 }
 
@@ -113,6 +121,7 @@ void cMain::OnSoundOnOff(wxCommandEvent& evt)
 		Music->Play();
 		IniConfig->Write(wxT("SoundOn"), true);
 	}
+	evt.Skip();
 }
 
 void cMain::OnWAVLoaded(wxMediaEvent& evt)

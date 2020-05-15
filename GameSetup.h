@@ -12,15 +12,12 @@ public:
 	GameSetup();
 	~GameSetup();
 	bool InitFirstRun(Map& GameMap);
-	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight,uint16_t location, uint8_t props = 0);
+	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 
-		
 	//bool InitFromSavedGame(GameObjects& game, std::string fName);
 private:
 	//GameObjects* gObj = nullptr;
-	
-	//Item* thing = nullptr;
 
+	//Item* thing = nullptr;
 };
 #endif // GAMESETUP_H
-

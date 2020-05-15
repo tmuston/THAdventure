@@ -10,6 +10,7 @@
 #include "wx/fileconf.h"
 #include "wx/font.h"
 
+
 // definitions for the window events
 enum
 {

@@ -1,8 +1,10 @@
 #ifndef APP_H  // guard
 #define APP_H
 
+
 #include "wx/wx.h"
 #include "cMain.h"
+
 #define NOSPLASH
 class cApp : public wxApp
 {

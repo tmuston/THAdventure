@@ -13,6 +13,7 @@ Map::Map(const Map& obj)
 Map::~Map()
 {
 	//ZeroNodeId();
+	
 }
 void Map::Add(MapNode m)
 {

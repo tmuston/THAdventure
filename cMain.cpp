@@ -51,7 +51,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	else
 		gdMusicVolume = dReadVal;
 
-	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 500));
+	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 600));
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 
@@ -90,6 +90,18 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
 	
+	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(575,425), wxSize(25, 25));
+	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(625, 450), wxSize(25, 25));
+	btnS = new wxButton(panel, tmID_NORTH, wxT("S"), wxPoint(575, 475), wxSize(25, 25));
+	btnW = new wxButton(panel, tmID_NORTH, wxT("W"), wxPoint(525, 450), wxSize(25, 25));
+	btnU = new wxButton(panel, tmID_UP, wxT("U"),wxPoint(672, 425), wxSize(25, 32));
+	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(672, 470), wxSize(25, 32));
+	wxArrayString opts;
+	opts.Add(wxT("Feck"));
+	opts.Add(wxT("Arse"));
+	opts.Add(wxT("Girls"));
+	opts.Add(wxT("Drink"));
+	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(400, 425), wxSize(50, 100),opts );
 	 //Do all the map stuff
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());

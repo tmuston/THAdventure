@@ -26,6 +26,7 @@
 #include "wx/config.h"
 #include "wx/fileconf.h"
 #include "wx/font.h"
+#include "wx/arrstr.h"
 
 
 // definitions for the window events
@@ -36,7 +37,14 @@ enum
 	tmID_MUSICLOADED,
 	tmID_MUSICFINISHED,
 	tmID_TITLE,
-	tmID_DESCRIPTION
+	tmID_DESCRIPTION,
+	tmID_NORTH,
+	tmID_EAST,
+	tmID_SOUTH,
+	tmID_WEST,
+	tmID_UP,
+	tmID_DOWN,
+	tmID_RADIOBOX
 };
 
 class cMain : public wxFrame
@@ -78,6 +86,7 @@ private:
 	wxButton* btnW = nullptr;
 	wxButton* btnU = nullptr;
 	wxButton* btnD = nullptr;
+	wxRadioBox* rbOptions = nullptr;
 
 	bool GameLoop();
 	bool bComplete = false;

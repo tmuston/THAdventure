@@ -1,3 +1,21 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  Item.cpp                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file defines the properties of the Items which are usable         //
+//    within the game.  Note that the items themselves are declared and      //
+//    defined within GameSetup.h and GameSetup.cpp.                          //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "Item.h"
 
 Item::Item(std::string name, std::string desc, uint16_t weight, uint8_t props)

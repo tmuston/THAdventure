@@ -1,5 +1,22 @@
 #ifndef SOUNDOPTIONS_H
 #define SOUNDOPTIONS_H
+///////////////////////////////////////////////////////////////////////////////
+//								  SoundOptions.h                             //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file declares the SoundOptions class, which displays a            //
+//    custom dialog to allow setting of sound and music volume.              //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 
 #include "wx/wx.h"
 #include "wx/frame.h"

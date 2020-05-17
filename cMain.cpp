@@ -1,3 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  cMain.cpp                                  //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file defines a wxFrame object, which controls the flow of the.    //
+//    Application.  This is the equivalent of int main().                    //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "cMain.h"
 #include "Map.h"
 #include "GameSetup.h"
@@ -20,9 +37,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
+	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
 	// create a wxConfig object - in this case an ini file
-	IniConfig = new wxFileConfig(wxT(""), wxT(""), wxT("tha.ini"), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
-
+	IniConfig = new wxFileConfig(wxT(""), wxT(""), (gSetup->GetIniFileName()), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
+	
 	wxConfigBase::Set(IniConfig);
 	IniConfig->EnableAutoSave();
 	IniConfig->SetPath(wxT("/Sound"));
@@ -40,7 +58,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 
 	Music->SetVolume(0.0);
-	Music->Load(wxT("game.wav"));
+	Music->Load(gSetup->GetMusicFile());
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -63,8 +81,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
-	fntTitle->AddPrivateFont("England.ttf");
-	fntTitle->SetFaceName("England Hand DB");
+	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
+	fntTitle->SetFaceName(gSetup->GetTitleFaceName());
 	txtTitle->SetFont(*fntTitle);
 	txtTitle->SetValue(wxT("Test Text"));
 
@@ -73,10 +91,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtDesc->SetFont(*fntDesc);
 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
-	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
+	
 	 //Do all the map stuff
 	map = new Map();
-	map->LoadMap("tha.map");
+	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map);
 }
 

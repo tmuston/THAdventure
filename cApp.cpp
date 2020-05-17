@@ -1,8 +1,25 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  cApp.cpp                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file defines a wxWidgets application object.                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "cApp.h"
 #include "cMain.h"
 #include "wx/splash.h"
 #include "wx/bitmap.h"
 #include "wx/icon.h"
+#include "GameSetup.h"
 
 
 wxIMPLEMENT_APP(cApp);
@@ -22,7 +39,8 @@ bool cApp::OnInit()
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;
-	if (bitmap.LoadFile(wxT("splash.png"), wxBITMAP_TYPE_PNG))
+	std::unique_ptr<GameSetup> setup(new GameSetup());
+	if (bitmap.LoadFile(setup->GetSplashImage(), wxBITMAP_TYPE_PNG))
 	{
 		wxSplashScreen* splash = new wxSplashScreen(bitmap,
 			wxSPLASH_CENTRE_ON_SCREEN | wxSPLASH_TIMEOUT,

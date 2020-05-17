@@ -1,3 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  GameSetup.cpp                              //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file, along with GameSetup.h, are the two files needed in         //
+//    order to create your own unique game.  The only other modification     //
+//    necessary is to change the title in the constructor of the cMain       //
+//    object in cMain.cpp.  All other files can be left untouched.           //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "GameSetup.h"
 
 // various rooms
@@ -25,6 +44,13 @@
 
 GameSetup::GameSetup()
 {// constructor
+	MapName = "THA.MAP";
+	IniFileName = "tha.ini";
+	MusicFile = "Game.wav";
+	SplashImage = "Splash.png";
+	TitleFont = "England.ttf";
+	TitleFaceName = "England Hand DB";
+	
 }
 
 GameSetup::~GameSetup()

@@ -1,5 +1,23 @@
 #ifndef ITEM_H
 #define ITEM_H
+///////////////////////////////////////////////////////////////////////////////
+//								  Item.h                                     //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file declares the properties of the Items which are usable        //
+//    within the game.  Note that the items themselves are declared and      //
+//    defined within GameSetup.h and GameSetup.cpp.                          //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 
 static uint16_t ItemID = 0;

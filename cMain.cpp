@@ -33,8 +33,6 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
-	// set the initial music volume - eventually will read the value from a wxConfig
-
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
 	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
@@ -106,9 +104,18 @@ cMain::~cMain()
 
 		map = nullptr;
 	}
+	if (fntDesc != nullptr)
+	{
+		delete fntDesc;
+		fntDesc = nullptr;
+	}
+	if (fntTitle != nullptr)
+	{
+		delete fntTitle;
+		fntTitle = nullptr;
+	}
 
-	
-	
+
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
@@ -207,4 +214,5 @@ bool cMain::GameLoop()
 		wxSafeYield();
 	}
 	return bComplete;
+	
 }

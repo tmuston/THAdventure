@@ -23,7 +23,7 @@
 #define TIM_TESTING
 #ifdef TIM_TESTING
 	#define NOSPLASH
-	//#define NOPROLOGUE
+	#define NOPROLOGUE
 	#define NOEPILOGUE
 #endif
 

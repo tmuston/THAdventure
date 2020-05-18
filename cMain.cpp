@@ -33,11 +33,15 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+	/////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+	//NEED A CODE REVIEW.  POSSIBLY IMPLEMENT A GAME LOOP USINF wxTIMER    //
+	/////////////////////////////////////////////////////////////////////////
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
-	//std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
-	gSetup = new GameSetup();
+	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
+
 	// create a wxConfig object - in this case an ini file
 	IniConfig = new wxFileConfig(wxT(""), wxT(""), (gSetup->GetIniFileName()), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
 
@@ -58,7 +62,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 
 	Music->Load(gSetup->GetMusicFile());
-	
+
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -116,6 +120,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	gSetup->InitFirstRun(*map);
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
+	SetGameRunning(true);
+	ShowPrologue();
 }
 
 cMain::~cMain()
@@ -191,6 +197,7 @@ void cMain::OnIdle(wxIdleEvent& evt)
 		Music->SetVolume(gdMusicVolume);
 		// save the value to the ini file
 		IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
+		//ShowPrologue();
 	}
 
 	evt.Skip();
@@ -205,9 +212,9 @@ void cMain::ShowPrologue()
 	{
 		wxYield();
 		txtDesc->AppendText(*i);
-		wxSleep(2);
+		
 	}
-	wxSleep(6);
+	
 	txtDesc->Clear();
 }
 

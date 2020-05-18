@@ -88,7 +88,6 @@ private:
 	wxTextCtrl* txtDesc = nullptr;
 	wxFont* fntTitle = nullptr;
 	wxFont* fntDesc = nullptr;
-	GameSetup* gSetup = nullptr;
 	wxButton* btnN = nullptr;
 	wxButton* btnE = nullptr;
 	wxButton* btnS = nullptr;

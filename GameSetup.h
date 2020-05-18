@@ -21,10 +21,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "wx/wx.h"
 #include "wx/utils.h"
-#include "GameObjects.h"
-#include "MapNode.h"
 #include "map.h"
-#include "cApp.h"
 //#include "cMain.h"
 
 class GameSetup
@@ -42,11 +39,10 @@ public:
 	inline std::string GetIniFileName() { return IniFileName; }
 	inline std::string GetTitleFont() { return TitleFont; }
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
-	void Prologue(cMain* mainWindow);
-	void Epilogue(cMain* mainWindow);
+	std::vector<std::string> Prologue();//  these two functions need to be re-engineered so as to not require cMain pointers
+	std::vector<std::string> Epilogue();
 	//bool InitFromSavedGame(GameObjects& game, std::string fName);
 private:
-	//GameObjects* gObj = nullptr;
 	std::string SplashImage; //  both of thses strings need to be set in the constructor
 	std::string MusicFile;
 	std::string MapName;
@@ -54,7 +50,5 @@ private:
 	std::string IniFileName;
 	std::string TitleFont;
 	std::string TitleFaceName;
-
-	//Item* thing = nullptr;
 };
 #endif // GAMESETUP_H

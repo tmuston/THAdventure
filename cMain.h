@@ -27,7 +27,7 @@
 #include "wx/arrstr.h"
 #include "Map.h"
 #include "SoundOptions.h"
-//#include "GameSetup.h"
+#include "GameSetup.h"
 
 
 // definitions for the window events
@@ -88,7 +88,7 @@ private:
 	wxTextCtrl* txtDesc = nullptr;
 	wxFont* fntTitle = nullptr;
 	wxFont* fntDesc = nullptr;
-
+	GameSetup* gSetup = nullptr;
 	wxButton* btnN = nullptr;
 	wxButton* btnE = nullptr;
 	wxButton* btnS = nullptr;
@@ -97,9 +97,13 @@ private:
 	wxButton* btnD = nullptr;
 	wxRadioBox* rbOptions = nullptr;
 	wxButton* btnGo = nullptr;
-	//GameSetup* gSetup = nullptr;
-	//bool GameLoop();
+	void ShowPrologue();
 	bool bComplete = false;
+	bool PrologueDone = false;
+
+	// data for the prologue and epilogue
+	std::vector<std::string> PrologueData;
+	std::vector<std::string> EpilogueData;
 	wxDECLARE_EVENT_TABLE();
 };
 #endif // MAIN_H

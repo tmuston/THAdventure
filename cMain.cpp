@@ -36,11 +36,11 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
-	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
-	//gSetup = new GameSetup();
+	//std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
+	gSetup = new GameSetup();
 	// create a wxConfig object - in this case an ini file
 	IniConfig = new wxFileConfig(wxT(""), wxT(""), (gSetup->GetIniFileName()), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
-	
+
 	wxConfigBase::Set(IniConfig);
 	IniConfig->EnableAutoSave();
 	IniConfig->SetPath(wxT("/Sound"));
@@ -57,8 +57,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 
-	Music->SetVolume(0.0);
 	Music->Load(gSetup->GetMusicFile());
+	
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -91,16 +91,15 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtDesc->SetFont(*fntDesc);
 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
-	
-	
-	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628,425), wxSize(25, 25));
+
+	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 425), wxSize(25, 25));
 	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 450), wxSize(25, 25));
 	btnS = new wxButton(panel, tmID_NORTH, wxT("S"), wxPoint(628, 475), wxSize(25, 25));
 	btnW = new wxButton(panel, tmID_NORTH, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
-	btnU = new wxButton(panel, tmID_UP, wxT("U"),wxPoint(725, 425), wxSize(25, 32));
+	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 425), wxSize(25, 32));
 	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 470), wxSize(25, 32));
 	wxArrayString opts;
-	
+
 	opts.Add(wxT("Eat"));
 	opts.Add(wxT("Drink"));
 	opts.Add(wxT("Take"));
@@ -108,14 +107,15 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	opts.Add(wxT("Use"));
 	opts.Add(wxT("Talk"));
 	opts.Add(wxT("Destroy"));
-	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60),opts );
+	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60), opts);
 
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&GO!"), wxPoint(100, 480), wxSize(450, 50));
-	 //Do all the map stuff
+	//Do all the map stuff
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map);
-	
+	PrologueData = gSetup->Prologue();
+	EpilogueData = gSetup->Epilogue();
 }
 
 cMain::~cMain()
@@ -136,23 +136,20 @@ cMain::~cMain()
 		delete fntTitle;
 		fntTitle = nullptr;
 	}
-
-
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
 	bComplete = true;  // exit the game loop
-	
+
 	Close();
-	
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
 	soundWindow->Show();
-	
+
 	evt.Skip();
 }
 
@@ -173,8 +170,7 @@ void cMain::OnSoundOnOff(wxCommandEvent& evt)
 
 void cMain::OnWAVLoaded(wxMediaEvent& evt)
 {
-	Music->SetVolume(1.0);
-
+	Music->SetVolume(0.05);
 	Music->Play();
 	SetMusicVol(gdMusicVolume);
 
@@ -196,18 +192,23 @@ void cMain::OnIdle(wxIdleEvent& evt)
 		// save the value to the ini file
 		IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
 	}
-	if (GetGameRunning())
-	{// this is the de facto game loop - stupid TIM!
 
-		//Get user input
-		//gSetup->Prologue(this);
-		
-	}
-	else
-	{
-		//gSetup->Prologue(this);
-	}
 	evt.Skip();
+}
+
+void cMain::ShowPrologue()
+{//  Display the prologue info
+	txtTitle->Clear();
+	txtTitle->SetValue(wxString("Prologue"));
+	txtDesc->Clear();
+	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
+	{
+		wxYield();
+		txtDesc->AppendText(*i);
+		wxSleep(2);
+	}
+	wxSleep(6);
+	txtDesc->Clear();
 }
 
 void cMain::CreateMenu()
@@ -258,15 +259,3 @@ void cMain::AddToDesc(std::string words)
 {
 	txtDesc->AppendText(wxString(words));
 }
-
-//bool cMain::GameLoop()
-//{
-//	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
-//
-//	while (!bComplete)
-//	{ // the entire game should happen here
-//	//	wxSafeYield();
-//	}
-//	return bComplete;
-//	
-//}

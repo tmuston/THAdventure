@@ -85,10 +85,9 @@ void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, u
 	
 }
 
-void GameSetup::Prologue(cMain* mainWindow)
-{//  Write the story for the user
-	mainWindow->SetTitle(" Prologue ");
-	mainWindow->ClearDesc();
+std::vector<std::string> GameSetup::Prologue()
+{//  Generate the story for the user
+	
 	std::vector<std::string> line;
 	
 	line.push_back("It is a beautiful crisp Saturday morning, around 9:23 AM\n");
@@ -97,19 +96,16 @@ void GameSetup::Prologue(cMain* mainWindow)
 	line.push_back("You are a caretaker at the Town Hall, and today your job\n");
 	line.push_back("is to tidy up after last night's party and prepare the hall\n");
 	line.push_back("for a wedding.  Everything must be perfect!\n\n");
-	for (auto i = line.begin(); i != line.end(); i++)
-	{// print the prologue, pause between lines and accept a key input to bail out
-		mainWindow->AddToDesc(*i);
-			
-	}
-
-
-
-
+	return line;
 }
 
-void GameSetup::Epilogue(cMain* mainWindow)
+std::vector<std::string> GameSetup::Epilogue()
 {//
+	std::vector<std::string> line;
+
+	line.push_back("CONGRATULATIONS !  You completed the task.\n\n");
+	
+	return line;
 }
 
 //bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)

@@ -19,14 +19,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "wx/wx.h"
-#include "Map.h"
-#include "SoundOptions.h"
 #include "wx/mediactrl.h"
 #include "wx/sound.h"
 #include "wx/config.h"
 #include "wx/fileconf.h"
 #include "wx/font.h"
 #include "wx/arrstr.h"
+#include "Map.h"
+#include "SoundOptions.h"
 
 
 // definitions for the window events
@@ -44,7 +44,8 @@ enum
 	tmID_WEST,
 	tmID_UP,
 	tmID_DOWN,
-	tmID_RADIOBOX
+	tmID_RADIOBOX,
+	tmID_GOBUTTON
 };
 
 class cMain : public wxFrame
@@ -58,6 +59,10 @@ public:
 
 	void CreateMenu();
 	void SetMusicVol(double dVal);
+	void ClearTitle();
+	void ClearDesc();
+	void SetTitle( std::string title);
+	void AddToDesc( std::string words);
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -87,6 +92,7 @@ private:
 	wxButton* btnU = nullptr;
 	wxButton* btnD = nullptr;
 	wxRadioBox* rbOptions = nullptr;
+	wxButton* btnGo = nullptr;
 
 	bool GameLoop();
 	bool bComplete = false;

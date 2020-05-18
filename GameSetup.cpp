@@ -19,6 +19,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "GameSetup.h"
 
+
 // various rooms
 
 #define ENTRANCE		1 
@@ -55,14 +56,23 @@ GameSetup::GameSetup()
 
 GameSetup::~GameSetup()
 {
-}
+}	
+
+//  Options for items:
+//	Eatable
+//	Drinkable
+//	Takeable
+//	Droppable
+//	Usable
+//	Talkable
+//	Killable
 
 bool GameSetup::InitFirstRun(Map& GameMap)
 {// allocates the default Items to the default rooms - called at the start of the game
-	AddInfoToMap(GameMap, "Sandwich", "A shiny tool", LIGHTWEIGHT, INNER_FOYER, Movable | Carryable | Usable | Eatable);
+	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable );
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
-	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Carryable);
+	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
 	return true;
 }
 
@@ -72,6 +82,29 @@ void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, u
 	theMap.PlaceItemInNode(*newItem, location);
 	delete newItem;
 	
+}
+
+void GameSetup::Prologue(cMain* mainWindow)
+{//  Write the story for the user
+	mainWindow->SetTitle(" Prologue ");
+	mainWindow->ClearDesc();
+	std::vector<std::string> line;
+	
+	line.push_back("It is a beautiful crisp Saturday morning, around 9:23 AM\n");
+	line.push_back("However, you have little time to admire the singing of the sparrows\n");
+	line.push_back("You have a job to do.\n\n");
+	line.push_back("You are a caretaker at the Town Hall, and today your job\n");
+	line.push_back("is to tidy up after last night's party and prepare the hall\n");
+	line.push_back("for a wedding.  Everything must be perfect!\n\n");
+	for (auto i = line.begin(); i != line.end(); i++)
+	{// print the prologue, pause between lines and accept a key input to bail out
+		mainWindow->AddToDesc(*i);
+			
+	}
+
+
+
+
 }
 
 //bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)

@@ -19,9 +19,12 @@
 //    object in cMain.cpp.  All other files can be left untouched.           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+#include "wx/wx.h"
+#include "wx/utils.h"
 #include "GameObjects.h"
 #include "MapNode.h"
 #include "map.h"
+#include "cApp.h"
 
 class GameSetup
 {// create all the items, and place them in their initial positions
@@ -38,6 +41,8 @@ public:
 	inline std::string GetIniFileName() { return IniFileName; }
 	inline std::string GetTitleFont() { return TitleFont; }
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
+	void Prologue(cMain* mainWindow);
+	void Epilogue(cMain* mainWindow);
 	//bool InitFromSavedGame(GameObjects& game, std::string fName);
 private:
 	//GameObjects* gObj = nullptr;

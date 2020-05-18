@@ -26,12 +26,11 @@ enum ItemProperty
 {
 	Eatable		= 1,
 	Drinkable	= 2,
-	Killable	= 4,
-	Movable		= 8,
-	Destroyable	= 16,
-	Carryable	= 32,
-	Usable		= 64,
-	Talkable	= 128
+	Takeable	= 4,
+	Droppable	= 8,
+	Usable		= 16,
+	Talkable	= 32,
+	Killable	= 64,
 };
 
 #define INVALID_LOCATION 65535
@@ -51,12 +50,11 @@ public:
 	// get individual properties
 	inline bool GetEdible() { return Properties & Eatable; }
 	inline bool GetDrinkable() { return Properties & Drinkable; }
-	inline bool GetKillable() { return Properties & Killable; }
-	inline bool GetMovable() { return Properties & Movable; }
-	inline bool GetDestroyable() { return Properties & Destroyable; }
-	inline bool GetCarryable() { return Properties & Carryable; }
+	inline bool GetTakeable() { return Properties & Takeable; }
+	inline bool GetDroppable() { return Properties & Droppable; }
 	inline bool GetUsable() { return Properties & Usable; }
 	inline bool GetTalkable() { return Properties & Talkable; }
+	inline bool GetKillable() { return Properties & Killable; }
 	inline std::string GetConversation() { return Conversation; }
 	inline void SetConversation(std::string conv) { Conversation = conv; }
 

@@ -16,7 +16,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "cMain.h"
-#include "Map.h"
+//#include "Map.h"
 #include "GameSetup.h"
 
 #define id_panel 100
@@ -76,7 +76,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
 
 	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
-	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(100, 100), wxSize(600, 300), wxTE_MULTILINE | wxTE_READONLY);
+	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 100), wxSize(700, 300), wxTE_MULTILINE | wxTE_CENTRE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
@@ -84,28 +84,36 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtTitle->SetFont(*fntTitle);
 	txtTitle->SetValue(wxT("Test Text"));
 
-	fntDesc = new wxFont(12, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
+	fntDesc = new wxFont(16, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 
 	txtDesc->SetFont(*fntDesc);
 
 	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
 	
-	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(575,425), wxSize(25, 25));
-	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(625, 450), wxSize(25, 25));
-	btnS = new wxButton(panel, tmID_NORTH, wxT("S"), wxPoint(575, 475), wxSize(25, 25));
-	btnW = new wxButton(panel, tmID_NORTH, wxT("W"), wxPoint(525, 450), wxSize(25, 25));
-	btnU = new wxButton(panel, tmID_UP, wxT("U"),wxPoint(672, 425), wxSize(25, 32));
-	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(672, 470), wxSize(25, 32));
+	
+	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628,425), wxSize(25, 25));
+	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 450), wxSize(25, 25));
+	btnS = new wxButton(panel, tmID_NORTH, wxT("S"), wxPoint(628, 475), wxSize(25, 25));
+	btnW = new wxButton(panel, tmID_NORTH, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
+	btnU = new wxButton(panel, tmID_UP, wxT("U"),wxPoint(725, 425), wxSize(25, 32));
+	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 470), wxSize(25, 32));
 	wxArrayString opts;
-	opts.Add(wxT("Feck"));
-	opts.Add(wxT("Arse"));
-	opts.Add(wxT("Girls"));
+	
+	opts.Add(wxT("Eat"));
 	opts.Add(wxT("Drink"));
-	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(400, 425), wxSize(50, 100),opts );
+	opts.Add(wxT("Take"));
+	opts.Add(wxT("Drop"));
+	opts.Add(wxT("Use"));
+	opts.Add(wxT("Talk"));
+	opts.Add(wxT("Destroy"));
+	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60),opts );
+
+	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&GO!"), wxPoint(100, 480), wxSize(450, 50));
 	 //Do all the map stuff
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map);
+	//gSetup->Prologue(this);
 }
 
 cMain::~cMain()
@@ -218,9 +226,30 @@ void cMain::SetMusicVol(double dVal)
 	Music->SetVolume(dVal);
 }
 
+void cMain::ClearTitle()
+{
+	txtTitle->Clear();
+}
+void cMain::ClearDesc()
+{
+	txtDesc->Clear();
+}
+
+void cMain::SetTitle(std::string title)
+{
+	ClearTitle();
+	this->txtTitle->SetValue(wxString(title));
+}
+
+void cMain::AddToDesc(std::string words)
+{
+	txtDesc->AppendText(wxString(words));
+}
+
 bool cMain::GameLoop()
 {
 	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
+
 	while (!bComplete)
 	{ // the entire game should happen here
 		wxSafeYield();

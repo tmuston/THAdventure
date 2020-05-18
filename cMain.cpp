@@ -121,6 +121,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	SetGameRunning(true);
+	Show();
 	ShowPrologue();
 }
 
@@ -212,8 +213,10 @@ void cMain::ShowPrologue()
 	{
 		wxYield();
 		txtDesc->AppendText(*i);
-		
+		wxSleep(2);
 	}
+		
+	wxSleep(6);
 	
 	txtDesc->Clear();
 }

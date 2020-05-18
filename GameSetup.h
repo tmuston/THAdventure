@@ -25,6 +25,7 @@
 #include "MapNode.h"
 #include "map.h"
 #include "cApp.h"
+//#include "cMain.h"
 
 class GameSetup
 {// create all the items, and place them in their initial positions

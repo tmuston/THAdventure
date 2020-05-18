@@ -16,7 +16,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "cMain.h"
-//#include "Map.h"
+
 #include "GameSetup.h"
 
 #define id_panel 100
@@ -33,9 +33,11 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
 	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
+	//gSetup = new GameSetup();
 	// create a wxConfig object - in this case an ini file
 	IniConfig = new wxFileConfig(wxT(""), wxT(""), (gSetup->GetIniFileName()), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
 	
@@ -113,7 +115,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map);
-	//gSetup->Prologue(this);
+	
 }
 
 cMain::~cMain()
@@ -194,6 +196,17 @@ void cMain::OnIdle(wxIdleEvent& evt)
 		// save the value to the ini file
 		IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
 	}
+	if (GetGameRunning())
+	{// this is the de facto game loop - stupid TIM!
+
+		//Get user input
+		//gSetup->Prologue(this);
+		
+	}
+	else
+	{
+		//gSetup->Prologue(this);
+	}
 	evt.Skip();
 }
 
@@ -246,14 +259,14 @@ void cMain::AddToDesc(std::string words)
 	txtDesc->AppendText(wxString(words));
 }
 
-bool cMain::GameLoop()
-{
-	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
-
-	while (!bComplete)
-	{ // the entire game should happen here
-		wxSafeYield();
-	}
-	return bComplete;
-	
-}
+//bool cMain::GameLoop()
+//{
+//	bComplete = false; // strictly speaking, doesn't need to be set false, but it makes the code more readable
+//
+//	while (!bComplete)
+//	{ // the entire game should happen here
+//	//	wxSafeYield();
+//	}
+//	return bComplete;
+//	
+//}

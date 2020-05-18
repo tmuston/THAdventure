@@ -20,12 +20,12 @@
 #include "wx/wx.h"
 #include "cMain.h"
 
-//#define TESTING
-//#ifdef TESTING
+#define TIM_TESTING
+#ifdef TIM_TESTING
 	#define NOSPLASH
 	//#define NOPROLOGUE
 	#define NOEPILOGUE
-//#endif
+#endif
 
 class cApp : public wxApp
 {

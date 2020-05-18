@@ -27,6 +27,7 @@
 #include "wx/arrstr.h"
 #include "Map.h"
 #include "SoundOptions.h"
+//#include "GameSetup.h"
 
 
 // definitions for the window events
@@ -63,12 +64,15 @@ public:
 	void ClearDesc();
 	void SetTitle( std::string title);
 	void AddToDesc( std::string words);
+	inline void SetGameRunning(bool isRunning) { GameRunning = isRunning; }
+	inline bool GetGameRunning() { return GameRunning; }
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
+	bool GameRunning;
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
 
@@ -93,8 +97,8 @@ private:
 	wxButton* btnD = nullptr;
 	wxRadioBox* rbOptions = nullptr;
 	wxButton* btnGo = nullptr;
-
-	bool GameLoop();
+	//GameSetup* gSetup = nullptr;
+	//bool GameLoop();
 	bool bComplete = false;
 	wxDECLARE_EVENT_TABLE();
 };

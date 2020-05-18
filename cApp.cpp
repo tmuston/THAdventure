@@ -14,12 +14,13 @@
 //    This file defines a wxWidgets application object.                      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#include "cApp.h"
-#include "cMain.h"
+
 #include "wx/splash.h"
 #include "wx/bitmap.h"
 #include "wx/icon.h"
 #include "GameSetup.h"
+#include "cMain.h"
+#include "cApp.h"
 
 
 wxIMPLEMENT_APP(cApp);

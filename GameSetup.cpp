@@ -74,6 +74,7 @@ bool GameSetup::InitFirstRun(Map& GameMap)
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
 	return true;
+	
 }
 
 void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
@@ -105,6 +106,10 @@ void GameSetup::Prologue(cMain* mainWindow)
 
 
 
+}
+
+void GameSetup::Epilogue(cMain* mainWindow)
+{//
 }
 
 //bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)

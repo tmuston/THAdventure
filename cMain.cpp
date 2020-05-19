@@ -115,6 +115,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	SetGameRunning(true);
+	
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
 	loopTimer->Start(30);
 }
@@ -164,7 +165,9 @@ bool cMain::MainLoop()
 		txtTitle->SetValue(CurrentMapNode.GetTitle());
 		txtDesc->SetValue(CurrentMapNode.GetDesc());
 		wxYield();
+		
 	}
+	map->GetMapNodeByID(2);
 	return false;
 }
 

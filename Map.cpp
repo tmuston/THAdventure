@@ -24,7 +24,7 @@ Map::Map()
 
 Map::Map(const Map& obj)
 {// copy constructor
-	currNode = obj.currNode;
+	NodesInMap = obj.NodesInMap;
 }
 
 Map::~Map()
@@ -34,7 +34,7 @@ Map::~Map()
 }
 void Map::Add(MapNode m)
 {
-	currNode.push_back(m);
+	NodesInMap.push_back(m);
 }
 bool Map::Replace(MapNode m)
 {// find a MapNode in the current map that has the same ID, then replace all other data with that from m
@@ -42,12 +42,12 @@ bool Map::Replace(MapNode m)
 	uint16_t FindID = m.GetID();
 	for (uint16_t i = 0; i < GetMapSize(); i++)
 	{
-		if (currNode[i].GetID() == FindID)
+		if (NodesInMap[i].GetID() == FindID)
 		{// found the right MapNode to modify
-			currNode[i].SetTitle(m.GetTitle());
-			currNode[i].SetDescription(m.GetDesc());
+			NodesInMap[i].SetTitle(m.GetTitle());
+			NodesInMap[i].SetDescription(m.GetDesc());
 			for (int j = 0; j < 6; j++)
-				currNode[i].SetExit(j, m.GetExit(j));
+				NodesInMap[i].SetExit(j, m.GetExit(j));
 			bFound = true;
 		}
 		if (bFound)
@@ -67,9 +67,9 @@ bool Map::SaveMap(std::string fName)
 		file << "THAMap\n";  // file header
 
 		// save all of the MapNodes
-		for (unsigned int i = 0; i < currNode.size(); i++)
+		for (unsigned int i = 0; i < NodesInMap.size(); i++)
 		{
-			std::string s = currNode[i].NodeToString();
+			std::string s = NodesInMap[i].NodeToString();
 			file << s;
 		}
 	}
@@ -115,19 +115,38 @@ bool Map::LoadMap(std::string fName)
 }
 
 MapNode Map::GetMapNode(uint16_t n)
-{  // needs more work - possible crash
-	return this->currNode[n];
+{  /// might crash
+	return this->NodesInMap[n];
+}
+
+MapNode* Map::GetMapNodeByID(uint16_t n)
+{
+	std::vector<MapNode>::iterator it;
+	for (it = NodesInMap.begin(); it != NodesInMap.end(); ++it)
+	{
+		uint16_t id = it->GetID();
+		if (id == n)
+		{
+			//return &it;
+			return &(*it);
+			int x = n;
+		}
+	}
+	return nullptr;
+	// not found
+	
+	
 }
 
 bool Map::PlaceItemInNode(Item& item, uint16_t n)
 {
 	bool bAnswer = false;
-	for (uint16_t i = 0; i < currNode.size(); i++)
+	for (uint16_t i = 0; i < NodesInMap.size(); i++)
 	{
-		uint16_t NodeID = currNode[i].GetID();
+		uint16_t NodeID = NodesInMap[i].GetID();
 		if (NodeID == n)
 		{//  should be at the right MapNode
-			currNode[i].AddItem(item);
+			NodesInMap[i].AddItem(item);
 			bAnswer = true;
 		}
 		if (true == bAnswer)
@@ -138,7 +157,7 @@ bool Map::PlaceItemInNode(Item& item, uint16_t n)
 
 uint16_t Map::GetMapSize()
 {
-	uint16_t size = (uint16_t)currNode.size();
+	uint16_t size = (uint16_t)NodesInMap.size();
 
 	return(size);
 }

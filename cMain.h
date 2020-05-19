@@ -105,7 +105,6 @@ private:
 	bool bComplete = false;
 	bool PrologueDone = false;
 	wxTimer* loopTimer = nullptr;
-
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;

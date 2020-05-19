@@ -33,10 +33,6 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
-	/////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////
-	//NEED A CODE REVIEW.  POSSIBLY IMPLEMENT A GAME LOOP USINF wxTIMER    //
-	/////////////////////////////////////////////////////////////////////////
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
@@ -81,7 +77,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	else
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
 
-	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(250, 20), wxSize(300, 50), wxTE_CENTRE | wxTE_READONLY);
+	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 20), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
 	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 100), wxSize(700, 300), wxTE_MULTILINE | wxTE_CENTRE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
@@ -93,8 +89,6 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	fntDesc = new wxFont(16, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 
 	txtDesc->SetFont(*fntDesc);
-
-	txtDesc->SetValue("To begin at the beginning.  It is spring, moonless night in the small town.  Starless, and Bible-black.");
 
 	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 425), wxSize(25, 25));
 	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 450), wxSize(25, 25));
@@ -121,10 +115,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	SetGameRunning(true);
-	loopTimer = new wxTimer(this,tmID_LOOPTIMER);
+	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
 	loopTimer->Start(30);
-	//Show();
-	//ShowPrologue();
 }
 
 cMain::~cMain()
@@ -161,10 +153,16 @@ void cMain::OnExit(wxCommandEvent& evt)
 
 bool cMain::MainLoop()
 {
+	txtTitle->Clear();
 	txtDesc->Clear();
+	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  | wxTE_READONLY));
 	while (GetGameRunning())
 	{//  process the entire game loop from within here.  Return true if the game is completed
-		txtDesc->AppendText(wxT("Hello from the main loop\n"));
+		if (bComplete)
+			return true;// can't have txtDesc operations when it's already been killed off
+		CurrentMapNode = map->GetMapNode(0);
+		txtTitle->SetValue(CurrentMapNode.GetTitle());
+		txtDesc->SetValue(CurrentMapNode.GetDesc());
 		wxYield();
 	}
 	return false;
@@ -227,13 +225,15 @@ void cMain::OnGameLoop(wxTimerEvent& evt)
 	if (!PrologueDone)
 	{// stop the timer, show the prologue (which takes several seconds) and then restart the timer.
 		loopTimer->Stop();
+#ifndef NOPROLOGUE
 		ShowPrologue();
+#endif
 		PrologueDone = true;
 		loopTimer->Start(30);
 		SetGameRunning(true);
 		return;
 	}
-	// if we've got this far, we don't need the timer anymore.  
+	// if we've got this far, we don't need the timer anymore.
 	// We can kill it and start the 'real' game loop
 	if (GetGameRunning())
 	{
@@ -248,14 +248,13 @@ void cMain::ShowPrologue()
 	txtTitle->SetValue(wxString("Prologue"));
 	txtDesc->Clear();
 	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
-	{
-		wxYield();
+	{//  need keypress detection, so that the prologue can be cancelled
 		txtDesc->AppendText(*i);
+		txtDesc->HideNativeCaret();
+		wxYield();
 		wxSleep(2);
 	}
-		
-	wxSleep(6);
-	
+	wxSleep(3);
 	txtDesc->Clear();
 }
 

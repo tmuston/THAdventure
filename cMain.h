@@ -29,6 +29,7 @@
 #include "Map.h"
 #include "SoundOptions.h"
 #include "GameSetup.h"
+#include "BuildOptions.h"
 
 
 // definitions for the window events
@@ -78,7 +79,7 @@ private:
 	void OnGameLoop(wxTimerEvent& evt);
 	bool GameRunning;
 	Map* map = nullptr;
-	MapNode* CurrentMapNode = nullptr;
+	MapNode CurrentMapNode;
 
 	std::string FileName = "";
 	wxPanel* panel = nullptr;

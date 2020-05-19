@@ -30,6 +30,7 @@
     <ClCompile Include="SoundOptions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildOptions.h" />
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
     <ClInclude Include="GameSetup.h" />

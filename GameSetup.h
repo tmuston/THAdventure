@@ -22,6 +22,7 @@
 #include "wx/wx.h"
 #include "wx/utils.h"
 #include "map.h"
+#include "BuildOptions.h"
 //#include "cMain.h"
 
 class GameSetup

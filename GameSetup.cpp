@@ -92,10 +92,14 @@ std::vector<std::string> GameSetup::Prologue()
 	
 	line.push_back("It is a beautiful crisp Saturday morning, around 9:23 AM\n");
 	line.push_back("However, you have little time to admire the singing of the sparrows\n");
-	line.push_back("You have a job to do.\n\n");
+	line.push_back("\nYou have a job to do.\n\n");
 	line.push_back("You are a caretaker at the Town Hall, and today your job\n");
 	line.push_back("is to tidy up after last night's party and prepare the hall\n");
-	line.push_back("for a wedding.  Everything must be perfect!\n\n");
+	line.push_back("for a wedding.  \n\nEverything must be perfect!\n\n");
+	line.push_back("First things first.  You haven't got your keyfob, so you might need get a little creative\n");
+	line.push_back("in finding a way to get into the building\n\n");
+	line.push_back("Best of luck with that.  \n\nMaybe the Tourist Information Centre can help.\n");
+
 	return line;
 }
 

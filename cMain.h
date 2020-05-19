@@ -25,6 +25,7 @@
 #include "wx/fileconf.h"
 #include "wx/font.h"
 #include "wx/arrstr.h"
+#include "wx/timer.h"
 #include "Map.h"
 #include "SoundOptions.h"
 #include "GameSetup.h"
@@ -46,7 +47,8 @@ enum
 	tmID_UP,
 	tmID_DOWN,
 	tmID_RADIOBOX,
-	tmID_GOBUTTON
+	tmID_GOBUTTON,
+	tmID_LOOPTIMER
 };
 
 class cMain : public wxFrame
@@ -66,12 +68,14 @@ public:
 	void AddToDesc( std::string words);
 	inline void SetGameRunning(bool isRunning) { GameRunning = isRunning; }
 	inline bool GetGameRunning() { return GameRunning; }
+	bool MainLoop();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
+	void OnGameLoop(wxTimerEvent& evt);
 	bool GameRunning;
 	Map* map = nullptr;
 	MapNode* CurrentMapNode = nullptr;
@@ -99,6 +103,7 @@ private:
 	void ShowPrologue();
 	bool bComplete = false;
 	bool PrologueDone = false;
+	wxTimer* loopTimer = nullptr;
 
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;

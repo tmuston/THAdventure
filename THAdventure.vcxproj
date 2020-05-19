@@ -23,6 +23,7 @@
     <ClCompile Include="cMain.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LoopTimer.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapNode.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="cMain.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="LoopTimer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapNode.h" />
     <ClInclude Include="Player.h" />

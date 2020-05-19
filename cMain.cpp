@@ -27,7 +27,7 @@ EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
 EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 EVT_IDLE(OnIdle)
-
+EVT_TIMER(tmID_LOOPTIMER, OnGameLoop)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -121,8 +121,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	SetGameRunning(true);
-	Show();
-	ShowPrologue();
+	loopTimer = new wxTimer(this,tmID_LOOPTIMER);
+	loopTimer->Start(30);
+	//Show();
+	//ShowPrologue();
 }
 
 cMain::~cMain()
@@ -143,13 +145,29 @@ cMain::~cMain()
 		delete fntTitle;
 		fntTitle = nullptr;
 	}
+	if (loopTimer != nullptr)
+	{
+		delete loopTimer;
+		loopTimer = nullptr;
+	}
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
 	bComplete = true;  // exit the game loop
-
+	loopTimer->Stop();
 	Close();
+}
+
+bool cMain::MainLoop()
+{
+	txtDesc->Clear();
+	while (GetGameRunning())
+	{//  process the entire game loop from within here.  Return true if the game is completed
+		txtDesc->AppendText(wxT("Hello from the main loop\n"));
+		wxYield();
+	}
+	return false;
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
@@ -202,6 +220,26 @@ void cMain::OnIdle(wxIdleEvent& evt)
 	}
 
 	evt.Skip();
+}
+
+void cMain::OnGameLoop(wxTimerEvent& evt)
+{
+	if (!PrologueDone)
+	{// stop the timer, show the prologue (which takes several seconds) and then restart the timer.
+		loopTimer->Stop();
+		ShowPrologue();
+		PrologueDone = true;
+		loopTimer->Start(30);
+		SetGameRunning(true);
+		return;
+	}
+	// if we've got this far, we don't need the timer anymore.  
+	// We can kill it and start the 'real' game loop
+	if (GetGameRunning())
+	{
+		loopTimer->Stop();
+		MainLoop();
+	}
 }
 
 void cMain::ShowPrologue()

@@ -157,18 +157,52 @@ bool cMain::MainLoop()
 	txtTitle->Clear();
 	txtDesc->Clear();
 	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  | wxTE_READONLY));
+	bool bRefresh = true;
 	while (GetGameRunning())
 	{//  process the entire game loop from within here.  Return true if the game is completed
-		if (bComplete)
+		if (bComplete || !bRefresh)
 			return true;// can't have txtDesc operations when it's already been killed off
-		CurrentMapNode = map->GetMapNode(0);
+		CurrentMapNode = map->GetMapNode(1);
+		EnableSelectedNavButtons(CurrentMapNode.GetAllExits());
 		txtTitle->SetValue(CurrentMapNode.GetTitle());
 		txtDesc->SetValue(CurrentMapNode.GetDesc());
+		bRefresh = false;
 		wxYield();
 		
 	}
 	map->GetMapNodeByID(2);
 	return false;
+}
+
+void cMain::DisableAllNavButtons()
+{
+	btnN->Enable(false);
+	btnE->Enable(false);
+	btnS->Enable(false);
+	btnW->Enable(false);
+	btnU->Enable(false);
+	btnD->Enable(false);
+
+}
+
+void cMain::EnableSelectedNavButtons(uint16_t buttons)
+{//  Enable only the buttons for which there is a legal exit
+	DisableAllNavButtons();
+	
+	
+	if (buttons & North)
+		btnN->Enable(true);
+	if (buttons & East)
+		btnE->Enable(true);
+	if (buttons & South)
+		btnS->Enable(true);
+	if (buttons & West)
+		btnW->Enable(true);
+	if (buttons & Up)
+		btnU->Enable(true);
+	if (buttons & Down)
+		btnD->Enable(true);
+	
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)

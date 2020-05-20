@@ -72,6 +72,7 @@ public:
 	uint16_t GetExit(int n);
 	bool SetExit(uint16_t exit, uint16_t value);
 	void SetExits(Nodes& node);
+	uint16_t GetAllExits();
 
 private:
 	std::string Title;

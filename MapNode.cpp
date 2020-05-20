@@ -86,6 +86,18 @@ void MapNode::SetExits(Nodes& node)
 	ExitIDs[5] = node.d; // Down
 }
 
+uint16_t MapNode::GetAllExits()
+{
+	uint16_t RetVal = 0;
+	
+	for (int i = 0; i < 6; i++)
+	{
+		if (ExitIDs[i] != 0)// a valid exit
+			RetVal += (uint16_t)pow(2,i);
+	}
+	return RetVal;
+}
+
 std::string MapNode::NodeToString()
 {
 	using std::string;

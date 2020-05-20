@@ -70,6 +70,8 @@ public:
 	inline void SetGameRunning(bool isRunning) { GameRunning = isRunning; }
 	inline bool GetGameRunning() { return GameRunning; }
 	bool MainLoop();
+	void DisableAllNavButtons();
+	void EnableSelectedNavButtons(uint16_t buttons);
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);

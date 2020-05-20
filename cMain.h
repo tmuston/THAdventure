@@ -79,6 +79,15 @@ private:
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
 	void OnGameLoop(wxTimerEvent& evt);
+	bool bRefresh = false;
+	// Nav button event handles
+	void OnNorth(wxCommandEvent& evt);
+	void OnEast(wxCommandEvent& evt);
+	void OnSouth(wxCommandEvent& evt);
+	void OnWest(wxCommandEvent& evt);
+	void OnUp(wxCommandEvent& evt);
+	void OnDown(wxCommandEvent& evt);
+
 	bool GameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;
@@ -107,6 +116,7 @@ private:
 	bool bComplete = false;
 	bool PrologueDone = false;
 	wxTimer* loopTimer = nullptr;
+	uint16_t CurrentRoom = 1;
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;

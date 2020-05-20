@@ -28,6 +28,13 @@ EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
 EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 EVT_IDLE(OnIdle)
 EVT_TIMER(tmID_LOOPTIMER, OnGameLoop)
+// the nav buttons
+EVT_BUTTON(tmID_NORTH, OnNorth)
+EVT_BUTTON(tmID_EAST, OnEast)
+EVT_BUTTON(tmID_SOUTH, OnSouth)
+EVT_BUTTON(tmID_WEST, OnWest)
+EVT_BUTTON(tmID_UP, OnUp)
+EVT_BUTTON(tmID_DOWN, OnDown)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -92,8 +99,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 425), wxSize(25, 25));
 	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 450), wxSize(25, 25));
-	btnS = new wxButton(panel, tmID_NORTH, wxT("S"), wxPoint(628, 475), wxSize(25, 25));
-	btnW = new wxButton(panel, tmID_NORTH, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
+	btnS = new wxButton(panel, tmID_SOUTH, wxT("S"), wxPoint(628, 475), wxSize(25, 25));
+	btnW = new wxButton(panel, tmID_WEST, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
 	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 425), wxSize(25, 32));
 	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 470), wxSize(25, 32));
 	wxArrayString opts;
@@ -115,7 +122,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	SetGameRunning(true);
-	
+	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
 	loopTimer->Start(30);
 }
@@ -156,18 +163,25 @@ bool cMain::MainLoop()
 {
 	txtTitle->Clear();
 	txtDesc->Clear();
-	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  | wxTE_READONLY));
-	bool bRefresh = true;
+	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  |  wxTE_READONLY));
+	
 	while (GetGameRunning())
 	{//  process the entire game loop from within here.  Return true if the game is completed
 		if (bComplete || !bRefresh)
-			return true;// can't have txtDesc operations when it's already been killed off
-		CurrentMapNode = map->GetMapNode(1);
-		EnableSelectedNavButtons(CurrentMapNode.GetAllExits());
-		txtTitle->SetValue(CurrentMapNode.GetTitle());
-		txtDesc->SetValue(CurrentMapNode.GetDesc());
-		bRefresh = false;
-		wxYield();
+		{
+			wxYield();
+			
+		}
+		else
+		{
+			CurrentMapNode = *(map->GetMapNodeByID(CurrentRoom));
+			EnableSelectedNavButtons(CurrentMapNode.GetAllExits());
+			txtTitle->SetValue(CurrentMapNode.GetTitle());
+			txtDesc->SetValue(CurrentMapNode.GetDesc());
+			bRefresh = false;
+			wxYield();
+			// give textual info about exits
+		}
 		
 	}
 	map->GetMapNodeByID(2);
@@ -277,6 +291,37 @@ void cMain::OnGameLoop(wxTimerEvent& evt)
 		loopTimer->Stop();
 		MainLoop();
 	}
+}
+
+void cMain::OnNorth(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(0);
+}
+void cMain::OnEast(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(1);
+}
+void cMain::OnSouth(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(2);
+}
+void cMain::OnWest(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(3);
+}
+void cMain::OnUp(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(4);
+}
+void cMain::OnDown(wxCommandEvent& evt)
+{// set bRefresh
+	bRefresh = true;
+	CurrentRoom = CurrentMapNode.GetExit(5);
 }
 
 void cMain::ShowPrologue()

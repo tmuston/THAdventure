@@ -67,7 +67,7 @@ public:
 	void ClearDesc();
 	void SetTitle( std::string title);
 	void AddToDesc( std::string words);
-	inline void SetGameRunning(bool isRunning) { GameRunning = isRunning; }
+	void SetGameRunning(bool isRunning); 
 	inline bool GetGameRunning() { return GameRunning; }
 	bool MainLoop();
 	void DisableAllNavButtons();

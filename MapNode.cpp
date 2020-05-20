@@ -98,6 +98,20 @@ uint16_t MapNode::GetAllExits()
 	return RetVal;
 }
 
+std::string MapNode::GetDesc()
+{//  This needs to replace any occurrence of <newline> with \n
+	size_t pos = 0;
+	std::string search = "<newline>";
+	std::string replace = "\n";
+	
+	while ((pos = Description.find(search, pos)) != std::string::npos)
+	{
+		Description.replace(pos, search.length(), replace);
+		pos += replace.length();
+	}
+	return Description;
+}
+
 std::string MapNode::NodeToString()
 {
 	using std::string;

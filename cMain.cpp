@@ -155,7 +155,8 @@ cMain::~cMain()
 void cMain::OnExit(wxCommandEvent& evt)
 {
 	bComplete = true;  // exit the game loop
-	loopTimer->Stop();
+	SetGameRunning(false);
+	
 	Close();
 }
 
@@ -170,7 +171,11 @@ bool cMain::MainLoop()
 		if (bComplete || !bRefresh)
 		{
 			wxYield();
-			
+			if (!GetGameRunning())
+			{//  should allow us to drop out of the main loop
+
+				return true;
+			}
 		}
 		else
 		{
@@ -181,10 +186,11 @@ bool cMain::MainLoop()
 			bRefresh = false;
 			wxYield();
 			// give textual info about exits
+			
 		}
 		
 	}
-	map->GetMapNodeByID(2);
+	
 	return false;
 }
 
@@ -387,4 +393,10 @@ void cMain::SetTitle(std::string title)
 void cMain::AddToDesc(std::string words)
 {
 	txtDesc->AppendText(wxString(words));
+}
+
+void cMain::SetGameRunning(bool isRunning)
+{
+	
+	GameRunning = isRunning;
 }

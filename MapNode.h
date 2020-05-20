@@ -65,7 +65,7 @@ public:
 	//bool Leave(Directions d);
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }
-	inline std::string GetDesc() { return Description; }
+	std::string GetDesc();
 	inline void SetTitle(std::string t) { Title = t; }
 	inline void SetDescription(std::string d) { Description = d; }
 	std::string NodeToString();

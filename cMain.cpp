@@ -85,7 +85,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
 
 	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 20), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
-	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 100), wxSize(700, 300), wxTE_MULTILINE | wxTE_CENTRE | wxTE_READONLY);
+	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 100), wxSize(700, 300), wxTE_MULTILINE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
@@ -114,7 +114,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	opts.Add(wxT("Destroy"));
 	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60), opts);
 
-	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&GO!"), wxPoint(100, 480), wxSize(450, 50));
+	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 480), wxSize(450, 50));
 	//Do all the map stuff
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());
@@ -166,28 +166,28 @@ bool cMain::MainLoop()
 	txtDesc->Clear();
 	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  |  wxTE_READONLY));
 	
-	while (GetGameRunning())
+	while ( GetGameRunning() == true)
 	{//  process the entire game loop from within here.  Return true if the game is completed
-		if (bComplete || !bRefresh)
+		if (bRefresh == true)
 		{
-			wxYield();
-			if (!GetGameRunning())
-			{//  should allow us to drop out of the main loop
-
-				return true;
-			}
-		}
-		else
-		{
+			uint16_t exits;
 			CurrentMapNode = *(map->GetMapNodeByID(CurrentRoom));
-			EnableSelectedNavButtons(CurrentMapNode.GetAllExits());
+			exits = CurrentMapNode.GetAllExits();
+			EnableSelectedNavButtons(exits);
 			txtTitle->SetValue(CurrentMapNode.GetTitle());
 			txtDesc->SetValue(CurrentMapNode.GetDesc());
 			bRefresh = false;
 			wxYield();
 			// give textual info about exits
-			
+			if (exits > 0)
+				WriteExitInfo(exits);
+
 		}
+		else  // no need to update yet
+			wxYield();
+
+		//if (GetGameRunning() == false)
+		//	return true;
 		
 	}
 	
@@ -223,6 +223,28 @@ void cMain::EnableSelectedNavButtons(uint16_t buttons)
 	if (buttons & Down)
 		btnD->Enable(true);
 	
+}
+
+void cMain::WriteExitInfo(uint16_t info)
+{// write the info on the availablr exits to txtDesc
+	// sanity check
+	if (0 == info)
+		return;
+	txtDesc->AppendText(wxT("\n\n\tAvailable exits:\n\n"));
+
+	if (info & North)
+		txtDesc->AppendText(wxT("\tNorth"));
+	if (info & South)
+		txtDesc->AppendText(wxT("\tSouth"));
+	if (info & East)
+		txtDesc->AppendText(wxT("\tEast"));
+	if (info & West)
+		txtDesc->AppendText(wxT("\tWest"));
+	if (info & Up)
+		txtDesc->AppendText(wxT("\tUp"));
+	if (info & Down)
+		txtDesc->AppendText(wxT("\tDown"));
+
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
@@ -335,11 +357,13 @@ void cMain::ShowPrologue()
 	txtTitle->Clear();
 	txtTitle->SetValue(wxString("Prologue"));
 	txtDesc->Clear();
+	DisableAllNavButtons();
 	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
 	{//  need keypress detection, so that the prologue can be cancelled
 		txtDesc->AppendText(*i);
 		txtDesc->HideNativeCaret();
 		wxYield();
+		
 		wxSleep(2);
 	}
 	wxSleep(3);

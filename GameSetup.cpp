@@ -96,7 +96,7 @@ std::vector<std::string> GameSetup::Prologue()
 	line.push_back("You are a caretaker at the Town Hall, and today your job\n");
 	line.push_back("is to tidy up after last night's party and prepare the hall\n");
 	line.push_back("for a wedding.  \n\nEverything must be perfect!\n\n");
-	line.push_back("First things first.  You haven't got your keyfob, so you might need get a little creative\n");
+	line.push_back("First things first.  You haven't got your keyfob, so you might need get a little creative ");
 	line.push_back("in finding a way to get into the building\n\n");
 	line.push_back("Best of luck with that.  \n\nMaybe the Tourist Information Centre can help.\n");
 

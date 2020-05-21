@@ -72,6 +72,7 @@ public:
 	bool MainLoop();
 	void DisableAllNavButtons();
 	void EnableSelectedNavButtons(uint16_t buttons);
+	void WriteExitInfo(uint16_t info);
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);

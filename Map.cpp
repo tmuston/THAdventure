@@ -30,7 +30,6 @@ Map::Map(const Map& obj)
 Map::~Map()
 {
 	//ZeroNodeId();
-	
 }
 void Map::Add(MapNode m)
 {
@@ -129,13 +128,10 @@ MapNode* Map::GetMapNodeByID(uint16_t n)
 		{
 			//return &it;
 			return &(*it);
-			int x = n;
 		}
 	}
 	return nullptr;
 	// not found
-	
-	
 }
 
 bool Map::PlaceItemInNode(Item& item, uint16_t n)

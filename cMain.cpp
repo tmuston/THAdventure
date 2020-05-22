@@ -451,5 +451,5 @@ void cMain::AddToDesc(std::string words)
 void cMain::SetGameRunning(bool isRunning)
 {
 	
-	GameRunning = isRunning;
+	m_bGameRunning = isRunning;
 }

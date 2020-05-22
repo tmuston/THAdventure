@@ -69,7 +69,7 @@ public:
 	void SetTitle( std::string title);
 	void AddToDesc( std::string words);
 	void SetGameRunning(bool isRunning); 
-	inline bool GetGameRunning() { return GameRunning; }
+	inline bool GetGameRunning() { return m_bGameRunning; }
 	bool MainLoop();
 	void DisableAllNavButtons();
 	void EnableSelectedNavButtons(uint16_t buttons);
@@ -92,7 +92,7 @@ private:
 	void OnUp(wxCommandEvent& evt);
 	void OnDown(wxCommandEvent& evt);
 
-	bool GameRunning;
+	bool m_bGameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;
 

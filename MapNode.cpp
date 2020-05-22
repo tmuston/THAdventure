@@ -150,6 +150,18 @@ bool MapNode::SetExit(uint16_t exit, uint16_t value)
 	return true;
 }
 
+bool MapNode::GetItems(std::vector<Item>& Items)
+{// get all the items in the node.  Return true if there are any items, false otherwise
+	if(ItemsInNode.size()  == 0 )
+		return false;
+	
+	for (std::vector<Item>::iterator it = ItemsInNode.begin(); it != ItemsInNode.end(); ++it)
+	{
+		Items.push_back(*it);
+	}
+	return true;
+}
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////////// Not member functions ////////////////////
 /////////////////////////////////////////////////////////////////////

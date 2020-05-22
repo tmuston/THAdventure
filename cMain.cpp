@@ -112,9 +112,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	opts.Add(wxT("Use"));
 	opts.Add(wxT("Talk"));
 	opts.Add(wxT("Destroy"));
-	rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60), opts);
-
+	//rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60), opts);
+	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 410), wxSize(450, 60), opts);
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 480), wxSize(450, 50));
+	btnGo->Enable(false);
 	//Do all the map stuff
 	map = new Map();
 	map->LoadMap(gSetup->GetMapName());
@@ -178,7 +179,10 @@ bool cMain::MainLoop()
 			txtDesc->SetValue(CurrentMapNode.GetDesc());
 			bRefresh = false;
 			wxYield();
+			
 			// give textual info about exits
+			if (WriteItemInfo())  // there are items
+				ProcessItems();
 			if (exits > 0)
 				WriteExitInfo(exits);
 
@@ -245,6 +249,31 @@ void cMain::WriteExitInfo(uint16_t info)
 	if (info & Down)
 		txtDesc->AppendText(wxT("\tDown"));
 
+}
+
+bool cMain::WriteItemInfo()
+{// write all the Items in the node to txtDesc - assuming any exist
+	std::vector<Item> things;
+	bool bAnyItems = CurrentMapNode.GetItems(things);
+	if (!bAnyItems)// nothing to see here
+	{
+		btnGo->Enable(false);
+		return false;
+	}
+	txtDesc->AppendText(wxT("\nThis place contains :\n"));
+	for (std::vector<Item>::iterator it = things.begin(); it != things.end(); ++it)
+	{
+		std::string s = it->GetDescription();
+		txtDesc->AppendText(s);
+		txtDesc->AppendText(wxT("\n"));
+	}
+	btnGo->Enable(true);
+	return true;
+}
+
+void cMain::ProcessItems()
+{// for the moment, do nothing.  Eventually, populate a control with various options for Items
+	
 }
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)

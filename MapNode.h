@@ -71,6 +71,7 @@ public:
 	std::string NodeToString();
 	uint16_t GetExit(int n);
 	bool SetExit(uint16_t exit, uint16_t value);
+	bool GetItems(std::vector<Item>& Items);
 	void SetExits(Nodes& node);
 	uint16_t GetAllExits();
 

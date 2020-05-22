@@ -26,6 +26,7 @@
 #include "wx/font.h"
 #include "wx/arrstr.h"
 #include "wx/timer.h"
+#include "wx/listbox.h"
 #include "Map.h"
 #include "SoundOptions.h"
 #include "GameSetup.h"
@@ -47,7 +48,7 @@ enum
 	tmID_WEST,
 	tmID_UP,
 	tmID_DOWN,
-	tmID_RADIOBOX,
+	tmID_LISTBOX,
 	tmID_GOBUTTON,
 	tmID_LOOPTIMER
 };
@@ -73,6 +74,8 @@ public:
 	void DisableAllNavButtons();
 	void EnableSelectedNavButtons(uint16_t buttons);
 	void WriteExitInfo(uint16_t info);
+	bool WriteItemInfo();
+	void ProcessItems();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -111,7 +114,8 @@ private:
 	wxButton* btnW = nullptr;
 	wxButton* btnU = nullptr;
 	wxButton* btnD = nullptr;
-	wxRadioBox* rbOptions = nullptr;
+	//wxRadioBox* rbOptions = nullptr;
+	wxListBox* lbItems = nullptr;
 	wxButton* btnGo = nullptr;
 	void ShowPrologue();
 	bool bComplete = false;

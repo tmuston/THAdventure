@@ -93,7 +93,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	txtTitle->SetFont(*fntTitle);
 	txtTitle->SetValue(wxT("Test Text"));
 
-	fntDesc = new wxFont(16, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
+	fntDesc = new wxFont(14, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 
 	txtDesc->SetFont(*fntDesc);
 
@@ -103,17 +103,11 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	btnW = new wxButton(panel, tmID_WEST, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
 	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 425), wxSize(25, 32));
 	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 470), wxSize(25, 32));
-	wxArrayString opts;
-
-	opts.Add(wxT("Eat"));
-	opts.Add(wxT("Drink"));
-	opts.Add(wxT("Take"));
-	opts.Add(wxT("Drop"));
-	opts.Add(wxT("Use"));
-	opts.Add(wxT("Talk"));
-	opts.Add(wxT("Destroy"));
-	//rbOptions = new wxRadioBox(panel, tmID_RADIOBOX, wxT("Options"), wxPoint(100, 410), wxSize(450, 60), opts);
-	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 410), wxSize(450, 60), opts);
+	
+	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 410), wxSize(450, 60));
+	lbItems->SetFont(*fntDesc);
+	lbItems->Show(false);
+	
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 480), wxSize(450, 50));
 	btnGo->Enable(false);
 	//Do all the map stuff
@@ -162,7 +156,9 @@ void cMain::OnExit(wxCommandEvent& evt)
 }
 
 bool cMain::MainLoop()
-{
+{ /////////////////////////////////////////////
+ // This function is the 'guts' of the game  /
+/////////////////////////////////////////////
 	txtTitle->Clear();
 	txtDesc->Clear();
 	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  |  wxTE_READONLY));
@@ -183,8 +179,14 @@ bool cMain::MainLoop()
 			// give textual info about exits
 			if (WriteItemInfo())  // there are items
 				ProcessItems();
+			else
+			{
+				lbItems->Clear();
+				lbItems->Show(false);  //  we don't want no steenkin listbox
+			}
 			if (exits > 0)
 				WriteExitInfo(exits);
+			
 
 		}
 		else  // no need to update yet
@@ -273,8 +275,71 @@ bool cMain::WriteItemInfo()
 
 void cMain::ProcessItems()
 {// for the moment, do nothing.  Eventually, populate a control with various options for Items
+	std::vector<Item> lItems;
+	CurrentMapNode.GetItems(lItems);
+	uint16_t uId = 0;
+	uint16_t uAction = 0;
+	std::string sItemName = "";
+	std::string sAction = "";
+	std::vector<Item>::iterator it;
+	
+	for (it = lItems.begin(); it != lItems.end(); ++it)
+	{ // get all of the item IDs
+		uId = it->GetID();
+		uAction = it->GetProperties();
+		auto tup = std::make_tuple(uId, uAction);
+		vItemInfo.push_back(tup);
+		sItemName = it->GetName(); 
+			/*Eatable = 1,
+			Drinkable = 2,
+			Takeable = 4,
+			Droppable = 8,
+			Usable = 16,
+			Talkable = 32,
+			Killable = 64,*/
+		
+		if (uAction & Eatable)
+		{
+			sAction = "Eat " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Drinkable)
+		{
+			sAction = "Drink " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Takeable)
+		{
+			sAction = "Take " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Droppable)
+		{
+			sAction = "Drop " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Usable)
+		{
+			sAction = "Use " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Talkable)
+		{
+			sAction = "Talk to  " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		if (uAction & Killable)
+		{
+			sAction = "Kill " + sItemName;
+			lbItems->AppendString(sAction);
+		}
+		
+
+	}
+	lbItems->Show(true);
 	
 }
+
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame

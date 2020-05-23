@@ -27,6 +27,7 @@
 #include "wx/arrstr.h"
 #include "wx/timer.h"
 #include "wx/listbox.h"
+#include <tuple>
 #include "Map.h"
 #include "SoundOptions.h"
 #include "GameSetup.h"
@@ -76,6 +77,7 @@ public:
 	void WriteExitInfo(uint16_t info);
 	bool WriteItemInfo();
 	void ProcessItems();
+	//bool FillActionListBox();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -122,6 +124,7 @@ private:
 	bool PrologueDone = false;
 	wxTimer* loopTimer = nullptr;
 	uint16_t CurrentRoom = 1;
+	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;

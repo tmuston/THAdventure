@@ -94,6 +94,8 @@ private:
 	void OnUp(wxCommandEvent& evt);
 	void OnDown(wxCommandEvent& evt);
 
+	void OnDoIt(wxCommandEvent& evt);
+
 	bool m_bGameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;

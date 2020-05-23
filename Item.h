@@ -35,6 +35,7 @@ enum ItemProperty
 
 #define INVALID_LOCATION 65535
 #define CARRIED_BY_PLAYER 0
+#define INVALID_ITEM 65535
 class Item
 {
 public:
@@ -47,6 +48,7 @@ public:
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
+	
 	// get individual properties
 	/*inline bool GetEdible() { return Properties & Eatable; }
 	inline bool GetDrinkable() { return Properties & Drinkable; }

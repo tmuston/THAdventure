@@ -40,6 +40,7 @@ bool Item::SetLocation(uint16_t loc)
 	return true;
 }
 
+
 bool Item::SetProperty(uint8_t prop)
 {// sets an individual property
 	if (0 == prop)

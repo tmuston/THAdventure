@@ -162,6 +162,24 @@ bool MapNode::GetItems(std::vector<Item>& Items)
 	return true;
 }
 
+uint16_t MapNode::GetItemIdFromName(std::string str)
+{// this function is passed a std::string with the command, a space and then the name
+ //  and to return the ID we need to strip the command and space, and then search for the ID
+ //  Say it quickly, and it sounds easy.
+	uint16_t item = INVALID_ITEM;  // if the item can't be found, this will get returned
+	size_t size = str.std::string::find_first_of(" ");  // finds the space after the action to be performed
+	std::string sSubstring = str.substr(size + 2);
+	for (size_t i = 0; i < ItemsInNode.size(); i++)
+	{
+		if (ItemsInNode[i].GetName() == sSubstring) //  Hurray!  We've found it
+		{
+			item = ItemsInNode[i].GetID();
+			break;
+		}
+	}
+	return item;
+}
+
 /////////////////////////////////////////////////////////////////////
 /////////////////////////// Not member functions ////////////////////
 /////////////////////////////////////////////////////////////////////

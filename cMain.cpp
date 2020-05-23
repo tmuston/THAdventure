@@ -35,6 +35,7 @@ EVT_BUTTON(tmID_SOUTH, OnSouth)
 EVT_BUTTON(tmID_WEST, OnWest)
 EVT_BUTTON(tmID_UP, OnUp)
 EVT_BUTTON(tmID_DOWN, OnDown)
+EVT_BUTTON(tmID_GOBUTTON, OnDoIt)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -191,9 +192,6 @@ bool cMain::MainLoop()
 		}
 		else  // no need to update yet
 			wxYield();
-
-		//if (GetGameRunning() == false)
-		//	return true;
 		
 	}
 	
@@ -257,8 +255,11 @@ bool cMain::WriteItemInfo()
 {// write all the Items in the node to txtDesc - assuming any exist
 	std::vector<Item> things;
 	bool bAnyItems = CurrentMapNode.GetItems(things);
+	lbItems->Clear();
+	lbItems->Show(false);
 	if (!bAnyItems)// nothing to see here
 	{
+		
 		btnGo->Enable(false);
 		return false;
 	}
@@ -274,15 +275,17 @@ bool cMain::WriteItemInfo()
 }
 
 void cMain::ProcessItems()
-{// for the moment, do nothing.  Eventually, populate a control with various options for Items
+{
 	std::vector<Item> lItems;
 	CurrentMapNode.GetItems(lItems);
 	uint16_t uId = 0;
 	uint16_t uAction = 0;
 	std::string sItemName = "";
 	std::string sAction = "";
-	std::vector<Item>::iterator it;
+	// clear out the vItemInfo vector
+	vItemInfo.clear();
 	
+	std::vector<Item>::iterator it;
 	for (it = lItems.begin(); it != lItems.end(); ++it)
 	{ // get all of the item IDs
 		uId = it->GetID();
@@ -290,13 +293,7 @@ void cMain::ProcessItems()
 		auto tup = std::make_tuple(uId, uAction);
 		vItemInfo.push_back(tup);
 		sItemName = it->GetName(); 
-			/*Eatable = 1,
-			Drinkable = 2,
-			Takeable = 4,
-			Droppable = 8,
-			Usable = 16,
-			Talkable = 32,
-			Killable = 64,*/
+			
 		
 		if (uAction & Eatable)
 		{
@@ -325,7 +322,7 @@ void cMain::ProcessItems()
 		}
 		if (uAction & Talkable)
 		{
-			sAction = "Talk to  " + sItemName;
+			sAction = "Question  " + sItemName;
 			lbItems->AppendString(sAction);
 		}
 		if (uAction & Killable)
@@ -444,6 +441,29 @@ void cMain::OnDown(wxCommandEvent& evt)
 {// set bRefresh
 	bRefresh = true;
 	CurrentRoom = CurrentMapNode.GetExit(5);
+}
+
+void cMain::OnDoIt(wxCommandEvent& evt)
+{// Do something when the 'do it' button is pressed.
+	wxString ListItem = lbItems->GetStringSelection();
+	if (ListItem == wxT(""))
+	{
+		wxMessageBox(wxT("You need to select an action from the list"), wxT("Ooops!"));
+		return;
+	}
+	//  now comes the fun part.  Figure out which action of which item to perform, and
+	// adjust Item, player and MapNode accordingly
+	uint16_t uId, uActions;
+
+	// get the ItemID from the listbox selection by nefarious means
+	uint16_t uListBoxID = CurrentMapNode.GetItemIdFromName(std::string((lbItems->GetStringSelection())));
+	for (size_t i = 0; i < vItemInfo.size(); ++i)
+	{
+		uId = std::get<0>(vItemInfo[i]);
+		uActions = std::get<1>(vItemInfo[i]);
+
+		//  need to add a means of decoding the required action from the available actions.
+	}
 }
 
 void cMain::ShowPrologue()

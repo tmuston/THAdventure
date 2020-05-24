@@ -23,6 +23,7 @@
 #include "wx/utils.h"
 #include "map.h"
 #include "BuildOptions.h"
+#include "Player.h"  // in some games, you might want to give the player some initial items - if you're a wuss
 //#include "cMain.h"
 
 class GameSetup

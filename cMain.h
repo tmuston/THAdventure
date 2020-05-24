@@ -125,6 +125,7 @@ private:
 	void ShowPrologue();
 	bool bComplete = false;
 	bool PrologueDone = false;
+	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
 	uint16_t CurrentRoom = 1;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;

@@ -30,6 +30,8 @@ public:
 
 	inline void SetWeight(uint16_t w) { weight = w; }
 	inline void SetHealth(uint16_t h) { health = h; }
+	void AddItem(const Item& item);
+	bool RemoveItem(const Item& item);
 private:
 	std::string PlayerName = "<No Name>";
 	uint16_t weight = 0;	// probably rarely used, unless you want to make a game where 

@@ -32,6 +32,7 @@
 #include "SoundOptions.h"
 #include "GameSetup.h"
 #include "BuildOptions.h"
+#include "player.h"
 
 
 // definitions for the window events

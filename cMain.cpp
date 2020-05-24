@@ -41,6 +41,7 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
@@ -124,7 +125,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 }
 
 cMain::~cMain()
-{
+{ 
 	if (map != nullptr)
 	{
 		delete map;
@@ -150,6 +151,11 @@ cMain::~cMain()
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
+	/// <summary>
+	///  This function is called when the Exit menu item is selected
+	/// </summary>
+	/// <param name="evt"> The evt reference is a requirement of the wxWidgets event system </param>
+
 	bComplete = true;  // exit the game loop
 	SetGameRunning(false);
 	
@@ -163,6 +169,8 @@ bool cMain::MainLoop()
 	txtTitle->Clear();
 	txtDesc->Clear();
 	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  |  wxTE_READONLY));
+
+	
 	
 	while ( GetGameRunning() == true)
 	{//  process the entire game loop from within here.  Return true if the game is completed
@@ -461,9 +469,10 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 	{
 		uId = std::get<0>(vItemInfo[i]);
 		uActions = std::get<1>(vItemInfo[i]);
-
-		//  need to add a means of decoding the required action from the available actions.
 	}
+		//  need to add a means of decoding the required action from the available actions.
+	   // This will involve decoding the first part of the lbItems string, checking 
+	  // that it is allowed (it should be) and then executing it.
 }
 
 void cMain::ShowPrologue()

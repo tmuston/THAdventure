@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "Player.h"
 
+
 Player::Player(std::string name)
 {// will need to checkthat some dweeb hasn't initialised name to NULL 
 	if((name != ""))
@@ -24,4 +25,29 @@ Player::Player(std::string name)
 
 Player::~Player()
 {
+}
+
+void Player::AddItem(const Item& item)
+{
+	CarriedItems.push_back(item);
+}
+
+bool Player::RemoveItem(const Item& item)
+{
+	//uint16_t id = item.GetID();
+	Item lItem = item;
+	uint16_t id = lItem.GetID();
+	// iterate through the CarriedItems vector to see if the required item is present
+	int iCount = 0;
+	std::vector<Item>::iterator it;
+	for (it = CarriedItems.begin(); it != CarriedItems.end(); ++it)
+	{
+		if (it->GetID() == id)  //  found the item to kill
+		{
+			CarriedItems.erase(CarriedItems.begin() + iCount);
+			return true;
+		}
+		iCount++;
+	}
+	return false;
 }

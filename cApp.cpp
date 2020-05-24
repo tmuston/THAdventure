@@ -22,21 +22,18 @@
 #include "cMain.h"
 #include "cApp.h"
 
-
 wxIMPLEMENT_APP(cApp);
 
-cApp::cApp()  
+cApp::cApp()
 {
 }
 
 cApp::~cApp()
 {
-	
 }
 
 bool cApp::OnInit()
 {// add a splash screen  id NOSPLASH isn't defined in cApp.h  Less of a pain during testing to not have to wait
-	
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;
@@ -48,7 +45,7 @@ bool cApp::OnInit()
 			4000, NULL, -1, wxDefaultPosition, wxDefaultSize,
 			wxBORDER_SIMPLE | wxSTAY_ON_TOP);
 	}
-	
+
 	::wxSleep(4);
 #endif
 

@@ -1,7 +1,5 @@
-#ifndef BUILDOPTS_H
-#define BUILDOPTS_H
 ///////////////////////////////////////////////////////////////////////////////
-//								  BuildOptions.h                             //
+//								  StartDialog.cpp                            //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -13,15 +11,45 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file declares the build options.                                  //
+//    This file defines the window that gets the player name                 //
 //                                                                           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+#include "StartDialog.h"
 
-#define TIM_TESTING  //  Comment this line out for production
-#ifdef TIM_TESTING
-	#define NOSPLASH
-	#define NOPROLOGUE
-	#define NOEPILOGUE
-#endif
-#endif
+wxBEGIN_EVENT_TABLE(StartDialog, wxDialog)
+
+EVT_BUTTON(wxID_OK, OnOK)
+
+wxEND_EVENT_TABLE()
+
+StartDialog::StartDialog(wxWindow* parent, wxWindowID id, const wxString& title,
+	const wxPoint& position, const wxSize& size, long style)
+	: wxDialog(parent, id, title, position, size, style)
+{//  construct a wxDialog to allow the player to enter their name
+	Centre();
+	lblBlurb = new wxStaticText(this, wxID_ANY, wxT("Please enter a player name"), wxPoint(120, 30), wxSize(150,30));
+	txtName = new wxTextCtrl(this, tmID_NAME, "", wxPoint(80,140), wxSize(240, 35), wxTE_CENTRE);
+	btnOK = new wxButton(this, wxID_OK, "&Ok", wxPoint(160, 200), wxSize(80, 35));
+	btnOK->Enable(false);
+	
+	
+}
+
+
+
+StartDialog::~StartDialog()
+{
+}
+
+wxString StartDialog::GetText()
+{
+	return Answer;
+}
+
+void StartDialog::OnOK(wxCommandEvent& evt)
+{
+	Answer = txtName->GetValue();
+	Close();
+	evt.Skip();
+}

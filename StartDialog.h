@@ -1,7 +1,5 @@
-#ifndef BUILDOPTS_H
-#define BUILDOPTS_H
 ///////////////////////////////////////////////////////////////////////////////
-//								  BuildOptions.h                             //
+//								  StartDialog.h                              //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -13,15 +11,38 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file declares the build options.                                  //
+//    This file declares the window that gets the player name                //
 //                                                                           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+#ifndef NEWGAME_H
+#define NEWGAME_H
+#include "wx/wx.h"
+#include "wx/dialog.h"
 
-#define TIM_TESTING  //  Comment this line out for production
-#ifdef TIM_TESTING
-	#define NOSPLASH
-	#define NOPROLOGUE
-	#define NOEPILOGUE
-#endif
-#endif
+enum
+{
+	tmID_NAME = 1,
+	tmID_CANCEL,
+	tmID_LOAD
+};
+class StartDialog : public wxDialog
+{
+public:
+	StartDialog(wxWindow* parent, wxWindowID id, const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxDEFAULT_DIALOG_STYLE);
+	~StartDialog();
+	wxString GetText();
+	void OnOK(wxCommandEvent& evt);
+
+private:
+	wxButton* btnOK = nullptr;
+	wxTextCtrl* txtName = nullptr;
+	wxStaticText* lblBlurb = nullptr;
+	wxString Answer = "";
+	wxDECLARE_EVENT_TABLE();
+};
+#endif  //NEWGAME_H
+

@@ -33,6 +33,8 @@
 #include "GameSetup.h"
 #include "BuildOptions.h"
 #include "player.h"
+#include "StartDialog.h"
+
 
 
 // definitions for the window events
@@ -63,6 +65,7 @@ public:
 
 	// event functions
 	void OnExit(wxCommandEvent& evt);
+	void OnNew(wxCommandEvent& evt);
 
 	void CreateMenu();
 	void SetMusicVol(double dVal);
@@ -127,6 +130,7 @@ private:
 	bool PrologueDone = false;
 	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
+	StartDialog* StartWindow = nullptr;
 	uint16_t CurrentRoom = 1;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;
 	// data for the prologue and epilogue

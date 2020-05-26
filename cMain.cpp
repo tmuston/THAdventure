@@ -15,6 +15,7 @@
 //    Application.  This is the equivalent of int main().                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+#include <filesystem>
 #include "cMain.h"
 
 #include "GameSetup.h"
@@ -22,6 +23,7 @@
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
+EVT_MENU(wxID_NEW, OnNew)  // file>exit
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
@@ -41,6 +43,12 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+
+	//if there are no save files
+	StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 300));
+	StartWindow->ShowModal();
+	StartWindow->Destroy();
+	//
 	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
@@ -63,7 +71,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 		gdMusicVolume = dReadVal;
 
 	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 600));
-	panel->SetBackgroundColour(wxColour(120, 120, 120));
+	panel->SetBackgroundColour(wxColour(120, 120, 160));
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 
 	Music->Load(gSetup->GetMusicFile());
@@ -122,6 +130,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
 	loopTimer->Start(30);
+	
 }
 
 cMain::~cMain()
@@ -151,15 +160,20 @@ cMain::~cMain()
 
 void cMain::OnExit(wxCommandEvent& evt)
 {
-	/// <summary>
-	///  This function is called when the Exit menu item is selected
-	/// </summary>
-	/// <param name="evt"> The evt reference is a requirement of the wxWidgets event system </param>
-
+	
 	bComplete = true;  // exit the game loop
 	SetGameRunning(false);
 	
 	Close();
+}
+
+void cMain::OnNew(wxCommandEvent& evt)
+{// bring up the new dialog
+	StartWindow = new StartDialog(this, wxID_ANY, "Welcome", wxDefaultPosition, wxSize(400, 300));
+	StartWindow->ShowModal();
+	StartWindow->Destroy();
+
+	// Lots of stuff needs to happen if we're here
 }
 
 bool cMain::MainLoop()
@@ -386,15 +400,17 @@ void cMain::OnWAVFinished(wxMediaEvent& evt)
 
 void cMain::OnIdle(wxIdleEvent& evt)
 {	// music volume
-	double ldMusicVolume = Music->GetVolume();
-	if (fabs(ldMusicVolume - gdMusicVolume) > 0.05)
+	if (Music != nullptr)  // stop the application from crashing if the media control hasn't yet been created
 	{
-		Music->SetVolume(gdMusicVolume);
-		// save the value to the ini file
-		IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
-		//ShowPrologue();
+		double ldMusicVolume = Music->GetVolume();
+		if (fabs(ldMusicVolume - gdMusicVolume) > 0.05)
+		{
+			Music->SetVolume(gdMusicVolume);
+			// save the value to the ini file
+			IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
+			//ShowPrologue();
+		}
 	}
-
 	evt.Skip();
 }
 

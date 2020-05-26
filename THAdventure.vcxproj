@@ -26,6 +26,7 @@
     <ClCompile Include="LoopTimer.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapNode.cpp" />
+    <ClCompile Include="OpenGameDialog.cpp" />
     <ClCompile Include="StartDialog.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SoundOptions.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="LoopTimer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapNode.h" />
+    <ClInclude Include="OpenGameDialog.h" />
     <ClInclude Include="StartDialog.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />

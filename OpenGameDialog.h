@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//								  StartDialog.h                              //
+//								  OpenGameDialog.h                           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -11,39 +11,21 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file declares the window that gets the player name                //
+//    This file declares the window that gets the saved games                //
 //                                                                           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef NEWGAME_H
-#define NEWGAME_H
-#include "wx/wx.h"
 #include "wx/dialog.h"
-
-enum
-{
-	tmID_NAME = 1,
-	tmID_CANCEL,
-	tmID_LOAD
-};
-class StartDialog : public wxDialog
+#ifndef OPENGAME_H
+#define OPENGAME_H
+class OpenGameDialog : public wxDialog
 {
 public:
-	StartDialog(wxWindow* parent, wxWindowID id, const wxString& title,
-		const wxPoint& pos = wxDefaultPosition,
+	OpenGameDialog(wxWindow* parent, wxWindowID id, const wxString& title,
+		const wxPoint& position = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxDEFAULT_DIALOG_STYLE);
-	~StartDialog();
-	wxString GetText();
-	void OnOK(wxCommandEvent& evt);
-	void OnTextChange(wxCommandEvent& evt);
-
-private:
-	wxButton* btnOK = nullptr;
-	wxTextCtrl* txtName = nullptr;
-	wxStaticText* lblBlurb = nullptr;
-	wxString Answer = "";
-	wxDECLARE_EVENT_TABLE();
+	~OpenGameDialog();
 };
-#endif  //NEWGAME_H
+#endif //OPENGAME_H
 

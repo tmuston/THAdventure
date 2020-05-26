@@ -18,7 +18,7 @@
 
 
 Player::Player(std::string name)
-{// will need to checkthat some dweeb hasn't initialised name to NULL 
+{// will need to check that some dweeb hasn't initialised name to NULL 
 	if((name != ""))
 		PlayerName = name;
 }

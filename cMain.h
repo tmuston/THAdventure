@@ -34,6 +34,7 @@
 #include "BuildOptions.h"
 #include "player.h"
 #include "StartDialog.h"
+#include "OpenGameDialog.h"
 
 
 
@@ -81,6 +82,7 @@ public:
 	void WriteExitInfo(uint16_t info);
 	bool WriteItemInfo();
 	void ProcessItems();
+	void NewOrOpen();
 	//bool FillActionListBox();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
@@ -131,6 +133,7 @@ private:
 	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
 	StartDialog* StartWindow = nullptr;
+	OpenGameDialog* OpenGameWindow = nullptr;
 	uint16_t CurrentRoom = 1;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;
 	// data for the prologue and epilogue

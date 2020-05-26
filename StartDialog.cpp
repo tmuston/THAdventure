@@ -20,7 +20,7 @@
 wxBEGIN_EVENT_TABLE(StartDialog, wxDialog)
 
 EVT_BUTTON(wxID_OK, OnOK)
-
+EVT_TEXT(tmID_NAME, OnTextChange)
 wxEND_EVENT_TABLE()
 
 StartDialog::StartDialog(wxWindow* parent, wxWindowID id, const wxString& title,
@@ -52,4 +52,12 @@ void StartDialog::OnOK(wxCommandEvent& evt)
 	Answer = txtName->GetValue();
 	Close();
 	evt.Skip();
+}
+
+void StartDialog::OnTextChange(wxCommandEvent& evt)
+{  // if there's text, enable the button
+	if (txtName->GetValue() != wxT(""))
+		btnOK->Enable(true);
+	else
+		btnOK->Enable(false);
 }

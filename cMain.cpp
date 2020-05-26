@@ -15,7 +15,7 @@
 //    Application.  This is the equivalent of int main().                    //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#include <filesystem>
+#include "wx/dir.h"
 #include "cMain.h"
 
 #include "GameSetup.h"
@@ -43,13 +43,7 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
-
-	//if there are no save files
-	StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 300));
-	StartWindow->ShowModal();
-	StartWindow->Destroy();
-	//
-	
+	NewOrOpen();  // This function also creates the player object
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
@@ -155,6 +149,11 @@ cMain::~cMain()
 	{
 		delete loopTimer;
 		loopTimer = nullptr;
+	}
+	if (player != nullptr)
+	{
+		delete player;
+		player = nullptr;
 	}
 }
 
@@ -356,6 +355,33 @@ void cMain::ProcessItems()
 
 	}
 	lbItems->Show(true);
+	
+}
+
+void cMain::NewOrOpen()
+{// If no saved games exist, ask for a player name
+ // otherwise ask which saved game to load
+ //if there are no save files
+	wxDir d(wxGetCwd());
+	wxString fName;
+	bool bTesting = d.GetFirst(&fName, wxT("*.sav"));
+	if (bTesting)
+	{
+		OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
+		OpenGameWindow->ShowModal();
+
+		//player = new Player(StartWindow->GetText().ToStdString());
+		OpenGameWindow->Destroy();
+	}
+	else // Offer the option to open an existing game
+	{
+		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 300));
+		StartWindow->ShowModal();
+
+		player = new Player(StartWindow->GetText().ToStdString());
+		StartWindow->Destroy();
+		
+	}
 	
 }
 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//								  LoopTimer.h                                //
+//								  GameState.h                                //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -11,19 +11,21 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file declares a LoopTimer object                                  //
+//    This file declares a GameState object, which is used as an area to     //         
+//    store any configuration changes as a delta from the original state     //
+//    Also handles loading and saving of game (.sav) files                   //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef LOOPTIMER_H
-#define LOOPTIMER_H
-
-#include "wx/timer.h"
-class LoopTimer : public wxTimer
-{
+#ifndef GAMESTATE_H
+#define GAMESTATE_H
+class GameState
+{// this class  handles any changes to the state of the MapNode and Item objects from
+ // their original states.  It also handles load and save.
 public:
-	void Notify();
-	void start();
-};
+	GameState();
+	~GameState();
+private:
 
-#endif  //  LOOPTIMER_H
+};
+#endif //GAMESTATE_H
 

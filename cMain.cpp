@@ -24,6 +24,7 @@
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 EVT_MENU(wxID_NEW, OnNew)  // file>exit
+EVT_MENU(wxID_SAVE, OnSave)
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
@@ -173,6 +174,13 @@ void cMain::OnNew(wxCommandEvent& evt)
 	StartWindow->Destroy();
 
 	// Lots of stuff needs to happen if we're here
+}
+
+void cMain::OnSave(wxCommandEvent& evt)
+{//save a map.  Just testing for now
+	if (map != nullptr)
+		map->SaveMap("map.sav");
+	
 }
 
 bool cMain::MainLoop()
@@ -545,7 +553,7 @@ void cMain::CreateMenu()
 	fileMenu->Append(wxID_OPEN, _T("&Open"));
 	fileMenu->AppendSeparator();
 	fileMenu->Append(wxID_SAVE, _T("&Save"));
-	fileMenu->Append(wxID_SAVEAS, _T("Save &As"));
+	
 	fileMenu->AppendSeparator();
 
 	fileMenu->Append(wxID_EXIT, _T("E&xit"));

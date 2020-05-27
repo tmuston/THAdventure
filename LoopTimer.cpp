@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  LoopTimer.cpp                              //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file defines a LoopTimer object                                   //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "LoopTimer.h"
 
 void LoopTimer::Notify()

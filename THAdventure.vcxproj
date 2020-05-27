@@ -22,6 +22,7 @@
     <ClCompile Include="cApp.cpp" />
     <ClCompile Include="cMain.cpp" />
     <ClCompile Include="GameSetup.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LoopTimer.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
     <ClInclude Include="GameSetup.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LoopTimer.h" />
     <ClInclude Include="Map.h" />
@@ -163,6 +165,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(WXWIN)\include;$(WXWIN)\include\msvc</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

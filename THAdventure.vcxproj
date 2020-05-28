@@ -47,6 +47,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SoundOptions.h" />
+    <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="THAdventure.rc" />

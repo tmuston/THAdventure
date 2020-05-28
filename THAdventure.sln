@@ -13,6 +13,9 @@ Global
 		DLL Debug|Default = DLL Debug|Default
 		DLL Debug|x64 = DLL Debug|x64
 		DLL Debug|x86 = DLL Debug|x86
+		DLL Release|Default = DLL Release|Default
+		DLL Release|x64 = DLL Release|x64
+		DLL Release|x86 = DLL Release|x86
 		Release|Default = Release|Default
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
@@ -29,6 +32,12 @@ Global
 		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Debug|x64.Build.0 = Debug|x64
 		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Debug|x86.ActiveCfg = Debug|Win32
 		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Debug|x86.Build.0 = Debug|Win32
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|Default.ActiveCfg = Release|x64
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|Default.Build.0 = Release|x64
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|x64.ActiveCfg = Release|x64
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|x64.Build.0 = Release|x64
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|x86.ActiveCfg = Release|Win32
+		{2221A24D-2A72-4B43-9430-5863C1094701}.DLL Release|x86.Build.0 = Release|Win32
 		{2221A24D-2A72-4B43-9430-5863C1094701}.Release|Default.ActiveCfg = Release|Win32
 		{2221A24D-2A72-4B43-9430-5863C1094701}.Release|x64.ActiveCfg = Release|x64
 		{2221A24D-2A72-4B43-9430-5863C1094701}.Release|x64.Build.0 = Release|x64
@@ -45,6 +54,12 @@ Global
 		Debug|Default = Debug|Default
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		DLL Debug|Default = DLL Debug|Default
+		DLL Debug|x64 = DLL Debug|x64
+		DLL Debug|x86 = DLL Debug|x86
+		DLL Release|Default = DLL Release|Default
+		DLL Release|x64 = DLL Release|x64
+		DLL Release|x86 = DLL Release|x86
 		Release|Default = Release|Default
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
@@ -53,12 +68,34 @@ Global
 		Debug|Default = Debug|Default
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		DLL Debug|Default = DLL Debug|Default
+		DLL Debug|x64 = DLL Debug|x64
+		DLL Debug|x86 = DLL Debug|x86
+		Release|Default = Release|Default
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Default = Debug|Default
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		DLL Debug|Default = DLL Debug|Default
+		DLL Debug|x64 = DLL Debug|x64
+		DLL Debug|x86 = DLL Debug|x86
 		Release|Default = Release|Default
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		DLL Debug|Default = DLL Debug|Default
+		DLL Debug|x64 = DLL Debug|x64
+		DLL Debug|x86 = DLL Debug|x86
+		Release|Default = Release|Default
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

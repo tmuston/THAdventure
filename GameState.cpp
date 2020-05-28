@@ -25,3 +25,22 @@ GameState::GameState()
 GameState::~GameState()
 {
 }
+
+bool GameState::SaveToFile(std::string fName)
+{
+	return false;
+}
+
+bool GameState::LoadFromFile(std::string fName)
+{
+	return false;
+}
+
+bool GameState::MakePlayerSection( Player& pl)
+{//  get the player name, health, weight and IDs of any carried items, and put them into a string
+ // all uint16_t data should be stored as 4 bytes of hexadecimal
+	std::stringstream stream;
+	stream << "/pl/" << pl.GetName() << std::hex << pl.GetHealth() << std::hex << pl.GetWeight() << "/pl/";
+	
+	return false;
+}

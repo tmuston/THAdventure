@@ -35,6 +35,7 @@
 #include "player.h"
 #include "StartDialog.h"
 #include "OpenGameDialog.h"
+#include "GameState.h"
 
 
 
@@ -84,6 +85,7 @@ public:
 	bool WriteItemInfo();
 	void ProcessItems();
 	void NewOrOpen();
+	inline Player* GetPlayer() { return player; }
 	//bool FillActionListBox();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);

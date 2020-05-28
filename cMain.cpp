@@ -48,6 +48,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	GameState* g = new GameState();
 	g->MakePlayerSection(*player);
+	delete g;
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;

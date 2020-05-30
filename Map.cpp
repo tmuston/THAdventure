@@ -206,3 +206,9 @@ bool Map::StringToMapNode(std::string s)
 	this->Add(node);  // Add the node to the map
 	return true;
 }
+
+std::ostream& operator<<(std::ostream& out, const Map& obj)
+{
+	
+	return out;
+}

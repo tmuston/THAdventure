@@ -21,29 +21,34 @@
 
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <vector>
 #include <sstream>
 #include "Player.h"
-#include "MapNode.h"
+
+#include "Map.h"
 
 class GameState
 {// this class  handles any changes to the state of the MapNode and Item objects from
  // their original states.  It also handles load and save.
 public:
-	GameState();
+	GameState(Player& p, Map& m);
 	~GameState();
-	bool SaveToFile(std::string fName);
+	bool SaveToFile();
 	bool LoadFromFile(std::string fName);
-	bool MakePlayerSection(Player& pl);
+	//bool MakePlayerSection(Player& pl);
+	friend std::ostream& operator << (std::ostream& out, const GameState& obj);
 private:
 	
-	bool MakeNodeSection();
-	std::string PlayerName = "";
+	//bool MakeNodeSection();
+	/*std::string PlayerName = "";
 	uint16_t PlayerWeight = 0;
 	uint16_t PlayerHealth = 0;
 	std::vector<uint16_t> PlayerItemIDs;
 	std::string PlayerSection = "";
-	std::string NodeSection = "";
+	std::string NodeSection = "";*/
+	Player* localPlayer = nullptr;
+	Map* localMap = nullptr;
 };
 #endif //GAMESTATE_H
 

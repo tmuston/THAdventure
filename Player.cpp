@@ -51,3 +51,23 @@ bool Player::RemoveItem(const Item& item)
 	}
 	return false;
 }
+std::ostream& operator << (std::ostream& out, const Player& obj)
+{
+	out << obj.PlayerName
+		<< "\n" << obj.health
+		<< "\n" << obj.weight;
+
+	size_t iCount = obj.CarriedItems.size();
+	if (iCount > 0)  // we have at least one item
+	{
+		for (size_t i = 0; i < iCount; i++)
+		{
+			Item theItem = obj.CarriedItems[i];
+			uint16_t ItemID = theItem.GetID();
+			out << "\n" << ItemID;
+		}
+	}
+	out << "\n/p\n";  // end of player section
+
+	return out;
+}

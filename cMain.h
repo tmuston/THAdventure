@@ -137,6 +137,7 @@ private:
 	wxTimer* loopTimer = nullptr;
 	StartDialog* StartWindow = nullptr;
 	OpenGameDialog* OpenGameWindow = nullptr;
+	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;
 	// data for the prologue and epilogue

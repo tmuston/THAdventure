@@ -36,9 +36,10 @@ public:
 	MapNode* GetMapNodeByID(uint16_t n);
 	bool PlaceItemInNode(Item& i, uint16_t n);
 	uint16_t GetMapSize();
-
-private:
 	std::vector<MapNode> NodesInMap;
+	friend std::ostream& operator << (std::ostream& out, const Map& obj);
+private:
+	
 	bool StringToMapNode(std::string s);
 };
 #endif //MAP_H

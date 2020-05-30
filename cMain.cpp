@@ -45,10 +45,8 @@ double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	NewOrOpen();  // This function also creates the player object 
-
-	GameState* g = new GameState();
-	g->MakePlayerSection(*player);
-	delete g;
+	map = new Map();
+	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	bool bSoundOn = true;
@@ -120,7 +118,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 480), wxSize(450, 50));
 	btnGo->Enable(false);
 	//Do all the map stuff
-	map = new Map();
+	
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map);
 	PrologueData = gSetup->Prologue();
@@ -160,6 +158,12 @@ cMain::~cMain()
 		delete player;
 		player = nullptr;
 	}
+	if (game != nullptr)
+	{
+		delete game;
+		game = nullptr;
+	}
+
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
@@ -181,10 +185,11 @@ void cMain::OnNew(wxCommandEvent& evt)
 }
 
 void cMain::OnSave(wxCommandEvent& evt)
-{//save a map.  Just testing for now
-	if (map != nullptr)
-		map->SaveMap("map.sav");
+{//save the game state 
 	
+	
+	game = new GameState(*player, *map);
+	game->SaveToFile();
 }
 
 bool cMain::MainLoop()
@@ -381,13 +386,13 @@ void cMain::NewOrOpen()
 	{
 		OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
 		OpenGameWindow->ShowModal();
-
-		//player = new Player(StartWindow->GetText().ToStdString());
+		
+		
 		OpenGameWindow->Destroy();
 	}
 	else // Offer the option to open an existing game
 	{
-		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 300));
+		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 200));
 		StartWindow->ShowModal();
 
 		player = new Player(StartWindow->GetText().ToStdString());

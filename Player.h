@@ -32,6 +32,8 @@ public:
 	inline void SetHealth(uint16_t h) { health = h; }
 	void AddItem(const Item& item);
 	bool RemoveItem(const Item& item);
+	friend std::ostream& operator << (std::ostream& out, const Player& obj);
+	
 private:
 	std::string PlayerName = "<No Name>";
 	uint16_t weight = 0;	// probably rarely used, unless you want to make a game where 

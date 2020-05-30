@@ -34,7 +34,7 @@ class GameState
 public:
 	GameState(Player& p, Map& m);
 	~GameState();
-	bool SaveToFile();
+	bool SaveToFile( uint16_t NodeID);
 	bool LoadFromFile(std::string fName);
 	//bool MakePlayerSection(Player& pl);
 	friend std::ostream& operator << (std::ostream& out, const GameState& obj);

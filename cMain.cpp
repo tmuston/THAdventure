@@ -186,10 +186,11 @@ void cMain::OnNew(wxCommandEvent& evt)
 
 void cMain::OnSave(wxCommandEvent& evt)
 {//save the game state 
-	
+	uint16_t nodeID = CurrentMapNode.GetID();
 	
 	game = new GameState(*player, *map);
-	game->SaveToFile();
+	game->SaveToFile(nodeID);
+	delete game;
 }
 
 bool cMain::MainLoop()

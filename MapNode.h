@@ -75,11 +75,12 @@ public:
 	uint16_t GetItemIdFromName(std::string str);
 	void SetExits(Nodes& node);
 	uint16_t GetAllExits();
+	std::vector<Item> ItemsInNode;	// whatever items happen to be in the room
 
 private:
 	std::string Title;
 	std::string Description;
-	std::vector<Item> ItemsInNode;	// whatever items happen to be in the room
+	
 	uint16_t ID = 0;
 	uint16_t ExitIDs[6];				// needs to be populated by the class
 										// an ID of zero indicates no exit

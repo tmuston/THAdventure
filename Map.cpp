@@ -208,7 +208,23 @@ bool Map::StringToMapNode(std::string s)
 }
 
 std::ostream& operator<<(std::ostream& out, const Map& obj)
-{
-	
+{// only need to store  item locations
+	Map tempMap = obj;
+	//uint16_t currMapNodeID = tempMap.GetMapNode();
+	uint16_t NodesInMap = tempMap.GetMapSize();
+	for (uint16_t i = 0; i < NodesInMap; i++)
+	{
+		MapNode tempNode = tempMap.GetMapNode(i);
+		size_t numItems = tempNode.ItemsInNode.size();
+		if (numItems > 0)// there are items
+		{
+			out << "\n" << tempNode.GetID();  // node id
+			for (uint16_t j = 0; j < numItems; j++)
+			{
+				out << "\t" << tempNode.ItemsInNode[j].GetID();  // items
+			}
+		}
+
+	}
 	return out;
 }

@@ -67,7 +67,7 @@ std::ostream& operator << (std::ostream& out, const Player& obj)
 			out << "\n" << ItemID;
 		}
 	}
-	out << "\n/p\n";  // end of player section
+	out << "\n/p";  // end of player section
 
 	return out;
 }

@@ -27,10 +27,11 @@ GameState::~GameState()
 {
 }
 
-bool GameState::SaveToFile()
+bool GameState::SaveToFile(uint16_t NodeID)
 {
 	std::string outfName = localPlayer->GetName() + ".sav";
 	std::ofstream outfile(outfName);
+	outfile << NodeID << "\n";
 	outfile << *localPlayer;
 	outfile << *localMap;
 	outfile.close();

@@ -133,6 +133,7 @@ private:
 	void ShowPrologue();
 	bool bComplete = false;
 	bool PrologueDone = false;
+	bool bGameSaved = false;
 	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
 	StartDialog* StartWindow = nullptr;

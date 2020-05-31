@@ -33,9 +33,11 @@ public:
 	void AddItem(const Item& item);
 	bool RemoveItem(const Item& item);
 	friend std::ostream& operator << (std::ostream& out, const Player& obj);
+	friend std::istream& operator>>(std::istream& is, Player& p);
 	
 private:
 	std::string PlayerName = "<No Name>";
+	uint16_t location;
 	uint16_t weight = 0;	// probably rarely used, unless you want to make a game where 
 							// the player can collapse a floor or similar
 	uint16_t health = 100;	// decreases over time if the player doesn't eat or drink

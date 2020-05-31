@@ -123,6 +123,20 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	gSetup->InitFirstRun(*map);
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
+
+	/// <summary>
+	/// ///////////////////////  Testing code
+	/// </summary>
+	/// <returns></returns>
+	player = new Player("Spaniel");
+	game = new GameState(*player, *map);
+	uint16_t tmpNodeID;
+	game->LoadFromFile("tim.sav", &tmpNodeID);
+	//bGameSaved = true;
+	CurrentRoom = tmpNodeID;
+	delete game;
+	game = nullptr;
+
 	SetGameRunning(true);
 	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
@@ -190,7 +204,9 @@ void cMain::OnSave(wxCommandEvent& evt)
 	
 	game = new GameState(*player, *map);
 	game->SaveToFile(nodeID);
+	bGameSaved = true;
 	delete game;
+	game = nullptr;
 }
 
 bool cMain::MainLoop()
@@ -205,8 +221,11 @@ bool cMain::MainLoop()
 	
 	while ( GetGameRunning() == true)
 	{//  process the entire game loop from within here.  Return true if the game is completed
+		
 		if (bRefresh == true)
 		{
+			if (bGameSaved == true)
+				bGameSaved = false;
 			uint16_t exits;
 			CurrentMapNode = *(map->GetMapNodeByID(CurrentRoom));
 			exits = CurrentMapNode.GetAllExits();
@@ -385,11 +404,13 @@ void cMain::NewOrOpen()
 	bool bTesting = d.GetFirst(&fName, wxT("*.sav"));
 	if (bTesting)
 	{
-		OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
+		/*OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
 		OpenGameWindow->ShowModal();
 		
 		
-		OpenGameWindow->Destroy();
+		OpenGameWindow->Destroy();*/
+
+		
 	}
 	else // Offer the option to open an existing game
 	{

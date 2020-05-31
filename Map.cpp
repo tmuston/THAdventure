@@ -218,13 +218,36 @@ std::ostream& operator<<(std::ostream& out, const Map& obj)
 		size_t numItems = tempNode.ItemsInNode.size();
 		if (numItems > 0)// there are items
 		{
-			out << "\n" << tempNode.GetID();  // node id
+			out << '\n' << tempNode.GetID();  // node id
 			for (uint16_t j = 0; j < numItems; j++)
 			{
-				out << "\t" << tempNode.ItemsInNode[j].GetID();  // items
+				out << ':' << tempNode.ItemsInNode[j].GetID();  // items
 			}
 		}
 
 	}
 	return out;
+}
+
+std::istream& operator>>(std::istream& is, Map& m)
+{
+	// firstly, remove all items from every MapNode
+	uint16_t MapSize = m.GetMapSize();
+	for (uint16_t i = 1; i < MapSize; i++)  // has to be 1, as the player is effectively Node 0
+	{// march through every MapNode and remove all items
+		MapNode tmpMapNode = m.GetMapNode(i);
+		tmpMapNode.ItemsInNode.clear();
+	}
+	//  then read the file and place the items into their respective nodes 
+	bool bDone = false;
+	while (!bDone)
+	{
+		std::vector<uint16_t> tmpItems;
+		//std::string tmpMapString;
+		uint16_t tmpMapNode;
+		is >> tmpMapNode;
+		if (is.eof())
+			bDone = true;
+	}
+	return is;
 }

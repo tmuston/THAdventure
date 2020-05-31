@@ -35,9 +35,9 @@ public:
 	GameState(Player& p, Map& m);
 	~GameState();
 	bool SaveToFile( uint16_t NodeID);
-	bool LoadFromFile(std::string fName);
+	bool LoadFromFile(std::string fName, uint16_t* nodeId);
 	//bool MakePlayerSection(Player& pl);
-	friend std::ostream& operator << (std::ostream& out, const GameState& obj);
+	//friend std::ostream& operator << (std::ostream& out, const GameState& obj);
 private:
 	
 	//bool MakeNodeSection();

@@ -31,16 +31,21 @@ bool GameState::SaveToFile(uint16_t NodeID)
 {
 	std::string outfName = localPlayer->GetName() + ".sav";
 	std::ofstream outfile(outfName);
-	outfile << NodeID << "\n";
+	outfile << NodeID << '\n';
 	outfile << *localPlayer;
 	outfile << *localMap;
 	outfile.close();
 	return false;
 }
 
-bool GameState::LoadFromFile(std::string fName)
+bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 {
-	return false;
+	std::ifstream ifs(fName);
+	ifs >> *nodeId;
+	ifs >> *localPlayer;
+	ifs >> *localMap;
+	ifs.close();
+	return true;
 }
 
 //bool GameState::MakePlayerSection( Player& pl)

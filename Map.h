@@ -38,6 +38,8 @@ public:
 	uint16_t GetMapSize();
 	std::vector<MapNode> NodesInMap;
 	friend std::ostream& operator << (std::ostream& out, const Map& obj);
+	friend std::istream& operator>>(std::istream& is, Map& m);
+	
 private:
 	
 	bool StringToMapNode(std::string s);

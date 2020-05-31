@@ -54,8 +54,8 @@ bool Player::RemoveItem(const Item& item)
 std::ostream& operator << (std::ostream& out, const Player& obj)
 {
 	out << obj.PlayerName
-		<< "\n" << obj.health
-		<< "\n" << obj.weight;
+		<< '\n' << obj.health
+		<< '\n' << obj.weight;
 
 	size_t iCount = obj.CarriedItems.size();
 	if (iCount > 0)  // we have at least one item
@@ -64,10 +64,17 @@ std::ostream& operator << (std::ostream& out, const Player& obj)
 		{
 			Item theItem = obj.CarriedItems[i];
 			uint16_t ItemID = theItem.GetID();
-			out << "\n" << ItemID;
+			out << '\n' << ItemID;
 		}
 	}
 	out << "\n/p";  // end of player section
 
 	return out;
+}
+std::istream& operator>>(std::istream& is, Player& p)
+{
+	std::string delimiter;  // this gets thrown away
+	// read in individual members of p
+	is >> p.PlayerName >> p.health >> p.weight >> delimiter;
+	return is;
 }

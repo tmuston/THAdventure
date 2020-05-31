@@ -19,6 +19,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "wx/wx.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>

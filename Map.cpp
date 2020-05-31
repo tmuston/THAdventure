@@ -224,30 +224,45 @@ std::ostream& operator<<(std::ostream& out, const Map& obj)
 				out << ':' << tempNode.ItemsInNode[j].GetID();  // items
 			}
 		}
-
 	}
 	return out;
 }
 
 std::istream& operator>>(std::istream& is, Map& m)
 {
-	// firstly, remove all items from every MapNode
-	uint16_t MapSize = m.GetMapSize();
-	for (uint16_t i = 1; i < MapSize; i++)  // has to be 1, as the player is effectively Node 0
-	{// march through every MapNode and remove all items
-		MapNode tmpMapNode = m.GetMapNode(i);
-		tmpMapNode.ItemsInNode.clear();
+	std::string tmpMapString;
+	uint16_t tmpMapNodeID;
+	std::getline(is, tmpMapString);  // the first line read is empty for some reason
+	while (std::getline(is, tmpMapString))
+	{ // break up the line and store its contents
+		size_t pos = tmpMapString.find(":");
+		std::string sub = tmpMapString.substr(0, pos);
+		tmpMapNodeID = std::stoi(sub); //  this is the MapNode
+		MapNode* newMN = m.GetMapNodeByID(tmpMapNodeID);
+		tmpMapString = tmpMapString.substr(pos + 1); // the rest of the string after the MapNode
+		size_t newpos;
+		int nItemNum = 0;
+		do
+		{
+			newpos = tmpMapString.find(":");
+			uint16_t tmpLocation;
+
+			if (newpos != std::string::npos)//  we still have more to read
+			{
+				tmpMapString = tmpMapString.substr(0,newpos); // the rest of the string
+				tmpLocation = std::stoi(tmpMapString);
+				newMN->ItemsInNode[nItemNum].SetLocation(tmpLocation);
+				tmpMapString = tmpMapString.substr(newpos);
+				nItemNum++;
+			}
+			else
+			{
+				tmpLocation = std::stoi(tmpMapString);
+				newMN->ItemsInNode[nItemNum].SetLocation(tmpLocation);
+				
+			}
+		} while (newpos != std::string::npos);
 	}
-	//  then read the file and place the items into their respective nodes 
-	bool bDone = false;
-	while (!bDone)
-	{
-		std::vector<uint16_t> tmpItems;
-		//std::string tmpMapString;
-		uint16_t tmpMapNode;
-		is >> tmpMapNode;
-		if (is.eof())
-			bDone = true;
-	}
+
 	return is;
 }

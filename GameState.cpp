@@ -41,6 +41,11 @@ bool GameState::SaveToFile(uint16_t NodeID)
 bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 {
 	std::ifstream ifs(fName);
+	if (!ifs.is_open())
+	{
+		wxMessageBox(wxT("Cannot open the file !"), wxT("Ooops!"));
+		return false;
+	}
 	ifs >> *nodeId;
 	ifs >> *localPlayer;
 	ifs >> *localMap;
@@ -48,13 +53,6 @@ bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 	return true;
 }
 
-//bool GameState::MakePlayerSection( Player& pl)
-//{//  get the player name, health, weight and IDs of any carried items, and put them into a string
-// // all uint16_t data should be stored as 4 bytes of hexadecimal
-//	std::stringstream stream;
-//	stream << "/pl/" << pl.GetName() << "/" << std::hex << std::setfill('0') << std::setw(4) << pl.GetHealth() << std::hex << std::setfill('0') << std::setw(4) << pl.GetWeight() << "/pl/";
-//	
-//	return false;
-//}
+
 
 

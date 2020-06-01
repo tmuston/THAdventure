@@ -230,38 +230,47 @@ std::ostream& operator<<(std::ostream& out, const Map& obj)
 
 std::istream& operator>>(std::istream& is, Map& m)
 {
+	std::vector<Item> tmpItems;
+	// remove every item from the map, after copying it to the tmpItems vector
+	for (uint16_t i = 1; i < m.GetMapSize(); i++)
+	{
+		bool bHasItems = false;
+		MapNode* mn = m.GetMapNodeByID(i);
+		for (uint16_t j = 0; j < mn->ItemsInNode.size(); j++)
+		{
+			bHasItems = true;
+			Item tmpI = mn->ItemsInNode[j];
+			tmpItems.push_back(tmpI);
+		}
+		if (bHasItems)
+		{  // only needed if there is at least one item in the node
+			mn->ItemsInNode.clear();
+			mn->ItemsInNode.shrink_to_fit();
+		}
+	}
+
 	std::string tmpMapString;
-	uint16_t tmpMapNodeID;
+	uint16_t tmpMapNodeID, tmpItemID;
 	std::getline(is, tmpMapString);  // the first line read is empty for some reason
 	while (std::getline(is, tmpMapString))
 	{ // break up the line and store its contents
-		size_t pos = tmpMapString.find(":");
-		std::string sub = tmpMapString.substr(0, pos);
-		tmpMapNodeID = std::stoi(sub); //  this is the MapNode
-		MapNode* newMN = m.GetMapNodeByID(tmpMapNodeID);
-		tmpMapString = tmpMapString.substr(pos + 1); // the rest of the string after the MapNode
-		size_t newpos;
-		int nItemNum = 0;
-		do
+		tmpMapNodeID = std::stoi(tmpMapString);
+		while (size_t pos = tmpMapString.find(":") != std::string::npos)
 		{
-			newpos = tmpMapString.find(":");
-			uint16_t tmpLocation;
-
-			if (newpos != std::string::npos)//  we still have more to read
+			tmpMapString = tmpMapString.substr(pos + 1);  // chop the beginning
+			tmpItemID = std::stoi(tmpMapString);
+			MapNode* mn = m.GetMapNodeByID(tmpMapNodeID);
+			std::vector<Item>::iterator it;
+			for (it = tmpItems.begin(); it != tmpItems.end(); ++it)
 			{
-				tmpMapString = tmpMapString.substr(0,newpos); // the rest of the string
-				tmpLocation = std::stoi(tmpMapString);
-				newMN->ItemsInNode[nItemNum].SetLocation(tmpLocation);
-				tmpMapString = tmpMapString.substr(newpos);
-				nItemNum++;
+				uint16_t tmpInt = it->GetID();
+				if (tmpInt == tmpItemID)
+				{
+					it->SetLocation(tmpInt);
+					mn->ItemsInNode.push_back(*it);
+				}
 			}
-			else
-			{
-				tmpLocation = std::stoi(tmpMapString);
-				newMN->ItemsInNode[nItemNum].SetLocation(tmpLocation);
-				
-			}
-		} while (newpos != std::string::npos);
+		}
 	}
 
 	return is;

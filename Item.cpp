@@ -28,6 +28,17 @@ Item::Item(std::string name, std::string desc, uint16_t weight, uint8_t props)
 	CurrentLocation = INVALID_LOCATION;  // needs to be set elsewhere in the game
 }
 
+Item::Item(const Item& i)
+{ // copy constructor
+	ID = i.ID;
+	Name = i.Name;
+	Description = i.Description;
+	Weight = i.Weight;
+	Properties = i.Properties;
+	Conversation = i.Conversation;
+	CurrentLocation = i.CurrentLocation;
+}
+
 Item::~Item()
 {// Kill 'em all
 }

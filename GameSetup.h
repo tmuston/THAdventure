@@ -35,7 +35,7 @@ public:
 	~GameSetup();
 	bool InitFirstRun(Map& GameMap, Player& GamePlayer);
 	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
-	void AddInfoToPlayer(Player& thePlayer, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
+	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline std::string GetMusicFile() { return MusicFile; }
 	inline std::string GetMapName() { return MapName; }

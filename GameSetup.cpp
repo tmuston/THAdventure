@@ -86,9 +86,11 @@ void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, u
 	
 }
 
-void GameSetup::AddInfoToPlayer(Player& thePlayer, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
+void GameSetup::AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
 {
 	Item* newItem = new Item(title, desc, weight, props);
+	// store in the map so the Item can be found when loading
+	AddInfoToMap(theMap, title, desc, weight, props); 
 	thePlayer.AddItem(*newItem);
 	delete newItem;
 }

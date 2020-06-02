@@ -67,12 +67,13 @@ GameSetup::~GameSetup()
 //	Talkable
 //	Killable
 
-bool GameSetup::InitFirstRun(Map& GameMap)
+bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 {// allocates the default Items to the default rooms - called at the start of the game
 	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable );
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
+	AddInfoToPlayer(GamePlayer, "Grand piano", "A battered old Steimway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
 	return true;
 	
 }
@@ -83,6 +84,13 @@ void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, u
 	theMap.PlaceItemInNode(*newItem, location);
 	delete newItem;
 	
+}
+
+void GameSetup::AddInfoToPlayer(Player& thePlayer, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
+{
+	Item* newItem = new Item(title, desc, weight, props);
+	thePlayer.AddItem(*newItem);
+	delete newItem;
 }
 
 std::vector<std::string> GameSetup::Prologue()

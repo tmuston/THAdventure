@@ -120,7 +120,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	//Do all the map stuff
 	
 	map->LoadMap(gSetup->GetMapName());
-	gSetup->InitFirstRun(*map);
+	gSetup->InitFirstRun(*map, *player);
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 
@@ -128,11 +128,11 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	/// ///////////////////////  Testing code
 	/// </summary>
 	/// <returns></returns>
-	player = new Player("Spaniel");
+	
 	game = new GameState(*player, *map);
 	uint16_t tmpNodeID;
 	game->LoadFromFile("tim.sav", &tmpNodeID);
-	//bGameSaved = true;
+	bGameSaved = true;
 	CurrentRoom = tmpNodeID;
 	delete game;
 	game = nullptr;
@@ -203,6 +203,7 @@ void cMain::OnSave(wxCommandEvent& evt)
 	uint16_t nodeID = CurrentMapNode.GetID();
 	
 	game = new GameState(*player, *map);
+
 	game->SaveToFile(nodeID);
 	bGameSaved = true;
 	delete game;
@@ -410,7 +411,8 @@ void cMain::NewOrOpen()
 		
 		OpenGameWindow->Destroy();*/
 
-		
+		// a bit of a hack
+		player = new Player("No-name");
 	}
 	else // Offer the option to open an existing game
 	{

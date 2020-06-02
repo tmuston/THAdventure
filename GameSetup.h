@@ -33,8 +33,9 @@ class GameSetup
 public:
 	GameSetup();
 	~GameSetup();
-	bool InitFirstRun(Map& GameMap);
+	bool InitFirstRun(Map& GameMap, Player& GamePlayer);
 	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
+	void AddInfoToPlayer(Player& thePlayer, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline std::string GetMusicFile() { return MusicFile; }
 	inline std::string GetMapName() { return MapName; }
@@ -43,9 +44,9 @@ public:
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
 	std::vector<std::string> Prologue();//  these two functions need to be re-engineered so as to not require cMain pointers
 	std::vector<std::string> Epilogue();
-	//bool InitFromSavedGame(GameObjects& game, std::string fName);
+	
 private:
-	std::string SplashImage; //  both of thses strings need to be set in the constructor
+	std::string SplashImage; 
 	std::string MusicFile;
 	std::string MapName;
 	std::string GameTitle;

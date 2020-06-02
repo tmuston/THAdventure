@@ -67,6 +67,8 @@ std::ostream& operator << (std::ostream& out, const Player& obj)
 			out << '\n' << ItemID;
 		}
 	}
+	
+
 	out << "\n/p";  // end of player section
 
 	return out;
@@ -75,6 +77,16 @@ std::istream& operator>>(std::istream& is, Player& p)
 {
 	std::string delimiter;  // this gets thrown away
 	// read in individual members of p
-	is >> p.PlayerName >> p.health >> p.weight >> delimiter;
+	is >> p.PlayerName >> p.health >> p.weight;
+		
+	is >> delimiter;  // if no carried items, will be  "/p"
+	size_t iCount = 0;
+	while (delimiter != "/p")
+	{
+		// need to somehow get the required item, check that it's not already thee, and if not, add it.
+		uint16_t ItemID;
+		is >> delimiter;
+		iCount++;
+	}
 	return is;
 }

@@ -20,6 +20,7 @@
 
 Map::Map()
 {
+	NodesInMap.reserve(20);
 }
 
 Map::Map(const Map& obj)

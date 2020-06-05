@@ -33,7 +33,10 @@ Nodes::~Nodes()
 
 MapNode::MapNode()
 {// Do nowt, as the default constructor makes no sense.
-	ID = ++NodeID;
+	/*ID = ++NodeID;
+	
+	ItemsInNode.reserve(5);*/
+
 }
 
 MapNode::MapNode(Nodes& n, std::string Caption, std::string Desc, bool won)
@@ -41,6 +44,7 @@ MapNode::MapNode(Nodes& n, std::string Caption, std::string Desc, bool won)
 	Title = Caption;
 	Description = Desc;
 	ID = ++NodeID;				// Create a unique Node ID (starting at 1)
+	ItemsInNode.reserve(5);
 	SetExits(n);
 }
 MapNode::MapNode(uint16_t id, Nodes& n, std::string Caption, std::string Desc, bool won)
@@ -49,6 +53,7 @@ MapNode::MapNode(uint16_t id, Nodes& n, std::string Caption, std::string Desc, b
 	Description = Desc;
 	ID = id;				// Create a unique Node ID (starting at 1)
 	NodeID = ID;
+	ItemsInNode.reserve(5);
 	SetExits(n);
 }
 

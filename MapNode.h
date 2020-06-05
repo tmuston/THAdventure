@@ -22,6 +22,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <array>
 #include "Item.h"
 
 static uint16_t NodeID = 0;
@@ -83,7 +84,8 @@ private:
 	std::string Description;
 	
 	uint16_t ID = 0;
-	uint16_t ExitIDs[6];				// needs to be populated by the class
+	std::array<uint16_t, 6> ExitIDs;
+	//uint16_t ExitIDs[6];				// needs to be populated by the class
 										// an ID of zero indicates no exit
 										// ExitIDs[0] = North
 										// ExitIDs[1] = East

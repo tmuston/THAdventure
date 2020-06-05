@@ -345,3 +345,6 @@ healthchecksdb
 #Fonts
 *.ttf
 *.otf
+
+## game save files
+*.sav

@@ -34,7 +34,6 @@
 #include "BuildOptions.h"
 #include "player.h"
 #include "StartDialog.h"
-#include "OpenGameDialog.h"
 #include "GameState.h"
 
 
@@ -137,7 +136,6 @@ private:
 	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
 	StartDialog* StartWindow = nullptr;
-	OpenGameDialog* OpenGameWindow = nullptr;
 	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;

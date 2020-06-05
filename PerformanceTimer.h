@@ -1,5 +1,7 @@
+#ifndef PERFORMANCETIMER_H
+#define PERFORMANCETIMER_H 
 ///////////////////////////////////////////////////////////////////////////////
-//								  OpenGameDialog.h                           //
+//					        PerformanceTimer.h                               //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -11,21 +13,19 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file declares the window that gets the saved games                //
-//                                                                           //
+//            This file declares a performance timimg class                  //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#include "wx/dialog.h"
-#ifndef OPENGAME_H
-#define OPENGAME_H
-class OpenGameDialog : public wxDialog
+#include <chrono>
+#include <iostream>
+class PerformanceTimer
 {
 public:
-	OpenGameDialog(wxWindow* parent, wxWindowID id, const wxString& title,
-		const wxPoint& position = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxDEFAULT_DIALOG_STYLE);
-	~OpenGameDialog();
+	PerformanceTimer();
+	~PerformanceTimer();
+private:
+	std::chrono::high_resolution_clock::time_point t1, t2;
+	std::chrono::duration<double> time_span;
 };
-#endif //OPENGAME_H
 
+#endif //PERFORMANCETIMER_H

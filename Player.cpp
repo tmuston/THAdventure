@@ -77,7 +77,12 @@ std::istream& operator>>(std::istream& is, Player& p)
 {
 	std::string delimiter;  // this gets thrown away
 	// read in individual members of p
-	is >> p.PlayerName >> p.health >> p.weight;
+	std::string name;
+	std::getline(is, name);  // don't understand why I always have to call Getline twice
+	std::getline(is, name);
+	//is >> p.PlayerName;
+	p.PlayerName = name;
+	is >> p.health >> p.weight;
 		
 	is >> delimiter;  // if no carried items, will be  "/p"
 	

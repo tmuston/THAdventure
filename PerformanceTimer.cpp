@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//								  OpenGameDialog.cpp                         //
+//					        PerformanceTimer.cpp                             //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
@@ -11,22 +11,21 @@
 //                                                                           //
 //    Released as open source under the GPL license (See license.txt)        //
 //                                                                           //
-//    This file defines the window that gets the saved games                 //
-//                                                                           //
+//         This file defines a performance timimg class                      //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#include "OpenGameDialog.h"
+#include "PerformanceTimer.h"
 
-OpenGameDialog::OpenGameDialog(wxWindow* parent, 
-	wxWindowID id, 
-	const wxString& title, 
-	const wxPoint& position, 
-	const wxSize& size, 
-	long style)
-	: wxDialog(parent, id, title, position, size, style)
+PerformanceTimer::PerformanceTimer()
 {
+	using namespace std::chrono;
+	t1 = high_resolution_clock::now();
 }
 
-OpenGameDialog::~OpenGameDialog()
+PerformanceTimer::~PerformanceTimer()
 {
+	using namespace std::chrono;
+	t2 = high_resolution_clock::now();
+	time_span = duration_cast<duration<double>>(t2 - t1);
+	std::cout << "It took me " << time_span.count() << " seconds.";
 }

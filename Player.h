@@ -25,6 +25,7 @@ class Player
 public:
 	Player(std::string name);
 	~Player();
+	inline void SetName(const std::string& name) { PlayerName = name; }
 	inline std::string GetName() { return PlayerName;  }
 	inline uint16_t GetWeight() { return weight; }
 	inline uint16_t GetHealth() { return health; }

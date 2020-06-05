@@ -18,6 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "GameState.h"
 
+
 GameState::GameState(Player& p, Map& m)
 {
 	localPlayer = &p;
@@ -40,6 +41,8 @@ bool GameState::SaveToFile(uint16_t NodeID)
 
 bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 {
+	
+	
 	std::ifstream ifs(fName);
 	if (!ifs.is_open())
 	{
@@ -50,6 +53,7 @@ bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 	ifs >> *localPlayer;
 	ifs >> *localMap;
 	ifs.close();
+	
 	return true;
 }
 

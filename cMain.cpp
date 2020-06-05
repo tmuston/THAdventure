@@ -20,6 +20,7 @@
 
 #include "GameSetup.h"
 
+
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
@@ -44,6 +45,7 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
+	player = new Player("");
 	map = new Map();
 	NewOrOpen();  // This function also creates the player object 
 	
@@ -125,19 +127,6 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 
-	/// <summary>
-	/// ///////////////////////  Testing code
-	/// </summary>
-	/// <returns></returns>
-	
-	game = new GameState(*player, *map);
-	uint16_t tmpNodeID;
-	game->LoadFromFile("tim.sav", &tmpNodeID);
-	bGameSaved = true;
-	CurrentRoom = tmpNodeID;
-	delete game;
-	game = nullptr;
-
 	SetGameRunning(true);
 	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
@@ -194,8 +183,10 @@ void cMain::OnNew(wxCommandEvent& evt)
 {// bring up the new dialog
 	StartWindow = new StartDialog(this, wxID_ANY, "Welcome", wxDefaultPosition, wxSize(400, 300));
 	StartWindow->ShowModal();
+	std::string PlayerName = StartWindow->GetText().ToStdString();
 	StartWindow->Destroy();
-
+	delete player;
+	player = new Player(PlayerName);
 	// Lots of stuff needs to happen if we're here
 }
 
@@ -400,27 +391,35 @@ void cMain::ProcessItems()
 void cMain::NewOrOpen()
 {// If no saved games exist, ask for a player name
  // otherwise ask which saved game to load
- //if there are no save files
-	wxDir d(wxGetCwd());
+ 	wxDir d(wxGetCwd());
 	wxString fName;
 	bool bTesting = d.GetFirst(&fName, wxT("*.sav"));
 	if(bTesting)
 	{
-		/*OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
-		OpenGameWindow->ShowModal();
-		
-		
-		OpenGameWindow->Destroy();*/
+		wxFileDialog OpenDialog(
+			this, _("Choose a saved game file to open"), wxEmptyString, wxEmptyString,
+			_("Save files (*.sav)|*.sav"),
+			wxFD_OPEN, wxDefaultPosition);
 
-		// a bit of a hack
-		player = new Player("No-name");
+		if (OpenDialog.ShowModal() == wxID_OK) // if the user clicks "Open" instead of "Cancel"
+		{
+			wxString wxFile = OpenDialog.GetPath(); // Set the Title to reflect the file open
+			game = new GameState(*player, *map);
+			uint16_t tmpNodeID;
+			game->LoadFromFile(wxFile.ToStdString(), &tmpNodeID);
+			bGameSaved = true;
+			CurrentRoom = tmpNodeID;
+			delete game;
+			game = nullptr;
+			return;
+		}
 	}
 	else // Offer the option to open an existing game
 	{
 		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 200));
 		StartWindow->ShowModal();
 
-		player = new Player(StartWindow->GetText().ToStdString());
+		player->SetName(StartWindow->GetText().ToStdString());
 		StartWindow->Destroy();
 		
 	}

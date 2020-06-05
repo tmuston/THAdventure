@@ -73,7 +73,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
-	AddInfoToPlayer(GamePlayer, "Grand piano", "A battered old Steimway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
+	AddInfoToPlayer(GamePlayer, GameMap, "Grand piano", "A battered old Steimway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
 	return true;
 	
 }
@@ -91,7 +91,7 @@ void GameSetup::AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title
 	Item* newItem = new Item(title, desc, weight, props);
 	// store in the map so the Item can be found when loading
 	AddInfoToMap(theMap, title, desc, weight, props); 
-	thePlayer.AddItem(*newItem);
+	thePlayer.AddItemID(newItem->GetID());
 	delete newItem;
 }
 

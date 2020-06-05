@@ -75,6 +75,7 @@ public:
 	uint16_t GetItemIdFromName(std::string str);
 	void SetExits(Nodes& node);
 	uint16_t GetAllExits();
+	
 	std::vector<Item> ItemsInNode;	// whatever items happen to be in the room
 
 private:

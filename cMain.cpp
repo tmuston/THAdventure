@@ -44,8 +44,9 @@ wxEND_EVENT_TABLE()
 double gdMusicVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
-	NewOrOpen();  // This function also creates the player object 
 	map = new Map();
+	NewOrOpen();  // This function also creates the player object 
+	
 	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
@@ -403,7 +404,7 @@ void cMain::NewOrOpen()
 	wxDir d(wxGetCwd());
 	wxString fName;
 	bool bTesting = d.GetFirst(&fName, wxT("*.sav"));
-	if (bTesting)
+	if(bTesting)
 	{
 		/*OpenGameWindow = new OpenGameDialog(this, wxID_ANY, "Choose a saved game", wxDefaultPosition, wxSize(400, 300));
 		OpenGameWindow->ShowModal();

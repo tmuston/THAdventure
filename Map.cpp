@@ -210,11 +210,12 @@ bool Map::StringToMapNode(std::string s)
 std::ostream& operator<<(std::ostream& out, const Map& obj)
 {// only need to store  item locations
 	Map tempMap = obj;
-	//uint16_t currMapNodeID = tempMap.GetMapNode();
 	uint16_t NodesInMap = tempMap.GetMapSize();
 	for (uint16_t i = 0; i < NodesInMap; i++)
 	{
 		MapNode tempNode = tempMap.GetMapNode(i);
+		// Get all six exits of a MapNode as one uint16_t
+		//out << '\n' << '(' << tempNode.GetAllExits() << ')';
 		size_t numItems = tempNode.ItemsInNode.size();
 		if (numItems > 0)// there are items
 		{
@@ -228,7 +229,7 @@ std::ostream& operator<<(std::ostream& out, const Map& obj)
 	return out;
 }
 
-std::istream& operator>>(std::istream& is, Map& m)
+std::istream& operator>>(std::istream& is, Map& m)  // load
 {
 	std::vector<Item> tmpItems;
 	// remove every item from the map, after copying it to the tmpItems vector
@@ -252,6 +253,7 @@ std::istream& operator>>(std::istream& is, Map& m)
 	std::string tmpMapString;
 	uint16_t tmpMapNodeID, tmpItemID;
 	std::getline(is, tmpMapString);  // the first line read is empty for some reason
+	uint16_t NodeID = 1;
 	while (std::getline(is, tmpMapString))
 	{ // break up the line and store its contents
 		tmpMapNodeID = std::stoi(tmpMapString);

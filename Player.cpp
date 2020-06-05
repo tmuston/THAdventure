@@ -19,6 +19,7 @@
 
 Player::Player(std::string name)
 {// will need to check that some dweeb hasn't initialised name to NULL 
+	
 	if((name != ""))
 		PlayerName = name;
 }
@@ -27,24 +28,23 @@ Player::~Player()
 {
 }
 
-void Player::AddItem(const Item& item)
+void Player::AddItemID(const uint16_t& itemID)
 {
-	CarriedItems.push_back(item);
+	CarriedItemIDs.push_back(itemID);
 }
 
-bool Player::RemoveItem(const Item& item)
+bool Player::RemoveItemID(const uint16_t& itemID)
 {
 	//uint16_t id = item.GetID();
-	Item lItem = item;
-	uint16_t id = lItem.GetID();
+	uint16_t id = itemID;
 	// iterate through the CarriedItems vector to see if the required item is present
 	int iCount = 0;
-	std::vector<Item>::iterator it;
-	for (it = CarriedItems.begin(); it != CarriedItems.end(); ++it)
+	std::vector<uint16_t>::iterator it;
+	for (it = CarriedItemIDs.begin(); it != CarriedItemIDs.end(); ++it)
 	{
-		if (it->GetID() == id)  //  found the item to kill
+		if (*it == id)  //  found the item to kill
 		{
-			CarriedItems.erase(CarriedItems.begin() + iCount);
+			CarriedItemIDs.erase(CarriedItemIDs.begin() + iCount);
 			return true;
 		}
 		iCount++;
@@ -57,13 +57,13 @@ std::ostream& operator << (std::ostream& out, const Player& obj)
 		<< '\n' << obj.health
 		<< '\n' << obj.weight;
 
-	size_t iCount = obj.CarriedItems.size();
+	size_t iCount = obj.CarriedItemIDs.size();
 	if (iCount > 0)  // we have at least one item
 	{
 		for (size_t i = 0; i < iCount; i++)
 		{
-			Item theItem = obj.CarriedItems[i];
-			uint16_t ItemID = theItem.GetID();
+			
+			uint16_t ItemID = obj.CarriedItemIDs[i];
 			out << '\n' << ItemID;
 		}
 	}
@@ -80,13 +80,13 @@ std::istream& operator>>(std::istream& is, Player& p)
 	is >> p.PlayerName >> p.health >> p.weight;
 		
 	is >> delimiter;  // if no carried items, will be  "/p"
-	size_t iCount = 0;
+	
 	while (delimiter != "/p")
 	{
-		// need to somehow get the required item, check that it's not already thee, and if not, add it.
-		uint16_t ItemID;
+		// need to somehow get the required item, check that it's not already there, and if not, add it.
+		uint16_t ItemID = std::stoi(delimiter);
+		p.CarriedItemIDs.push_back(ItemID);
 		is >> delimiter;
-		iCount++;
 	}
 	return is;
 }

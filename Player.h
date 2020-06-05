@@ -19,6 +19,7 @@
 #include <iostream>
 #include <vector>
 #include "Item.h"
+#include "Map.h"
 class Player
 {
 public:
@@ -30,18 +31,19 @@ public:
 
 	inline void SetWeight(uint16_t w) { weight = w; }
 	inline void SetHealth(uint16_t h) { health = h; }
-	void AddItem(const Item& item);
-	bool RemoveItem(const Item& item);
+	void AddItemID(const uint16_t& itemID);
+	bool RemoveItemID(const uint16_t& itemID);
 	friend std::ostream& operator << (std::ostream& out, const Player& obj);
 	friend std::istream& operator>>(std::istream& is, Player& p);
 	
 private:
 	std::string PlayerName = "<No Name>";
-	uint16_t location;
+	uint16_t location = 0;
 	uint16_t weight = 0;	// probably rarely used, unless you want to make a game where 
 							// the player can collapse a floor or similar
 	uint16_t health = 100;	// decreases over time if the player doesn't eat or drink
-	std::vector<Item> CarriedItems;
+	std::vector<uint16_t> CarriedItemIDs;
+	
 
 };
 #endif // PALYER_H

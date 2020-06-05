@@ -99,6 +99,8 @@ uint16_t MapNode::GetAllExits()
 	return RetVal;
 }
 
+
+
 std::string MapNode::GetDesc()
 {//  This needs to replace any occurrence of <newline> with \n
 	size_t pos = 0;

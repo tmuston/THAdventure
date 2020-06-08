@@ -27,6 +27,7 @@
 #include "wx/arrstr.h"
 #include "wx/timer.h"
 #include "wx/listbox.h"
+#include "wx/utils.h"
 #include <tuple>
 #include "Map.h"
 #include "SoundOptions.h"

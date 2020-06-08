@@ -42,7 +42,7 @@ public:
 	inline std::string GetIniFileName() { return IniFileName; }
 	inline std::string GetTitleFont() { return TitleFont; }
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
-	std::vector<std::string> Prologue();//  these two functions need to be re-engineered so as to not require cMain pointers
+	std::vector<std::string> Prologue();
 	std::vector<std::string> Epilogue();
 	
 private:

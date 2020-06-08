@@ -174,6 +174,7 @@ void cMain::OnExit(wxCommandEvent& evt)
 {
 	
 	bComplete = true;  // exit the game loop
+	PrologueDone = true;
 	SetGameRunning(false);
 	
 	Close();
@@ -411,6 +412,7 @@ void cMain::NewOrOpen()
 			CurrentRoom = tmpNodeID;
 			delete game;
 			game = nullptr;
+			PrologueDone = true;  // don't run the prologue
 			return;
 		}
 	}
@@ -563,17 +565,28 @@ void cMain::ShowPrologue()
 	txtTitle->Clear();
 	txtTitle->SetValue(wxString("Prologue"));
 	txtDesc->Clear();
+	fileMenu->Enable(wxID_EXIT, false);
 	DisableAllNavButtons();
 	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
 	{//  need keypress detection, so that the prologue can be cancelled
 		txtDesc->AppendText(*i);
 		txtDesc->HideNativeCaret();
-		wxYield();
-		
-		wxSleep(2);
+		for (int j = 0; j < 10; j++)
+		{// to make the menus a bit more responsive during the prologue
+			wxYield();
+
+			::wxMilliSleep(200);
+		}
 	}
-	wxSleep(3);
+	
+	for (int j = 0; j < 15; j++)
+	{// to make the menus a bit more responsive during the prologue
+		wxYield();
+
+		::wxMilliSleep(200);
+	}
 	txtDesc->Clear();
+	fileMenu->Enable(wxID_EXIT, true);
 }
 
 void cMain::CreateMenu()

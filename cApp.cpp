@@ -37,18 +37,23 @@ bool cApp::OnInit()
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;
-	std::unique_ptr<GameSetup> setup(new GameSetup());
+	wxSplashScreen* splash = nullptr;
+	GameSetup *setup =new GameSetup();  
 	if (bitmap.LoadFile(setup->GetSplashImage(), wxBITMAP_TYPE_PNG))
 	{
-		wxSplashScreen* splash = new wxSplashScreen(bitmap,
+		splash = new wxSplashScreen(bitmap,
 			wxSPLASH_CENTRE_ON_SCREEN | wxSPLASH_TIMEOUT,
 			4000, NULL, -1, wxDefaultPosition, wxDefaultSize,
 			wxBORDER_SIMPLE | wxSTAY_ON_TOP);
+
+
+		::wxSleep(4);
+		splash->Close(true);
+		delete splash;
+		delete setup;
 	}
-
-	::wxSleep(4);
 #endif
-
+	
 	m_frame1 = new cMain();
 
 	m_frame1->Show();

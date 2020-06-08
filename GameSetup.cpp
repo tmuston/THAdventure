@@ -99,6 +99,7 @@ std::vector<std::string> GameSetup::Prologue()
 {//  Generate the story for the user
 	
 	std::vector<std::string> line;
+	line.reserve(10);
 	
 	line.push_back("It is a beautiful crisp Saturday morning, around 9:23 AM\n");
 	line.push_back("However, you have little time to admire the singing of the sparrows\n");

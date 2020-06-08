@@ -272,7 +272,10 @@ std::istream& operator>>(std::istream& is, Map& m)  // load
 				{
 					it->SetLocation(tmpInt);
 					mn->ItemsInNode.push_back(*it);
+					
+					
 				}
+				
 			}
 		}
 	}

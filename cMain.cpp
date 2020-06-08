@@ -47,7 +47,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 {
 	player = new Player("");
 	map = new Map();
-	NewOrOpen();  // This function also creates the player object 
+	//NewOrOpen();  
 	
 	
 	SetGameRunning(false);
@@ -124,6 +124,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map, *player);
+	NewOrOpen();
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 
@@ -189,6 +190,11 @@ void cMain::OnNew(wxCommandEvent& evt)
 	delete player;
 	player = new Player(PlayerName);
 	// Lots of stuff needs to happen if we're here
+	delete map;
+	map = new Map();
+	std::unique_ptr<GameSetup> gSetup(new GameSetup);
+	map->LoadMap(gSetup->GetMapName());
+	bRefresh = true;
 }
 
 void cMain::OnSave(wxCommandEvent& evt)
@@ -210,8 +216,6 @@ bool cMain::MainLoop()
 	txtTitle->Clear();
 	txtDesc->Clear();
 	txtDesc->SetDefaultStyle(wxTextAttr(wxTE_MULTILINE  |  wxTE_READONLY));
-
-	
 	
 	while ( GetGameRunning() == true)
 	{//  process the entire game loop from within here.  Return true if the game is completed

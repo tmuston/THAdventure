@@ -62,7 +62,7 @@ public:
 	~MapNode();
 
 	bool AddItem(const Item& item);
-	bool DropItem(const Item& item);
+	bool DropItem(Item& item);
 	//bool Leave(Directions d);
 	inline uint16_t GetID() { return ID; }
 	inline std::string GetTitle() { return Title; }
@@ -74,6 +74,7 @@ public:
 	bool SetExit(uint16_t exit, uint16_t value);
 	bool GetItems(std::vector<Item>& Items);
 	uint16_t GetItemIdFromName(std::string str);
+	
 	void SetExits(Nodes& node);
 	uint16_t GetAllExits();
 	

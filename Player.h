@@ -32,6 +32,8 @@ public:
 
 	inline void SetWeight(uint16_t w) { weight = w; }
 	inline void SetHealth(uint16_t h) { health = h; }
+	void AddHealth(uint16_t h);
+	uint16_t RemoveHealth(uint16_t h);
 	void AddItemID(const uint16_t& itemID);
 	bool RemoveItemID(const uint16_t& itemID);
 	friend std::ostream& operator << (std::ostream& out, const Player& obj);

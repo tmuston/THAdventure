@@ -73,7 +73,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
-	AddInfoToPlayer(GamePlayer, GameMap, "Grand piano", "A battered old Steimway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
+	AddInfoToPlayer(GamePlayer, GameMap, "Grand piano", "A battered old Steinway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
 	return true;
 	
 }

@@ -77,8 +77,16 @@ bool MapNode::AddItem(const Item& item)
 	return true;
 }
 
-bool MapNode::DropItem(const Item& item)
+bool MapNode::DropItem(Item& item)
 {// remove an item, and leave it in the current room
+	for (std::vector<Item>::iterator it = ItemsInNode.begin(); it != ItemsInNode.end(); ++it)
+	{
+		if (it->GetID() == item.GetID())
+		{
+			ItemsInNode.erase(it);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -176,7 +184,7 @@ uint16_t MapNode::GetItemIdFromName(std::string str)
  //  Say it quickly, and it sounds easy.
 	uint16_t item = INVALID_ITEM;  // if the item can't be found, this will get returned
 	size_t size = str.std::string::find_first_of(" ");  // finds the space after the action to be performed
-	std::string sSubstring = str.substr(size + 2);
+	std::string sSubstring = str.substr(size + 1);
 	for (size_t i = 0; i < ItemsInNode.size(); i++)
 	{
 		if (ItemsInNode[i].GetName() == sSubstring) //  Hurray!  We've found it
@@ -187,6 +195,8 @@ uint16_t MapNode::GetItemIdFromName(std::string str)
 	}
 	return item;
 }
+
+
 
 /////////////////////////////////////////////////////////////////////
 /////////////////////////// Not member functions ////////////////////

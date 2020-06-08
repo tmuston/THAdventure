@@ -48,6 +48,7 @@ bool Map::Replace(MapNode m)
 			NodesInMap[i].SetDescription(m.GetDesc());
 			for (int j = 0; j < 6; j++)
 				NodesInMap[i].SetExit(j, m.GetExit(j));
+			NodesInMap[i].ItemsInNode = m.ItemsInNode;
 			bFound = true;
 		}
 		if (bFound)

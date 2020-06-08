@@ -49,15 +49,7 @@ public:
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
-	
-	// get individual properties
-	/*inline bool GetEdible() { return Properties & Eatable; }
-	inline bool GetDrinkable() { return Properties & Drinkable; }
-	inline bool GetTakeable() { return Properties & Takeable; }
-	inline bool GetDroppable() { return Properties & Droppable; }
-	inline bool GetUsable() { return Properties & Usable; }
-	inline bool GetTalkable() { return Properties & Talkable; }
-	inline bool GetKillable() { return Properties & Killable; }*/
+		
 	inline std::string GetConversation() { return Conversation; }
 	inline void SetConversation(std::string conv) { Conversation = conv; }
 

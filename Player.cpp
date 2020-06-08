@@ -28,6 +28,22 @@ Player::~Player()
 {
 }
 
+
+
+void Player::AddHealth(uint16_t h)
+{
+	if (health < 100)  // maximum
+		health += h;
+	if (health > 100)
+		health = 100; // so health can never exceed 100
+}
+
+uint16_t Player::RemoveHealth(uint16_t h)
+{
+	health -= h;
+	return health; // so that the caller can check if we're dead
+}
+
 void Player::AddItemID(const uint16_t& itemID)
 {
 	CarriedItemIDs.push_back(itemID);

@@ -104,7 +104,8 @@ private:
 	void OnDown(wxCommandEvent& evt);
 
 	void OnDoIt(wxCommandEvent& evt);
-
+	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
+	void ShowPrologue();
 	bool m_bGameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;
@@ -127,10 +128,9 @@ private:
 	wxButton* btnW = nullptr;
 	wxButton* btnU = nullptr;
 	wxButton* btnD = nullptr;
-	//wxRadioBox* rbOptions = nullptr;
 	wxListBox* lbItems = nullptr;
 	wxButton* btnGo = nullptr;
-	void ShowPrologue();
+	
 	bool bComplete = false;
 	bool PrologueDone = false;
 	bool bGameSaved = false;

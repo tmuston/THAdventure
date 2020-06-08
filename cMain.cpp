@@ -374,7 +374,7 @@ void cMain::ProcessItems()
 		}
 		if (uAction & Talkable)
 		{
-			sAction = "Question  " + sItemName;
+			sAction = "Question " + sItemName;
 			lbItems->AppendString(sAction);
 		}
 		if (uAction & Killable)
@@ -536,6 +536,15 @@ void cMain::OnDown(wxCommandEvent& evt)
 	CurrentRoom = CurrentMapNode.GetExit(5);
 }
 
+
+//Eatable = 1,
+//Drinkable = 2,
+//Takeable = 4,
+//Droppable = 8,
+//Usable = 16,
+//Talkable = 32,
+//Killable = 64,
+
 void cMain::OnDoIt(wxCommandEvent& evt)
 {// Do something when the 'do it' button is pressed.
 	wxString ListItem = lbItems->GetStringSelection();
@@ -546,18 +555,99 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 	}
 	//  now comes the fun part.  Figure out which action of which item to perform, and
 	// adjust Item, player and MapNode accordingly
-	uint16_t uId, uActions;
+	uint16_t uId =0, uActions =0;
 
 	// get the ItemID from the listbox selection by nefarious means
 	uint16_t uListBoxID = CurrentMapNode.GetItemIdFromName(std::string((lbItems->GetStringSelection())));
 	for (size_t i = 0; i < vItemInfo.size(); ++i)
 	{
 		uId = std::get<0>(vItemInfo[i]);
-		uActions = std::get<1>(vItemInfo[i]);
+		if (uId == uListBoxID)
+		{
+			uActions = std::get<1>(vItemInfo[i]);  // available actions
+			break;
+		}
 	}
 		//  need to add a means of decoding the required action from the available actions.
-	   // This will involve decoding the first part of the lbItems string, checking 
-	  // that it is allowed (it should be) and then executing it.
+	   // This will involve using the first part of the lbItems string and then executing it.
+	std::string ActionString = ListItem.ToStdString();
+	size_t len = ActionString.std::string::find_first_of(" ");
+	ActionString = ActionString.substr(0, len);
+	ProcessItemAction(uId, ActionString, uActions);
+
+	evt.Skip();
+}
+
+bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions)
+{  // process the item given by ID with the action mentioned in action_string 
+   // if that action is allowed for that item
+	//Item theItem = CurrentMapNode.ItemsInNode[id];
+
+	uint16_t tmpAction = 0;
+	if (action_string == "Eat")
+		tmpAction = Eatable; //1
+	else
+	if(action_string == "Drink")
+		tmpAction = Drinkable;  //2
+	else
+	if (action_string == "Take")
+		tmpAction = Takeable; //4
+	else
+	if (action_string == "Drop")
+		tmpAction = Droppable;  //8
+	else
+	if (action_string == "Use")
+		tmpAction = Usable;  //16
+	else
+	if (action_string == "Question")
+		tmpAction = Talkable; //32
+	else
+	if (action_string == "Kill")
+		tmpAction = Killable;  //64
+
+	if (tmpAction & possible_actions)
+	{//  Now we have the Item ID and the action.  
+		id--;  // because the ID is always 1 more than the vector index
+		switch (tmpAction)
+		{
+		case Eatable:// remove from MapNode and increment health
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			map->Replace(CurrentMapNode);
+			player->AddHealth(10);
+			// need to set health
+			break;
+		
+		case Drinkable:
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			map->Replace(CurrentMapNode);
+			player->AddHealth(20);
+			break;
+		case Takeable:
+			break;
+		case Droppable:
+			break;
+		case Usable:
+			break;
+		case Talkable:
+			break;
+		case Killable:
+			// add some dialogue here
+			// battles can be tiring.  Remove some health
+			player->RemoveHealth(15);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			map->Replace(CurrentMapNode);
+			break;
+		default: //should never happen
+			wxMessageBox("Invalid Item option", "This is embarrassing");
+			break;
+		}
+		
+	}
+	else 
+		return false;
+	// update the grid
+	bRefresh = true;
+	return true;
 }
 
 void cMain::ShowPrologue()

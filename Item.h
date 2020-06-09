@@ -36,6 +36,7 @@ enum ItemProperty
 #define INVALID_LOCATION 65535
 #define CARRIED_BY_PLAYER 0
 #define INVALID_ITEM 65535
+void ZeroItemID();
 class Item
 {
 public:

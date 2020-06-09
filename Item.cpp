@@ -59,3 +59,8 @@ bool Item::SetProperty(uint8_t prop)
 	Properties = Properties | prop;
 	return true;
 }
+
+void ZeroItemID()
+{
+	ItemID = 0;
+}

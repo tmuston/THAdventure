@@ -194,6 +194,13 @@ void cMain::OnNew(wxCommandEvent& evt)
 	map = new Map();
 	std::unique_ptr<GameSetup> gSetup(new GameSetup);
 	map->LoadMap(gSetup->GetMapName());
+	vItemInfo.clear();
+	ZeroItemID();
+	gSetup->InitFirstRun(*map, *player);
+	
+
+	CurrentRoom = 1;
+	
 	bRefresh = true;
 }
 
@@ -417,6 +424,7 @@ void cMain::NewOrOpen()
 			delete game;
 			game = nullptr;
 			PrologueDone = true;  // don't run the prologue
+			bRefresh = true;
 			return;
 		}
 	}
@@ -481,7 +489,7 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			Music->SetVolume(gdMusicVolume);
 			// save the value to the ini file
 			IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
-			//ShowPrologue();
+			
 		}
 	}
 	evt.Skip();
@@ -627,6 +635,11 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			player->AddHealth(20);
 			break;
 		case Takeable:
+			
+			player->AddItemID(id);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			map->Replace(CurrentMapNode);
+			//  ignoring weight at the moment
 			break;
 		case Droppable:
 			break;

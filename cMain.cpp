@@ -561,7 +561,7 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 {// Do something when the 'do it' button is pressed.
 	wxString ListItem = lbItems->GetStringSelection();
 	if (ListItem == wxT(""))
-	{
+	{ // this code should never fire
 		wxMessageBox(wxT("You need to select an action from the list"), wxT("Ooops!"));
 		return;
 	}
@@ -580,8 +580,7 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 			break;
 		}
 	}
-		//  need to add a means of decoding the required action from the available actions.
-	   // This will involve using the first part of the lbItems string and then executing it.
+		
 	std::string ActionString = ListItem.ToStdString();
 	size_t len = ActionString.std::string::find_first_of(" ");
 	ActionString = ActionString.substr(0, len);
@@ -617,41 +616,58 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 	if (action_string == "Kill")
 		tmpAction = Killable;  //64
 
+	uint16_t theItemID = 0;
+	// find the item that has the correct ID
+	std::vector<Item>::iterator it;
+	uint16_t found = 0;
+	for (it = CurrentMapNode.ItemsInNode.begin(); it != CurrentMapNode.ItemsInNode.end(); ++it)
+	{
+		uint16_t x = CurrentMapNode.ItemsInNode[found].GetID();
+		if (x == id)
+		{
+			break;
+		}
+		found++;
+	}
+
 	if (tmpAction & possible_actions)
 	{//  Now we have the Item ID and the action.  
-		id--;  // because the ID is always 1 more than the vector index
+				
+		std::string conv;
 		switch (tmpAction)
 		{
 		case Eatable:// remove from MapNode and increment health
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			map->Replace(CurrentMapNode);
 			player->AddHealth(10);
 			// need to set health
 			break;
 		
 		case Drinkable:
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
 			break;
 		case Takeable:
 			
 			player->AddItemID(id);
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			map->Replace(CurrentMapNode);
 			//  ignoring weight at the moment
 			break;
 		case Droppable:
 			break;
 		case Usable:
+			
 			break;
 		case Talkable:
+			conv = CurrentMapNode.ItemsInNode[found].GetConversation();
 			break;
 		case Killable:
 			// add some dialogue here
 			// battles can be tiring.  Remove some health
 			player->RemoveHealth(15);
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[id]);
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			map->Replace(CurrentMapNode);
 			break;
 		default: //should never happen

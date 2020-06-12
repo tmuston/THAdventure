@@ -136,13 +136,13 @@ MapNode* Map::GetMapNodeByID(uint16_t n)
 	// not found
 }
 
-bool Map::PlaceItemInNode(Item& item, uint16_t n)
+bool Map::PlaceItemInNode(Item& item, uint16_t node)
 {
 	bool bAnswer = false;
 	for (uint16_t i = 0; i < NodesInMap.size(); i++)
 	{
 		uint16_t NodeID = NodesInMap[i].GetID();
-		if (NodeID == n)
+		if (NodeID == node)
 		{//  should be at the right MapNode
 			NodesInMap[i].AddItem(item);
 			bAnswer = true;

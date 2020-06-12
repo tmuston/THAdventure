@@ -34,7 +34,7 @@ public:
 	bool LoadMap(std::string fName);
 	MapNode GetMapNode(uint16_t n);
 	MapNode* GetMapNodeByID(uint16_t n);
-	bool PlaceItemInNode(Item& i, uint16_t n);
+	bool PlaceItemInNode(Item& i, uint16_t node);
 	uint16_t GetMapSize();
 	std::vector<MapNode> NodesInMap;
 	friend std::ostream& operator << (std::ostream& out, const Map& obj);

@@ -101,12 +101,18 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
 	fntTitle->SetFaceName(gSetup->GetTitleFaceName());
 	txtTitle->SetFont(*fntTitle);
-	txtTitle->SetValue(wxT("Test Text"));
-
+	//txtTitle->SetValue(wxT("Test Text"));
+	
 	fntDesc = new wxFont(14, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 
 	txtDesc->SetFont(*fntDesc);
+	// player stuff
 
+	box = new wxStaticBox(panel, wxID_ANY, "Player information", wxPoint(50, 340), wxSize(700, 80));
+	lblPlayerName = new wxStaticText(panel, tmID_PLAYERNAME, wxT("Player Name:"), wxPoint(90, 360), wxSize(100, 20));
+	lblPlayerHealth = new wxStaticText(panel, tmID_PLAYERHEALTH, wxT("Player Health:"), wxPoint(90, 380), wxSize(100, 20));
+	btnPlayer = new wxButton(panel, tmID_PLAYERBUTTON, wxT("Do it!"), wxPoint(630, 360), wxSize(100, 40));
+	lbPlayerItems = new wxListBox(panel, tmID_PLAYERLISTBOX, wxPoint(250,360), wxSize(370,50));
 	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 435), wxSize(25, 25));
 	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 460), wxSize(25, 25));
 	btnS = new wxButton(panel, tmID_SOUTH, wxT("S"), wxPoint(628, 485), wxSize(25, 25));
@@ -117,14 +123,20 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 430), wxSize(450, 50));
 	lbItems->SetFont(*fntDesc);
 	lbItems->Show(false);
+	lbPlayerItems->Show(false);
+	btnPlayer->Enable(false);
 	
-	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 490), wxSize(450, 40));
+	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("Do it!"), wxPoint(100, 490), wxSize(450, 40));
 	btnGo->Enable(false);
 	//Do all the map stuff
-	
+	 
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map, *player);
 	NewOrOpen();
+	wxString NameText = "Player Name: " + player->GetName();
+	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
+	lblPlayerName->SetLabelText(NameText);
+	lblPlayerHealth->SetLabelText(HealthText);
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 
@@ -198,7 +210,10 @@ void cMain::OnNew(wxCommandEvent& evt)
 	ZeroItemID();
 	gSetup->InitFirstRun(*map, *player);
 	
-
+	wxString NameText = "Player Name: " + player->GetName();
+	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
+	lblPlayerName->SetLabelText(NameText);
+	lblPlayerHealth->SetLabelText(HealthText);
 	CurrentRoom = 1;
 	
 	bRefresh = true;
@@ -547,15 +562,6 @@ void cMain::OnDown(wxCommandEvent& evt)
 	bRefresh = true;
 	CurrentRoom = CurrentMapNode.GetExit(5);
 }
-
-
-//Eatable = 1,
-//Drinkable = 2,
-//Takeable = 4,
-//Droppable = 8,
-//Usable = 16,
-//Talkable = 32,
-//Killable = 64,
 
 void cMain::OnDoIt(wxCommandEvent& evt)
 {// Do something when the 'do it' button is pressed.

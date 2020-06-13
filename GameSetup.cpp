@@ -73,7 +73,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
-	AddInfoToPlayer(GamePlayer, GameMap, "Grand piano", "A battered old Steinway - in need of tuning",WEIGHTLESS, CARRIED_BY_PLAYER, Usable);  // test code
+	
 	return true;
 	
 }
@@ -119,11 +119,8 @@ std::vector<std::string> GameSetup::Epilogue()
 	std::vector<std::string> line;
 
 	line.push_back("CONGRATULATIONS !  You completed the task.\n\n");
+	line.push_back("Time for a brew and a biscuit.\n\n");
 	
 	return line;
 }
 
-//bool GameSetup::InitFromSavedGame(GameObjects& game, std::string fName)
-//{
-//	return false;
-//}

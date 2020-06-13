@@ -37,6 +37,7 @@ public:
 	wxString GetText();
 	void OnOK(wxCommandEvent& evt);
 	void OnTextChange(wxCommandEvent& evt);
+	void OnTextEnter(wxCommandEvent& evt);
 
 private:
 	wxButton* btnOK = nullptr;

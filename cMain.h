@@ -56,7 +56,11 @@ enum
 	tmID_DOWN,
 	tmID_LISTBOX,
 	tmID_GOBUTTON,
-	tmID_LOOPTIMER
+	tmID_LOOPTIMER,
+	tmID_PLAYERNAME,
+	tmID_PLAYERHEALTH,
+	tmID_PLAYERBUTTON,
+	tmID_PLAYERLISTBOX
 };
 
 class cMain : public wxFrame
@@ -130,7 +134,12 @@ private:
 	wxButton* btnD = nullptr;
 	wxListBox* lbItems = nullptr;
 	wxButton* btnGo = nullptr;
-	
+	wxStaticBox* box = nullptr;
+	wxStaticText* lblPlayerName = nullptr;
+	wxStaticText* lblPlayerHealth = nullptr;
+	wxListBox* lbPlayerItems = nullptr;
+	wxButton* btnPlayer = nullptr;
+
 	bool bComplete = false;
 	bool PrologueDone = false;
 	bool bGameSaved = false;

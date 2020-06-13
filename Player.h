@@ -20,6 +20,7 @@
 #include <vector>
 #include "Item.h"
 #include "Map.h"
+#include "PlayerNode.h"
 class Player
 {
 public:
@@ -38,7 +39,7 @@ public:
 	bool RemoveItemID(const uint16_t& itemID);
 	friend std::ostream& operator << (std::ostream& out, const Player& obj);
 	friend std::istream& operator>>(std::istream& is, Player& p);
-	
+	PlayerNode pNode;  // an abbreviated version of MapNode, to store items carried by the player
 private:
 	std::string PlayerName = "<No Name>";
 	uint16_t location = 0;

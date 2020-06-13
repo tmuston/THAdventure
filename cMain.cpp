@@ -651,11 +651,18 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		case Takeable:
 			
 			player->AddItemID(id);
+			player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+			
 			map->Replace(CurrentMapNode);
 			//  ignoring weight at the moment
 			break;
 		case Droppable:
+			CurrentMapNode.AddItem(CurrentMapNode.ItemsInNode[found]);
+			player->RemoveItemID(id);
+			player->pNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+			
+			map->Replace(CurrentMapNode);
 			break;
 		case Usable:
 			

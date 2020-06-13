@@ -94,8 +94,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	else
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
 
-	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 20), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
-	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 100), wxSize(700, 300), wxTE_MULTILINE | wxTE_READONLY);
+	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 10), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
+	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 70), wxSize(700, 260), wxTE_MULTILINE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
@@ -107,18 +107,18 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	txtDesc->SetFont(*fntDesc);
 
-	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 425), wxSize(25, 25));
-	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 450), wxSize(25, 25));
-	btnS = new wxButton(panel, tmID_SOUTH, wxT("S"), wxPoint(628, 475), wxSize(25, 25));
-	btnW = new wxButton(panel, tmID_WEST, wxT("W"), wxPoint(578, 450), wxSize(25, 25));
-	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 425), wxSize(25, 32));
-	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 470), wxSize(25, 32));
+	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 435), wxSize(25, 25));
+	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 460), wxSize(25, 25));
+	btnS = new wxButton(panel, tmID_SOUTH, wxT("S"), wxPoint(628, 485), wxSize(25, 25));
+	btnW = new wxButton(panel, tmID_WEST, wxT("W"), wxPoint(578, 460), wxSize(25, 25));
+	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 435), wxSize(25, 32));
+	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 480), wxSize(25, 32));
 	
-	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 410), wxSize(450, 60));
+	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 430), wxSize(450, 50));
 	lbItems->SetFont(*fntDesc);
 	lbItems->Show(false);
 	
-	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 480), wxSize(450, 50));
+	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("&Do it!"), wxPoint(100, 490), wxSize(450, 40));
 	btnGo->Enable(false);
 	//Do all the map stuff
 	

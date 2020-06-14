@@ -29,9 +29,10 @@ public:
 	bool AddItem(const Item& item);
 	bool DropItem(Item& item);
 	inline uint16_t GetNumItems() { return numItems; }
+	std::vector<Item> ItemsInNode;
 private:
 	uint16_t numItems;
-	std::vector<Item> ItemsInNode;
+	
 
 };
 

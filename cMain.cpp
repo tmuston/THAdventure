@@ -40,6 +40,7 @@ EVT_BUTTON(tmID_WEST, OnWest)
 EVT_BUTTON(tmID_UP, OnUp)
 EVT_BUTTON(tmID_DOWN, OnDown)
 EVT_BUTTON(tmID_GOBUTTON, OnDoIt)
+EVT_BUTTON(tmID_PLAYERBUTTON, OnPlayerButton)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -101,7 +102,6 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
 	fntTitle->SetFaceName(gSetup->GetTitleFaceName());
 	txtTitle->SetFont(*fntTitle);
-	//txtTitle->SetValue(wxT("Test Text"));
 	
 	fntDesc = new wxFont(14, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
 
@@ -122,10 +122,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	
 	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 430), wxSize(450, 50));
 	lbItems->SetFont(*fntDesc);
+	lbPlayerItems->SetFont(*fntDesc);
 	lbItems->Show(false);
-	lbPlayerItems->Show(false);
-	btnPlayer->Enable(false);
-	
+		
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("Do it!"), wxPoint(100, 490), wxSize(450, 40));
 	btnGo->Enable(false);
 	//Do all the map stuff
@@ -135,6 +134,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	NewOrOpen();
 	wxString NameText = "Player Name: " + player->GetName();
 	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
+	bPlayerRefresh = true;
+	UpdatePlayerListBox();
+	
 	lblPlayerName->SetLabelText(NameText);
 	lblPlayerHealth->SetLabelText(HealthText);
 	PrologueData = gSetup->Prologue();
@@ -217,6 +219,7 @@ void cMain::OnNew(wxCommandEvent& evt)
 	CurrentRoom = 1;
 	
 	bRefresh = true;
+	bPlayerRefresh = true;
 }
 
 void cMain::OnSave(wxCommandEvent& evt)
@@ -252,6 +255,8 @@ bool cMain::MainLoop()
 			EnableSelectedNavButtons(exits);
 			txtTitle->SetValue(CurrentMapNode.GetTitle());
 			txtDesc->SetValue(CurrentMapNode.GetDesc());
+			UpdatePlayerListBox();
+			bPlayerRefresh = false;
 			bRefresh = false;
 			wxYield();
 			
@@ -595,6 +600,11 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 	evt.Skip();
 }
 
+void cMain::OnPlayerButton(wxCommandEvent& evt)
+{
+	// need to process items once they've arrived in the player listbox
+}
+
 bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions)
 {  // process the item given by ID with the action mentioned in action_string 
    // if that action is allowed for that item
@@ -661,15 +671,10 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			
 			map->Replace(CurrentMapNode);
+			bPlayerRefresh = true;
 			//  ignoring weight at the moment
 			break;
-		case Droppable:
-			CurrentMapNode.AddItem(CurrentMapNode.ItemsInNode[found]);
-			player->RemoveItemID(id);
-			player->pNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			
-			map->Replace(CurrentMapNode);
-			break;
+		
 		case Usable:
 			
 			break;
@@ -723,6 +728,67 @@ void cMain::ShowPrologue()
 	}
 	txtDesc->Clear();
 	fileMenu->Enable(wxID_EXIT, true);
+}
+
+void cMain::UpdatePlayerListBox()
+{// update the player listbox's contents, obviously
+	if (bPlayerRefresh == false)
+		return;
+	if (player->pNode.GetNumItems() == 0)
+	{
+		lbPlayerItems->Show(false);
+		btnPlayer->Enable(false);
+		return;
+	}
+	else
+	{
+		
+		btnPlayer->Enable(true);
+		bPlayerRefresh = false;
+	}
+	lbPlayerItems->Clear();
+
+	uint16_t uID, uAction = 0;
+	std::vector<Item>::iterator it;
+	std::string sItemName = "";
+	std::string sAction = "";
+	for (it = player->pNode.ItemsInNode.begin(); it != player->pNode.ItemsInNode.end(); ++it)
+	{
+		uID = it->GetID();
+		uAction = it->GetProperties();
+		auto tup = std::make_tuple(uID, uAction);
+		player->vPlayerItemInfo.push_back(tup);
+		sItemName = it->GetName();
+		if (uAction & Eatable)
+		{
+			sAction = "Eat " + sItemName;
+			lbPlayerItems->AppendString(sAction);
+		}
+		if (uAction & Drinkable)
+		{
+			sAction = "Drink " + sItemName;
+			lbPlayerItems->AppendString(sAction);
+		}
+		
+		if (uAction & Droppable)
+		{
+			sAction = "Drop " + sItemName;
+			lbPlayerItems->AppendString(sAction);
+		}
+		if (uAction & Usable)
+		{
+			sAction = "Use " + sItemName;
+			lbPlayerItems->AppendString(sAction);
+		}
+		
+		if (uAction & Killable)
+		{
+			sAction = "Kill " + sItemName;
+			lbPlayerItems->AppendString(sAction);
+		}
+		
+	}
+	lbPlayerItems->Show(true);
 }
 
 void cMain::CreateMenu()

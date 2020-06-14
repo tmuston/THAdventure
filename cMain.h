@@ -99,6 +99,7 @@ private:
 	void OnIdle(wxIdleEvent& evt);
 	void OnGameLoop(wxTimerEvent& evt);
 	bool bRefresh = false;
+	bool bPlayerRefresh = false;
 	// Nav button event handles
 	void OnNorth(wxCommandEvent& evt);
 	void OnEast(wxCommandEvent& evt);
@@ -108,8 +109,10 @@ private:
 	void OnDown(wxCommandEvent& evt);
 
 	void OnDoIt(wxCommandEvent& evt);
+	void OnPlayerButton(wxCommandEvent& evt);
 	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
 	void ShowPrologue();
+	void UpdatePlayerListBox();
 	bool m_bGameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;
@@ -148,7 +151,7 @@ private:
 	StartDialog* StartWindow = nullptr;
 	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
-	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo;
+	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo; //stores Item ID and Item Action, used by OnDoIt
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;

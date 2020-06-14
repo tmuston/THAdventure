@@ -40,6 +40,8 @@ public:
 	friend std::ostream& operator << (std::ostream& out, const Player& obj);
 	friend std::istream& operator>>(std::istream& is, Player& p);
 	PlayerNode pNode;  // an abbreviated version of MapNode, to store items carried by the player
+	std::vector<std::tuple<uint16_t, uint16_t>> vPlayerItemInfo; // stores the ID and action for
+	// each Item carried by the player.  Used by the player listbox and action button.
 private:
 	std::string PlayerName = "<No Name>";
 	uint16_t location = 0;
@@ -48,7 +50,7 @@ private:
 	uint16_t health = 100;	// decreases over time if the player doesn't eat or drink
 	std::vector<uint16_t> CarriedItemIDs;
 	
-
+	
 };
-#endif // PALYER_H
+#endif // PLAYER_H
 

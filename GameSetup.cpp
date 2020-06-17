@@ -72,15 +72,18 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable );
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
-	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable);
+	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable, UseWalkingStick);
 	
 	return true;
 	
 }
 
-void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
+void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props, void(*func)())
 {
 	Item* newItem = new Item(title, desc, weight,props);
+	
+	if (func != nullptr)
+		newItem->f = func;
 	theMap.PlaceItemInNode(*newItem, location);
 	delete newItem;
 	
@@ -124,3 +127,13 @@ std::vector<std::string> GameSetup::Epilogue()
 	return line;
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// Non-member functions that are specific to each game.  Used as function pointers passed
+// to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
+//////////////////////////////////////////////////////////////////////////////
+
+void UseWalkingStick()
+{
+	
+	wxMessageBox("Walking stick", "Used");
+}

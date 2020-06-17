@@ -50,11 +50,14 @@ public:
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
+	//inline void* GetFunc() { return f; }
 		
 	inline std::string GetConversation() { return Conversation; }
 	inline void SetConversation(std::string conv) { Conversation = conv; }
 
 	bool SetProperty(uint8_t prop);
+	// function pointer for use. take, kill etc.
+	void(*f)() = nullptr;
 private:
 	uint16_t ID = 0;  // set in the constructor
 	std::string Name;
@@ -66,6 +69,7 @@ private:
 	std::string Conversation = "";
 	// Which room is the item currently in (zero means it's being carried by the player)
 	uint16_t CurrentLocation = 0;
+	
 
 };
 #endif // ITEM_H

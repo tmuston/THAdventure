@@ -109,8 +109,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	// player stuff
 
 	box = new wxStaticBox(panel, wxID_ANY, "Player information", wxPoint(50, 340), wxSize(700, 80));
-	lblPlayerName = new wxStaticText(panel, tmID_PLAYERNAME, wxT("Player Name:"), wxPoint(90, 360), wxSize(100, 20));
-	lblPlayerHealth = new wxStaticText(panel, tmID_PLAYERHEALTH, wxT("Player Health:"), wxPoint(90, 380), wxSize(100, 20));
+	lblPlayerName = new wxStaticText(panel, tmID_PLAYERNAME, wxT("Player Name:"), wxPoint(70, 360), wxSize(100, 20));
+	lblPlayerHealth = new wxStaticText(panel, tmID_PLAYERHEALTH, wxT("Player Health:"), wxPoint(70, 380), wxSize(100, 20));
 	btnPlayer = new wxButton(panel, tmID_PLAYERBUTTON, wxT("Do it!"), wxPoint(630, 360), wxSize(100, 40));
 	lbPlayerItems = new wxListBox(panel, tmID_PLAYERLISTBOX, wxPoint(250,360), wxSize(370,50));
 	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 435), wxSize(25, 25));
@@ -452,7 +452,7 @@ void cMain::NewOrOpen()
 	{
 		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 200));
 		StartWindow->ShowModal();
-
+		
 		player->SetName(StartWindow->GetText().ToStdString());
 		StartWindow->Destroy();
 		
@@ -645,7 +645,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		}
 		found++;
 	}
-
+	void(*function)();
 	if (tmpAction & possible_actions)
 	{//  Now we have the Item ID and the action.  
 				
@@ -676,7 +676,13 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			break;
 		
 		case Usable:
-			
+			function = CurrentMapNode.ItemsInNode[found].f;
+				
+			if (function)
+			{
+				//void(*theFunc)() = function;
+				function();
+			}
 			break;
 		case Talkable:
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();

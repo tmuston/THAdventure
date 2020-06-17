@@ -24,7 +24,9 @@
 #include "map.h"
 #include "BuildOptions.h"
 #include "Player.h"  // in some games, you might want to give the player some initial items - if you're a wuss
-//#include "cMain.h"
+#include "cMain.h"
+
+
 
 class GameSetup
 {// create all the items, and place them in their initial positions
@@ -34,7 +36,7 @@ public:
 	GameSetup();
 	~GameSetup();
 	bool InitFirstRun(Map& GameMap, Player& GamePlayer);
-	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
+	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0, void(*func)() = nullptr);
 	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline std::string GetMusicFile() { return MusicFile; }
@@ -54,4 +56,12 @@ private:
 	std::string TitleFont;
 	std::string TitleFaceName;
 };
+
+//////////////////////////////////////////////////////////////////////////////
+// Non-member functions that are specific to each game.  Used as function pointers passed
+// to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
+//////////////////////////////////////////////////////////////////////////////
+
+void UseWalkingStick();
+
 #endif // GAMESETUP_H

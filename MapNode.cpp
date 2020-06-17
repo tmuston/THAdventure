@@ -64,7 +64,9 @@ MapNode::MapNode(const MapNode& obj)
 	Description = obj.Description;
 	for (int i = 0; i < 6; i++)
 		ExitIDs[i] = obj.ExitIDs[i];
+	
 	ItemsInNode = obj.ItemsInNode;
+	
 }
 
 MapNode::~MapNode()

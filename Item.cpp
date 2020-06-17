@@ -37,6 +37,7 @@ Item::Item(const Item& i)
 	Properties = i.Properties;
 	Conversation = i.Conversation;
 	CurrentLocation = i.CurrentLocation;
+	f = i.f;
 }
 
 Item::~Item()

@@ -90,6 +90,7 @@ public:
 	void ProcessItems();
 	void NewOrOpen();
 	inline Player* GetPlayer() { return player; }
+	void FlashPanel();
 	//bool FillActionListBox();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);

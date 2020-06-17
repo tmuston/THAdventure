@@ -16,9 +16,10 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "wx/dir.h"
+#include "GameSetup.h"
 #include "cMain.h"
 
-#include "GameSetup.h"
+
 
 
 #define id_panel 100
@@ -131,6 +132,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	 
 	map->LoadMap(gSetup->GetMapName());
 	gSetup->InitFirstRun(*map, *player);
+	gSetup->SetMap(map);
 	NewOrOpen();
 	wxString NameText = "Player Name: " + player->GetName();
 	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
@@ -460,6 +462,19 @@ void cMain::NewOrOpen()
 	
 }
 
+void cMain::FlashPanel()
+{//  flash the panel to indicate something has happened
+	for (uint16_t i = 0; i < 255; i+=16)
+	{
+		panel->SetBackgroundColour(wxColour(i, 127, i));
+		panel->Refresh();
+		::wxYield();
+	}
+	panel->SetBackgroundColour(wxColour(120, 120, 160));
+	panel->Refresh();
+	::wxYield();
+}
+
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
@@ -682,6 +697,10 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			{
 				//void(*theFunc)() = function;
 				function();
+				//FlashPanel();
+				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+
+				map->Replace(CurrentMapNode);
 			}
 			break;
 		case Talkable:

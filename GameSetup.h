@@ -19,6 +19,7 @@
 //    object in cMain.cpp.  All other files can be left untouched.           //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+
 #include "wx/wx.h"
 #include "wx/utils.h"
 #include "map.h"
@@ -39,6 +40,8 @@ public:
 	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0, void(*func)() = nullptr);
 	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
+	inline void SetMap(Map* m) { gmap = m; }
+	Map* gmap = nullptr;
 	inline std::string GetMusicFile() { return MusicFile; }
 	inline std::string GetMapName() { return MapName; }
 	inline std::string GetIniFileName() { return IniFileName; }
@@ -55,10 +58,10 @@ private:
 	std::string IniFileName;
 	std::string TitleFont;
 	std::string TitleFaceName;
+	
 };
-
 //////////////////////////////////////////////////////////////////////////////
-// Non-member functions that are specific to each game.  Used as function pointers passed
+// functions that are specific to each game.  Used as function pointers passed
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
 //////////////////////////////////////////////////////////////////////////////
 

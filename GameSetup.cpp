@@ -128,12 +128,12 @@ std::vector<std::string> GameSetup::Epilogue()
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// Non-member functions that are specific to each game.  Used as function pointers passed
+//  functions that are specific to each game.  Used as function pointers passed
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
 //////////////////////////////////////////////////////////////////////////////
 
 void UseWalkingStick()
 {
-	
+
 	wxMessageBox("Walking stick", "Used");
 }

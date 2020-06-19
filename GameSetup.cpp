@@ -78,7 +78,14 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	
 }
 
-void GameSetup::AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props, void(*func)())
+void GameSetup::AddInfoToMap(Map& theMap, 
+	std::string title, 
+	std::string desc, 
+	uint16_t weight, 
+	uint16_t location, 
+	uint8_t props, 
+	//std::function<void()>func)
+	void(*func)(void* mainwin))
 {
 	Item* newItem = new Item(title, desc, weight,props);
 	
@@ -132,8 +139,10 @@ std::vector<std::string> GameSetup::Epilogue()
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
 //////////////////////////////////////////////////////////////////////////////
 
-void UseWalkingStick()
+void UseWalkingStick(void* mainwin)
 {
+	cMain* c = (cMain*)mainwin;
+	c->FlashPanel();
 
-	wxMessageBox("Walking stick", "Used");
+	wxMessageBox("Boo", "Used");
 }

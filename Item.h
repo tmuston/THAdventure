@@ -18,6 +18,10 @@
 //    defined within GameSetup.h and GameSetup.cpp.                          //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
+
+#include "wx/wx.h"
+//#include "Map.h"
+//#include "cMain.h"
 #include <iostream>
 
 
@@ -58,7 +62,8 @@ public:
 
 	bool SetProperty(uint8_t prop);
 	// function pointer for use. take, kill etc.
-	void(*f)() = nullptr;
+	void(*f)(void* mainwin) = nullptr;
+	//std::function<void()>f = nullptr;
 private:
 	uint16_t ID = 0;  // set in the constructor
 	std::string Name;

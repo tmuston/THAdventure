@@ -1,3 +1,5 @@
+#ifndef LOOPTIMER_H
+#define LOOPTIMER_H
 ///////////////////////////////////////////////////////////////////////////////
 //								  LoopTimer.h                                //
 //                                                                           //
@@ -14,8 +16,7 @@
 //    This file declares a LoopTimer object                                  //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
-#ifndef LOOPTIMER_H
-#define LOOPTIMER_H
+
 
 #include "wx/timer.h"
 class LoopTimer : public wxTimer

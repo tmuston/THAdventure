@@ -20,10 +20,13 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+
 #include "wx/wx.h"
 #include "wx/utils.h"
+#include <iostream>
 #include "map.h"
 #include "BuildOptions.h"
+//#include <functional>
 #include "Player.h"  // in some games, you might want to give the player some initial items - if you're a wuss
 #include "cMain.h"
 
@@ -37,7 +40,15 @@ public:
 	GameSetup();
 	~GameSetup();
 	bool InitFirstRun(Map& GameMap, Player& GamePlayer);
-	void AddInfoToMap(Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0, void(*func)() = nullptr);
+	void AddInfoToMap(Map& theMap, 
+		std::string title, 
+		std::string desc, 
+		uint16_t weight, 
+		uint16_t location, 
+		uint8_t props = 0, 
+		
+		//void(*func)(std::string msg) = nullptr);
+		void(*func)(void* mainwin) = nullptr);
 	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline void SetMap(Map* m) { gmap = m; }
@@ -58,6 +69,8 @@ private:
 	std::string IniFileName;
 	std::string TitleFont;
 	std::string TitleFaceName;
+
+	
 	
 };
 //////////////////////////////////////////////////////////////////////////////
@@ -65,6 +78,6 @@ private:
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
 //////////////////////////////////////////////////////////////////////////////
 
-void UseWalkingStick();
+void UseWalkingStick(void* mainwin);
 
 #endif // GAMESETUP_H

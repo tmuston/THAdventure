@@ -660,7 +660,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		}
 		found++;
 	}
-	void(*function)();
+	void(*function)(void* mainwin);
 	if (tmpAction & possible_actions)
 	{//  Now we have the Item ID and the action.  
 				
@@ -696,7 +696,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			if (function)
 			{
 				//void(*theFunc)() = function;
-				function();
+				function(this);
 				//FlashPanel();
 				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 

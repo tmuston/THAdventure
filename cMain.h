@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef CMAIN_H
+#define CMAIN_H
 ///////////////////////////////////////////////////////////////////////////////
 //								  cMain.h                                    //
 //                                                                           //
@@ -28,6 +28,7 @@
 #include "wx/timer.h"
 #include "wx/listbox.h"
 #include "wx/utils.h"
+
 #include <tuple>
 #include "Map.h"
 #include "SoundOptions.h"
@@ -158,4 +159,4 @@ private:
 	std::vector<std::string> EpilogueData;
 	wxDECLARE_EVENT_TABLE();
 };
-#endif // MAIN_H
+#endif // CMAIN_H

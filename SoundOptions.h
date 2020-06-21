@@ -35,6 +35,7 @@ public:
 	
 	void OnClose(wxCommandEvent& evt);
 	void OnChangeMusicSlider(wxCommandEvent& evt);
+	void OnChangeSfxSlider(wxCommandEvent& evt);
 	
 private:
 	wxPanel* panel = nullptr;

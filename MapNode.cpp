@@ -75,6 +75,7 @@ MapNode::~MapNode()
 
 bool MapNode::AddItem(const Item& item)
 {// Add an item to the vector.  Could be on initialisation, or when a player drops it
+	
 	ItemsInNode.push_back(item);
 	return true;
 }

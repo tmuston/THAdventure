@@ -46,6 +46,7 @@ enum
 	tmID_SOUNDOPTIONS = 1,
 	tmID_SOUNDOFF,
 	tmID_MUSICLOADED,
+	tmID_SFXLOADED,
 	tmID_MUSICFINISHED,
 	tmID_TITLE,
 	tmID_DESCRIPTION,
@@ -77,6 +78,7 @@ public:
 
 	void CreateMenu();
 	void SetMusicVol(double dVal);
+	void SetSfxVol(double dVal);
 	void ClearTitle();
 	void ClearDesc();
 	void SetTitle( std::string title);
@@ -90,13 +92,16 @@ public:
 	bool WriteItemInfo();
 	void ProcessItems();
 	void NewOrOpen();
+	inline void SetRefresh(bool refresh) { bRefresh = refresh; }
 	inline Player* GetPlayer() { return player; }
 	void FlashPanel();
+	void PlaySFX(std::string fName);
 	//bool FillActionListBox();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
 	void OnWAVLoaded(wxMediaEvent& evt);
+	void OnSFXLoaded(wxMediaEvent& evt);
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
 	void OnGameLoop(wxTimerEvent& evt);
@@ -126,6 +131,7 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
+	//wxMediaCtrl* Sfx = nullptr;
 	wxFileConfig* IniConfig = nullptr; // the Ini file
 	wxTextCtrl* txtTitle = nullptr;
 	wxTextCtrl* txtDesc = nullptr;

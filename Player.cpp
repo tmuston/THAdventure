@@ -17,6 +17,7 @@
 #include "Player.h"
 
 
+
 Player::Player(std::string name)
 {// will need to check that some dweeb hasn't initialised name to NULL 
 	
@@ -30,6 +31,102 @@ Player::~Player()
 
 
 
+uint16_t Player::GetItemIdFromName(std::string str)
+{// this function is passed a std::string with the command, a space and then the name
+ //  and to return the ID we need to strip the command and space, and then search for the ID
+ //  Say it quickly, and it sounds easy.
+	uint16_t item = INVALID_ITEM;  // if the item can't be found, this will get returned
+	size_t size = str.std::string::find_first_of(" ");  // finds the space after the action to be performed
+	std::string sSubstring = str.substr(size + 1);
+	for (size_t i = 0; i < pNode.ItemsInNode.size(); i++)
+	{
+		if (pNode.ItemsInNode[i].GetName() == sSubstring) //  Hurray!  We've found it
+		{
+			item = pNode.ItemsInNode[i].GetID();
+			break;
+		}
+	}
+	return item;
+}
+
+bool Player::ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions)
+{// process the item given by ID with the action mentioned in action_string 
+   // if that action is allowed for that item
+	
+	uint16_t tmpAction = 0;
+	if (action_string == "Eat")
+		tmpAction = Eatable; //1
+	else
+	if (action_string == "Drink")
+		tmpAction = Drinkable;  //2
+	else
+	
+	if (action_string == "Drop")
+		tmpAction = Droppable;  //8
+	else
+	if (action_string == "Use")
+		tmpAction = Usable;  //16
+	
+	std::vector<Item>::iterator it;
+	uint16_t found = 0;
+	for (it = pNode.ItemsInNode.begin(); it != pNode.ItemsInNode.end(); ++it)
+	{
+		uint16_t x = pNode.ItemsInNode[found].GetID();
+		if (x == id)
+		{
+			break;
+		}
+		found++;
+	}
+	void(*function)(void* mainwin);//  this function pointer sends a pointer to cMain back to GameSetup.
+	if(tmpAction & possible_actions)
+	{//  Now we have the Item ID and the action.  
+
+		std::string conv;
+		switch (tmpAction)
+		{
+		case Eatable:// remove from MapNode and increment health
+			
+			pNode.DropItem(pNode.ItemsInNode[found]);
+			
+			AddHealth(10);
+			
+			break;
+
+		case Drinkable:
+			pNode.DropItem(pNode.ItemsInNode[found]);
+			
+			AddHealth(20);
+			break;
+		
+		case Usable:
+			function = pNode.ItemsInNode[found].f;
+
+			if (function)
+			{
+				function(this);
+				
+				pNode.DropItem(pNode.ItemsInNode[found]);
+
+			}
+			break;
+		case Droppable:
+			pNode.DropItem(pNode.ItemsInNode[found]);
+			break;
+		
+		default: //should never happen
+			wxMessageBox("Invalid Item option", "This is embarrassing");
+			break;
+		}
+
+	}
+	else
+		return false;
+	// update the grid
+	//bRefresh = true;
+	return true;
+}
+
 void Player::AddHealth(uint16_t h)
 {
 	if (health < 100)  // maximum
@@ -41,6 +138,7 @@ void Player::AddHealth(uint16_t h)
 uint16_t Player::RemoveHealth(uint16_t h)
 {
 	health -= h;
+	
 	return health; // so that the caller can check if we're dead
 }
 

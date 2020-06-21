@@ -28,5 +28,17 @@ bool PlayerNode::DropItem(Item& item)
 		}
 	}
 	return false;
-	
+
+}
+
+uint16_t PlayerNode::GetActions(uint16_t id)
+{
+	uint16_t uActions = 0;
+
+	for (auto item : ItemsInNode)
+	{
+		if (item.GetID() == id)
+			return item.GetProperties();
+	}
+	return uActions;
 }

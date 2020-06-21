@@ -69,10 +69,11 @@ GameSetup::~GameSetup()
 
 bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 {// allocates the default Items to the default rooms - called at the start of the game
-	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable );
+	// NOTE:  In general, alny Item that is Takeable should also be Droppable
+	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable | Droppable);
 	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
-	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable, UseWalkingStick);
+	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	
 	return true;
 	
@@ -143,6 +144,14 @@ void UseWalkingStick(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
 	c->FlashPanel();
+	c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
+	
 
-	wxMessageBox("Boo", "Used");
+	c->AddToDesc("Ouch!\n\n");
+	Player* p = c->GetPlayer();
+	p->RemoveHealth(15);
+	//c->PlaySFX("weird.wav");
+	::wxSleep(3);
+	
+	
 }

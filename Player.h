@@ -21,6 +21,7 @@
 #include "Item.h"
 #include "Map.h"
 #include "PlayerNode.h"
+
 class Player
 {
 public:
@@ -30,6 +31,8 @@ public:
 	inline std::string GetName() { return PlayerName;  }
 	inline uint16_t GetWeight() { return weight; }
 	inline uint16_t GetHealth() { return health; }
+	uint16_t GetItemIdFromName(std::string str);
+	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
 
 	inline void SetWeight(uint16_t w) { weight = w; }
 	inline void SetHealth(uint16_t h) { health = h; }

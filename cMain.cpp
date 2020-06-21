@@ -30,6 +30,7 @@ EVT_MENU(wxID_SAVE, OnSave)
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
+EVT_MEDIA_LOADED(tmID_SFXLOADED, OnSFXLoaded)
 EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 EVT_IDLE(OnIdle)
 EVT_TIMER(tmID_LOOPTIMER, OnGameLoop)
@@ -45,6 +46,7 @@ EVT_BUTTON(tmID_PLAYERBUTTON, OnPlayerButton)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
+double gdSfxVolume;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	player = new Player("");
@@ -54,6 +56,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
+	double dSfxVal = -1.0;
 	bool bSoundOn = true;
 	std::unique_ptr<GameSetup> gSetup(new GameSetup);  // trying out smart pointers
 
@@ -68,14 +71,27 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	{
 		IniConfig->Write(wxT("MusicVol"), 0.5);
 		gdMusicVolume = 0.5;
+		
 	}
 	else
 		gdMusicVolume = dReadVal;
+	
+	
+	dSfxVal = IniConfig->ReadDouble(wxT("SfxVol"), dReadVal);
+	if (dSfxVal < 0.0)  //not changed.  write the default value
+	{
+		IniConfig->Write(wxT("SfxVol"), 0.5);
+		gdSfxVolume = 0.5;
+
+	}
+	else
+		gdSfxVolume = dSfxVal;
+
 
 	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 600));
 	panel->SetBackgroundColour(wxColour(120, 120, 160));
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
-
+	//Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 	Music->Load(gSetup->GetMusicFile());
 
 	SetMusicVol(gdMusicVolume);
@@ -262,7 +278,7 @@ bool cMain::MainLoop()
 			bRefresh = false;
 			wxYield();
 			
-			// give textual info about exits
+			// give textual info about Items
 			if (WriteItemInfo())  // there are items
 				ProcessItems();
 			else
@@ -272,7 +288,10 @@ bool cMain::MainLoop()
 			}
 			if (exits > 0)
 				WriteExitInfo(exits);
+			wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
 			
+			lblPlayerHealth->SetLabelText(HealthText);
+
 
 		}
 		else  // no need to update yet
@@ -395,11 +414,11 @@ void cMain::ProcessItems()
 			sAction = "Take " + sItemName;
 			lbItems->AppendString(sAction);
 		}
-		if (uAction & Droppable)
+		/*if (uAction & Droppable)
 		{
 			sAction = "Drop " + sItemName;
 			lbItems->AppendString(sAction);
-		}
+		}*/
 		if (uAction & Usable)
 		{
 			sAction = "Use " + sItemName;
@@ -475,6 +494,11 @@ void cMain::FlashPanel()
 	::wxYield();
 }
 
+void cMain::PlaySFX(std::string fName)
+{
+	//Sfx->Load(fName);
+}
+
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
@@ -508,6 +532,15 @@ void cMain::OnWAVLoaded(wxMediaEvent& evt)
 	evt.Skip();
 }
 
+void cMain::OnSFXLoaded(wxMediaEvent& evt)
+{
+	//Sfx->SetVolume(0.05);
+	//Sfx->Play();
+	SetSfxVol(gdSfxVolume);
+
+	evt.Skip();
+}
+
 void cMain::OnWAVFinished(wxMediaEvent& evt)
 {
 	Music->Play();
@@ -526,6 +559,16 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			IniConfig->Write(wxT("MusicVol"), gdMusicVolume);
 			
 		}
+
+		//double ldSfxVolume = Sfx->GetVolume();
+		//if (fabs(ldSfxVolume - gdSfxVolume) > 0.05)
+		//{
+		//	//Sfx->SetVolume(gdSfxVolume);
+		//	// save the value to the ini file
+		//	IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
+
+		//}
+	
 	}
 	evt.Skip();
 }
@@ -617,14 +660,49 @@ void cMain::OnDoIt(wxCommandEvent& evt)
 
 void cMain::OnPlayerButton(wxCommandEvent& evt)
 {
-	// need to process items once they've arrived in the player listbox
+	wxString ListItem = lbPlayerItems->GetStringSelection();
+	if (ListItem == wxT(""))
+	{ // this code should never fire
+		wxMessageBox(wxT("You need to select an action from the list"), wxT("Ooops!"));
+		return;
+	}
+	//  now comes the fun part.  Figure out which action of which item to perform, and
+	// adjust Item, player and MapNode accordingly
+	uint16_t uActions = 0;
+
+	// get the ItemID from the listbox selection by nefarious means
+	uint16_t uListBoxID = player->GetItemIdFromName(std::string((lbPlayerItems->GetStringSelection())));
+	uActions = player->pNode.GetActions(uListBoxID);
+
+	std::string ActionString = ListItem.ToStdString();
+	size_t len = ActionString.std::string::find_first_of(" ");
+	ActionString = ActionString.substr(0, len);
+
+	// special case for drop
+	if (ActionString == "Drop")  // add the item to the current loacation
+	{
+		uint16_t id = 0;
+		for (auto index : player->pNode.ItemsInNode)
+		{
+			if (index.GetID() == uListBoxID)
+			{
+				index.SetLocation(CurrentMapNode.GetID());
+				map->PlaceItemInNode(index, CurrentMapNode.GetID());
+								
+			}
+		}
+		
+	}
+	player->ProcessItemAction(uListBoxID, ActionString, uActions);
+	bRefresh = true;
+	bPlayerRefresh = true;
+	evt.Skip();
 }
 
 bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions)
 {  // process the item given by ID with the action mentioned in action_string 
    // if that action is allowed for that item
-	//Item theItem = CurrentMapNode.ItemsInNode[id];
-
+	
 	uint16_t tmpAction = 0;
 	if (action_string == "Eat")
 		tmpAction = Eatable; //1
@@ -660,7 +738,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		}
 		found++;
 	}
-	void(*function)(void* mainwin);
+	void(*function)(void* mainwin);//  this function pointer sends a pointer to cMain back to GameSetup.
 	if (tmpAction & possible_actions)
 	{//  Now we have the Item ID and the action.  
 				
@@ -843,6 +921,10 @@ void cMain::CreateMenu()
 void cMain::SetMusicVol(double dVal)
 {
 	Music->SetVolume(dVal);
+}
+
+void cMain::SetSfxVol(double dVal)
+{
 }
 
 void cMain::ClearTitle()

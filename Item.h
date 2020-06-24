@@ -45,6 +45,7 @@ void ZeroItemID();
 class Item
 {
 public:
+	Item();
 	Item(std::string name, std::string desc, uint16_t weight, uint8_t props = 0);
 	Item(const Item& i);
 	~Item();

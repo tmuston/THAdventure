@@ -18,6 +18,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "Item.h"
 
+Item::Item()
+{
+}
+
 Item::Item(std::string name, std::string desc, uint16_t weight, uint8_t props)
 {// mainly just populating the item with values
 	ID = ++ItemID;

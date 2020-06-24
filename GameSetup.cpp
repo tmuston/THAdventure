@@ -85,7 +85,7 @@ void GameSetup::AddInfoToMap(Map& theMap,
 	uint16_t weight, 
 	uint16_t location, 
 	uint8_t props, 
-	//std::function<void()>func)
+	
 	void(*func)(void* mainwin))
 {
 	Item* newItem = new Item(title, desc, weight,props);

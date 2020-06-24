@@ -145,7 +145,7 @@ uint16_t Player::RemoveHealth(uint16_t h)
 void Player::AddItemID(const uint16_t& itemID)
 {
 	CarriedItemIDs.push_back(itemID);
-	// 
+	
 }
 
 bool Player::RemoveItemID(const uint16_t& itemID)
@@ -205,7 +205,8 @@ std::istream& operator>>(std::istream& is, Player& p)
 	{
 		// need to somehow get the required item, check that it's not already there, and if not, add it.
 		uint16_t ItemID = std::stoi(delimiter);
-		p.CarriedItemIDs.push_back(ItemID);
+		//p.CarriedItemIDs.push_back(ItemID);
+		p.AddItemID(ItemID);
 		is >> delimiter;
 	}
 	return is;

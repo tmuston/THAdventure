@@ -24,6 +24,7 @@
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemStore.cpp" />
     <ClCompile Include="LoopTimer.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapNode.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemStore.h" />
     <ClInclude Include="LoopTimer.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapNode.h" />

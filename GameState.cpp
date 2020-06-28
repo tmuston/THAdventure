@@ -41,8 +41,6 @@ bool GameState::SaveToFile(uint16_t NodeID)
 
 bool GameState::LoadFromFile(std::string fName, uint16_t *nodeId)
 {
-	
-	
 	std::ifstream ifs(fName);
 	if (!ifs.is_open())
 	{

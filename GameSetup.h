@@ -46,9 +46,8 @@ public:
 		uint16_t weight, 
 		uint16_t location, 
 		uint8_t props = 0, 
-		
-		//void(*func)(std::string msg) = nullptr);
 		void(*func)(void* mainwin) = nullptr);
+
 	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline void SetMap(Map* m) { gmap = m; }

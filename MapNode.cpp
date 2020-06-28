@@ -33,10 +33,10 @@ Nodes::~Nodes()
 
 MapNode::MapNode()
 {// Do nowt, as the default constructor makes no sense.
-	/*ID = ++NodeID;
-	
-	ItemsInNode.reserve(5);*/
-
+	for (auto i = 0; i < 6; i++)
+		ExitIDs[i] = 0; 
+	// the above 2 lines stop a warning about the default constructor (which is never called)
+	// not setting ExitIDs.  Grrrr
 }
 
 MapNode::MapNode(Nodes& n, std::string Caption, std::string Desc, bool won)

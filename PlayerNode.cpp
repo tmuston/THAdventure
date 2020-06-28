@@ -1,3 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////
+//								  PlayerNode.cpp                             //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                       Part of the EGM cross-platform                      //
+//                         Text adventure game engine                        //
+//                       Copyright (c)  Tim Muston 2020                      //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//    Released as open source under the GPL license (See license.txt)        //
+//                                                                           //
+//    This file defines the PlayerNode. which can be thought of as the       //
+//    Player equivalent to the MapNode class.                                //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
 #include "PlayerNode.h"
 
 PlayerNode::PlayerNode()

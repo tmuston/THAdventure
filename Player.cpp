@@ -122,8 +122,7 @@ bool Player::ProcessItemAction(uint16_t id, const std::string& action_string, ui
 	}
 	else
 		return false;
-	// update the grid
-	//bRefresh = true;
+
 	return true;
 }
 
@@ -145,6 +144,27 @@ uint16_t Player::RemoveHealth(uint16_t h)
 void Player::AddItemID(const uint16_t& itemID)
 {
 	CarriedItemIDs.push_back(itemID);
+	Map& m = GetMap();
+	// search the Map's individual MapNodes for Items that match ItemID.
+	// there will only be one match or less
+	uint16_t uMapSize = m.GetMapSize();
+	for (auto i = 0; i < uMapSize; i++)
+	{
+		if (m.NodesInMap[i].ItemsInNode.size() > 0)
+		{ // found a node that contains Items
+			MapNode mn = m.NodesInMap[i];
+			for (auto j = 0; j < mn.ItemsInNode.size(); j++)
+			{
+				if (mn.ItemsInNode[j].GetID() == itemID)  // Yippee
+				{
+					Item item = mn.ItemsInNode[j];
+					pNode.AddItem(item);
+				}
+			}
+
+		}
+	}
+
 	
 }
 
@@ -188,7 +208,7 @@ std::ostream& operator << (std::ostream& out, const Player& obj)
 
 	return out;
 }
-std::istream& operator>>(std::istream& is, Player& p)
+std::istream& operator>>(std::istream& is, Player& p)  //load
 {
 	std::string delimiter;  // this gets thrown away
 	// read in individual members of p
@@ -205,7 +225,7 @@ std::istream& operator>>(std::istream& is, Player& p)
 	{
 		// need to somehow get the required item, check that it's not already there, and if not, add it.
 		uint16_t ItemID = std::stoi(delimiter);
-		//p.CarriedItemIDs.push_back(ItemID);
+		
 		p.AddItemID(ItemID);
 		is >> delimiter;
 	}

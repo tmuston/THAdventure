@@ -51,8 +51,6 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 {
 	player = new Player("");
 	map = new Map();
-	//NewOrOpen();  
-	
 	
 	SetGameRunning(false);
 	double dReadVal = -1.0;
@@ -149,7 +147,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	//Do all the map stuff
 	 
 	map->LoadMap(gSetup->GetMapName());
+	
 	gSetup->InitFirstRun(*map, *player);
+	player->SetMap(*map);
 	gSetup->SetMap(map);
 	NewOrOpen();
 	wxString NameText = "Player Name: " + player->GetName();
@@ -416,11 +416,7 @@ void cMain::ProcessItems()
 			sAction = "Take " + sItemName;
 			lbItems->AppendString(sAction);
 		}
-		/*if (uAction & Droppable)
-		{
-			sAction = "Drop " + sItemName;
-			lbItems->AppendString(sAction);
-		}*/
+		
 		if (uAction & Usable)
 		{
 			sAction = "Use " + sItemName;
@@ -448,8 +444,8 @@ void cMain::NewOrOpen()
  // otherwise ask which saved game to load
  	wxDir d(wxGetCwd());
 	wxString fName;
-	bool bTesting = d.GetFirst(&fName, wxT("*.sav"));
-	if(bTesting)
+	bool bSaveExists = d.GetFirst(&fName, wxT("*.sav"));
+	if(bSaveExists)
 	{
 		wxFileDialog OpenDialog(
 			this, _("Choose a saved game file to open"), wxEmptyString, wxEmptyString,
@@ -774,14 +770,10 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			function = CurrentMapNode.ItemsInNode[found].f;
 				
 			if (function)
-			{
-				//void(*theFunc)() = function;
 				function(this);
-				//FlashPanel();
-				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-
-				map->Replace(CurrentMapNode);
-			}
+			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+			map->Replace(CurrentMapNode);
+			
 			break;
 		case Talkable:
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();

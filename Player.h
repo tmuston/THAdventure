@@ -33,7 +33,8 @@ public:
 	inline uint16_t GetHealth() { return health; }
 	uint16_t GetItemIdFromName(std::string str);
 	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
-
+	inline void SetMap(const Map& m) { PlayerMap = m; }
+	inline Map& GetMap() { return PlayerMap; }
 	inline void SetWeight(uint16_t w) { weight = w; }
 	inline void SetHealth(uint16_t h) { health = h; }
 	void AddHealth(uint16_t h);
@@ -47,6 +48,7 @@ public:
 	// each Item carried by the player.  Used by the player listbox and action button.
 private:
 	std::string PlayerName = "<No Name>";
+	Map PlayerMap;
 	uint16_t location = 0;
 	uint16_t weight = 0;	// probably rarely used, unless you want to make a game where 
 							// the player can collapse a floor or similar

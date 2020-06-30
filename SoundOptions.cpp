@@ -32,16 +32,17 @@ SoundOptions::SoundOptions() : wxFrame(nullptr,
 	wxSize(320, 240),
 	wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {//  display a wxFrame with options for music and sound effect volume
-	int iSliderValue = (int)(gdMusicVolume * 10);
+	int iMusicSliderValue = (int)(gdMusicVolume * 10);
+	int iSFXSliderValue = (int)(gdSfxVolume * 10);
 
 	Centre();
 	panel = new wxPanel(this);
 	panel->SetBackgroundColour(wxColour(120, 120, 120));
 	lblMusic = new wxStaticText(panel, wxID_ANY, "Music Volume", wxPoint(15, 40), wxSize(40, 45));
-	MusicSlider = new wxSlider(panel, tmID_MUSICSLIDER, iSliderValue, 0, 10, wxPoint(60, 40), wxSize(200, 50), wxSL_HORIZONTAL | wxSL_MIN_MAX_LABELS | wxSL_TOP);
+	MusicSlider = new wxSlider(panel, tmID_MUSICSLIDER, iMusicSliderValue, 0, 10, wxPoint(60, 40), wxSize(200, 50), wxSL_HORIZONTAL | wxSL_MIN_MAX_LABELS | wxSL_TOP);
 
 	lblSFX = new wxStaticText(panel, wxID_ANY, "Sounds Volume", wxPoint(15, 90), wxSize(40, 45));
-	SfxSlider = new wxSlider(panel, tmID_SFXSLIDER, 5, 0, 10, wxPoint(60, 90), wxSize(200, 50), wxSL_HORIZONTAL | wxSL_MIN_MAX_LABELS | wxSL_TOP);
+	SfxSlider = new wxSlider(panel, tmID_SFXSLIDER, iSFXSliderValue, 0, 10, wxPoint(60, 90), wxSize(200, 50), wxSL_HORIZONTAL | wxSL_MIN_MAX_LABELS | wxSL_TOP);
 
 	btnClose = new wxButton(panel, tmID_CLOSEFORM, "&Close", wxPoint(120, 150), wxSize(80, 35));
 }
@@ -77,4 +78,5 @@ void SoundOptions::OnChangeSfxSlider(wxCommandEvent& evt)
 	if (v > 0.95)
 		v = 1.0;
 	gdSfxVolume = v;
+	evt.Skip();
 }

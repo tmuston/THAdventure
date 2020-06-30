@@ -90,7 +90,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	panel->SetBackgroundColour(wxColour(120, 120, 160));
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 	
-	//Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
+	Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
 	Music->SetVolume(0.0);
 	Music->Load(gSetup->GetMusicFile());
 
@@ -494,7 +494,7 @@ void cMain::FlashPanel()
 
 void cMain::PlaySFX(std::string fName)
 {
-	//Sfx->Load(fName);
+	Sfx->Load(fName);
 }
 
 
@@ -532,8 +532,8 @@ void cMain::OnWAVLoaded(wxMediaEvent& evt)
 
 void cMain::OnSFXLoaded(wxMediaEvent& evt)
 {
-	//Sfx->SetVolume(0.05);
-	//Sfx->Play();
+	Sfx->SetVolume(0.05);
+	Sfx->Play();
 	SetSfxVol(gdSfxVolume);
 
 	evt.Skip();
@@ -558,14 +558,14 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			
 		}
 
-		//double ldSfxVolume = Sfx->GetVolume();
-		//if (fabs(ldSfxVolume - gdSfxVolume) > 0.05)
-		//{
-		//	//Sfx->SetVolume(gdSfxVolume);
-		//	// save the value to the ini file
-		//	IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
+		double ldSfxVolume = Sfx->GetVolume();
+		if (fabs(ldSfxVolume - gdSfxVolume) > 0.05)
+		{
+			Sfx->SetVolume(gdSfxVolume);
+			// save the value to the ini file
+			IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
 
-		//}
+		}
 	
 	}
 	evt.Skip();

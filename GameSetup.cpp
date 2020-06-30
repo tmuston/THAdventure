@@ -141,9 +141,12 @@ std::vector<std::string> GameSetup::Epilogue()
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
 //////////////////////////////////////////////////////////////////////////////
 
+
+
 void UseWalkingStick(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
+	c->PlaySFX("weird.wav");
 	c->FlashPanel();
 	c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
 	
@@ -151,7 +154,8 @@ void UseWalkingStick(void* mainwin)
 	c->AddToDesc("Ouch!\n\n");
 	Player* p = c->GetPlayer();
 	p->RemoveHealth(15);
-	//c->PlaySFX("weird.wav");
+	
+	wxYield();
 	::wxSleep(3);
 	
 	

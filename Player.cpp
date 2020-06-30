@@ -153,19 +153,17 @@ void Player::AddItemID(const uint16_t& itemID)
 		if (m.NodesInMap[i].ItemsInNode.size() > 0)
 		{ // found a node that contains Items
 			MapNode mn = m.NodesInMap[i];
-			for (auto j = 0; j < mn.ItemsInNode.size(); j++)
+			
+			for(uint16_t j = 0; j < static_cast<uint16_t>(mn.ItemsInNode.size()); j++)
 			{
-				if (mn.ItemsInNode[j].GetID() == itemID)  // Yippee
+				if (mn.ItemsInNode[j].GetID() == itemID)  
 				{
 					Item item = mn.ItemsInNode[j];
 					pNode.AddItem(item);
 				}
 			}
-
 		}
 	}
-
-	
 }
 
 bool Player::RemoveItemID(const uint16_t& itemID)
@@ -215,7 +213,6 @@ std::istream& operator>>(std::istream& is, Player& p)  //load
 	std::string name;
 	std::getline(is, name);  // don't understand why I always have to call Getline twice
 	std::getline(is, name);
-	//is >> p.PlayerName;
 	p.PlayerName = name;
 	is >> p.health >> p.weight;
 		

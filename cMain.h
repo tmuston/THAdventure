@@ -96,7 +96,7 @@ public:
 	inline Player* GetPlayer() { return player; }
 	void FlashPanel();
 	void PlaySFX(std::string fName);
-	//bool FillActionListBox();
+	
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -131,7 +131,7 @@ private:
 	wxMenu* soundMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
-	//wxMediaCtrl* Sfx = nullptr;
+	wxMediaCtrl* Sfx = nullptr;
 	wxFileConfig* IniConfig = nullptr; // the Ini file
 	wxTextCtrl* txtTitle = nullptr;
 	wxTextCtrl* txtDesc = nullptr;

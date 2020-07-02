@@ -49,7 +49,7 @@ uint16_t Player::GetItemIdFromName(std::string str)
 	return item;
 }
 
-bool Player::ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions)
+bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& action_string, uint16_t possible_actions)
 {// process the item given by ID with the action mentioned in action_string 
    // if that action is allowed for that item
 	
@@ -104,7 +104,7 @@ bool Player::ProcessItemAction(uint16_t id, const std::string& action_string, ui
 
 			if (function)
 			{
-				function(this);
+				function(mainwin);// <<<<  Wrong !  Should be the main window, not the player
 				
 				pNode.DropItem(pNode.ItemsInNode[found]);
 

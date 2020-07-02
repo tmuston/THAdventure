@@ -721,13 +721,13 @@ void cMain::OnPlayerButton(wxCommandEvent& evt)
 			if (index.GetID() == uListBoxID)
 			{
 				index.SetLocation(CurrentMapNode.GetID());
-				map->PlaceItemInNode(index, CurrentMapNode.GetID());
+				map->PlaceItemInNode( index, CurrentMapNode.GetID());
 								
 			}
 		}
 		
 	}
-	player->ProcessItemAction(uListBoxID, ActionString, uActions);
+	player->ProcessItemAction(this, uListBoxID, ActionString, uActions);
 	bRefresh = true;
 	bPlayerRefresh = true;
 	evt.Skip();

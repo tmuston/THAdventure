@@ -18,9 +18,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include <vector>
+//#include "cMain.h"
 #include "Item.h"
 #include "Map.h"
 #include "PlayerNode.h"
+
+class cMain;  // forward declaration so that ProcessItemAction can use the cMain object
 
 class Player
 {
@@ -32,7 +35,7 @@ public:
 	inline uint16_t GetWeight() { return weight; }
 	inline uint16_t GetHealth() { return health; }
 	uint16_t GetItemIdFromName(std::string str);
-	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
+	bool ProcessItemAction(cMain* mainwin,  uint16_t id, const std::string& action_string, uint16_t possible_actions);
 	inline void SetMap(const Map& m) { PlayerMap = m; }
 	inline Map& GetMap() { return PlayerMap; }
 	inline void SetWeight(uint16_t w) { weight = w; }

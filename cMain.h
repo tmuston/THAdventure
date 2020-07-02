@@ -18,6 +18,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <tuple>
 #include "wx/wx.h"
 #include "wx/mediactrl.h"
 #include "wx/sound.h"
@@ -30,12 +31,11 @@
 #include "wx/utils.h"
 
 
-#include <tuple>
 #include "Map.h"
 #include "SoundOptions.h"
 #include "GameSetup.h"
 #include "BuildOptions.h"
-#include "player.h"
+#include "Player.h"
 #include "StartDialog.h"
 #include "GameState.h"
 

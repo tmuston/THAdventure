@@ -78,5 +78,6 @@ private:
 //////////////////////////////////////////////////////////////////////////////
 
 void UseWalkingStick(void* mainwin);
+void TriggerGhosts(void* mainwin);
 
 #endif // GAMESETUP_H

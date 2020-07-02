@@ -29,6 +29,7 @@
 #include "wx/listbox.h"
 #include "wx/utils.h"
 
+
 #include <tuple>
 #include "Map.h"
 #include "SoundOptions.h"
@@ -62,7 +63,8 @@ enum
 	tmID_PLAYERNAME,
 	tmID_PLAYERHEALTH,
 	tmID_PLAYERBUTTON,
-	tmID_PLAYERLISTBOX
+	tmID_PLAYERLISTBOX,
+	tmID_KEYPRESS
 };
 
 class cMain : public wxFrame
@@ -95,7 +97,9 @@ public:
 	inline void SetRefresh(bool refresh) { bRefresh = refresh; }
 	inline Player* GetPlayer() { return player; }
 	void FlashPanel();
+	void FlashPanelBlack();
 	void PlaySFX(std::string fName);
+	void WaitForAnyKey();
 	
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
@@ -120,6 +124,7 @@ private:
 	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
 	void ShowPrologue();
 	void UpdatePlayerListBox();
+	void OnKeyDown(wxKeyEvent& evt);
 	bool m_bGameRunning;
 	Map* map = nullptr;
 	MapNode CurrentMapNode;

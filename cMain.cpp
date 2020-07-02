@@ -43,6 +43,7 @@ EVT_BUTTON(tmID_UP, OnUp)
 EVT_BUTTON(tmID_DOWN, OnDown)
 EVT_BUTTON(tmID_GOBUTTON, OnDoIt)
 EVT_BUTTON(tmID_PLAYERBUTTON, OnPlayerButton)
+EVT_KEY_DOWN(OnKeyDown)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -492,9 +493,44 @@ void cMain::FlashPanel()
 	::wxYield();
 }
 
+void cMain::FlashPanelBlack()
+{
+	for (uint16_t i = 0; i < 5; i++)
+	{
+		panel->SetBackgroundColour(wxColour(0, 0, 0));
+		panel->Refresh();
+		wxMilliSleep(60);
+		::wxYield();
+		panel->SetBackgroundColour(wxColour(255, 255, 255));
+		panel->Refresh();
+		wxMilliSleep(60);
+		::wxYield();
+
+	}
+	panel->SetBackgroundColour(wxColour(120, 120, 160));
+	panel->Refresh();
+}
+
 void cMain::PlaySFX(std::string fName)
 {
 	Sfx->Load(fName);
+}
+
+void cMain::WaitForAnyKey()
+{
+	bRefresh = false;
+	txtDesc->SetForegroundColour(*wxRED);
+	this->SetFocus();
+	AddToDesc("\n\n\t\t Press any key to continue ...");
+	while (!bRefresh)
+	{
+		wxYield();
+		wxMilliSleep(20);
+	}
+	txtDesc->SetForegroundColour(*wxBLACK);
+
+	
+	
 }
 
 
@@ -888,24 +924,31 @@ void cMain::UpdatePlayerListBox()
 	lbPlayerItems->Show(true);
 }
 
+void cMain::OnKeyDown(wxKeyEvent& evt)
+{
+
+	bRefresh = true;
+	evt.Skip();
+}
+
 void cMain::CreateMenu()
 {
 	menuBar = new wxMenuBar();
 
 	fileMenu = new wxMenu();
 	// add items in the file menu
-	fileMenu->Append(wxID_NEW, _T("&New game"));
-	fileMenu->Append(wxID_OPEN, _T("&Open"));
+	fileMenu->Append(wxID_NEW, _T("New game"));
+	fileMenu->Append(wxID_OPEN, _T("Open"));
 	fileMenu->AppendSeparator();
-	fileMenu->Append(wxID_SAVE, _T("&Save"));
+	fileMenu->Append(wxID_SAVE, _T("Save"));
 	
 	fileMenu->AppendSeparator();
 
-	fileMenu->Append(wxID_EXIT, _T("E&xit"));
+	fileMenu->Append(wxID_EXIT, _T("Exit"));
 
-	menuBar->Append(fileMenu, _T("&File"));
+	menuBar->Append(fileMenu, _T("File"));
 	soundMenu = new wxMenu();
-	soundMenu->Append(tmID_SOUNDOPTIONS, _T("Sound &Options"));
+	soundMenu->Append(tmID_SOUNDOPTIONS, _T("Sound Options"));
 	soundMenu->AppendSeparator();
 	soundMenu->AppendCheckItem(tmID_SOUNDOFF, _T("Silent Mode"));
 	menuBar->Append(soundMenu, _T("Sounds"));

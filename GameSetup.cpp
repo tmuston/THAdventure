@@ -148,6 +148,8 @@ void UseWalkingStick(void* mainwin)
 	cMain* c = (cMain*)mainwin;
 	c->PlaySFX("weird.wav");
 	c->FlashPanel();
+	
+	c->ClearDesc();
 	c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
 	
 
@@ -155,8 +157,25 @@ void UseWalkingStick(void* mainwin)
 	Player* p = c->GetPlayer();
 	p->RemoveHealth(15);
 	
-	wxYield();
-	::wxSleep(3);
+	c->WaitForAnyKey();
+		
 	
+}
+
+void TriggerGhosts(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
 	
+	c->PlaySFX("weird.wav");
+	c->FlashPanelBlack();
+	c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
+
+
+	c->AddToDesc("Ouch!\n\n");
+	Player* p = c->GetPlayer();
+	p->RemoveHealth(15);
+
+	c->WaitForAnyKey();
+
+
 }

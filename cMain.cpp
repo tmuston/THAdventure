@@ -533,6 +533,12 @@ void cMain::WaitForAnyKey()
 	
 }
 
+void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
+{// change the room that a MamNode's Exits point towards, or alternatively disable that exit
+	CurrentMapNode.SetExit(num, room);
+	map->Replace(CurrentMapNode);
+}
+
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
@@ -800,6 +806,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			map->Replace(CurrentMapNode);
 			bPlayerRefresh = true;
 			//  ignoring weight at the moment
+			
 			break;
 		
 		case Usable:
@@ -813,6 +820,17 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			break;
 		case Talkable:
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();
+			function = CurrentMapNode.ItemsInNode[found].f;
+			txtDesc->AppendText(conv);
+			bRefresh = false;
+			for (uint8_t i = 0; i < 100; i++)
+			{
+				wxYield();
+				wxMilliSleep(50);
+			}
+			bRefresh = true;
+			if (function)
+				function(this);
 			break;
 		case Killable:
 			// add some dialogue here

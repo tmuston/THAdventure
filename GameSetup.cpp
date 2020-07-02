@@ -72,7 +72,14 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 {// allocates the default Items to the default rooms - called at the start of the game
 	// NOTE:  In general, alny Item that is Takeable should also be Droppable
 	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable | Droppable);
-	AddInfoToMap(GameMap, "Lady behind the counter", "A very pleasant lady in the prime of her life.  Always ready with a smile.", WEIGHTLESS, TIC, Talkable);
+	AddInfoAndConversationToMap(GameMap, 
+		"Lady behind the counter", 
+		"A very pleasant lady in the prime of her life.  Always ready with a smile.", 
+		WEIGHTLESS, 
+		TIC, 
+		Talkable, 
+		"\tHello.\nLong time no see.\nWould you like me to let you into the Town Hall through the TIC?\n\n", 
+		GainEntryToTownHall);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	
@@ -97,6 +104,27 @@ void GameSetup::AddInfoToMap(Map& theMap,
 	delete newItem;
 	
 }
+
+void GameSetup::AddInfoAndConversationToMap(
+	Map& theMap, 
+	std::string title, 
+	std::string desc, 
+	uint16_t weight, 
+	uint16_t location, 
+	uint8_t props, 
+	std::string conversation, 
+	void(*func)(void* mainwin))
+{
+Item* newItem = new Item(title, desc, weight, props);
+
+if (func != nullptr)
+newItem->f = func;
+newItem->SetConversation(conversation);
+theMap.PlaceItemInNode(*newItem, location);
+
+delete newItem;
+}
+
 
 void GameSetup::AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
 {
@@ -178,4 +206,13 @@ void TriggerGhosts(void* mainwin)
 	c->WaitForAnyKey();
 
 
+}
+
+void GainEntryToTownHall(void* mainwin)
+{ // this function alters the map to allow a door to open
+	cMain* c = (cMain*)mainwin;
+	// the current MapNode needs it's first exit opening
+	c->EnableCurrentMapNodeExit(0, OUTER_FOYER);
+	c->Refresh();
+	
 }

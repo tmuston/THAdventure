@@ -56,8 +56,7 @@ public:
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
-	//inline void* GetFunc() { return f; }
-		
+	
 	inline std::string GetConversation() { return Conversation; }
 	inline void SetConversation(std::string conv) { Conversation = conv; }
 

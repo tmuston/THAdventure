@@ -100,6 +100,8 @@ public:
 	void FlashPanelBlack();
 	void PlaySFX(std::string fName);
 	void WaitForAnyKey();
+	void EnableCurrentMapNodeExit(uint16_t num, uint16_t room);
+	inline void Refresh() { bRefresh = true, bPlayerRefresh = true; }
 	
 private:
 	void OnSoundOptions(wxCommandEvent& evt);

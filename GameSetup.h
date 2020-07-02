@@ -48,6 +48,15 @@ public:
 		uint8_t props = 0, 
 		void(*func)(void* mainwin) = nullptr);
 
+	void AddInfoAndConversationToMap(Map& theMap,
+		std::string title,
+		std::string desc,
+		uint16_t weight,
+		uint16_t location,
+		uint8_t props = 0,
+		std::string conversation = nullptr,
+		void(*func)(void* mainwin) = nullptr);
+
 	void AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props = 0);
 	inline std::string GetSplashImage() { return SplashImage; }
 	inline void SetMap(Map* m) { gmap = m; }
@@ -79,5 +88,6 @@ private:
 
 void UseWalkingStick(void* mainwin);
 void TriggerGhosts(void* mainwin);
+void GainEntryToTownHall(void* mainwin);
 
 #endif // GAMESETUP_H

@@ -12,7 +12,11 @@ THAMap
 ~~11~Bar area~This isn't quite as bad as expected.  Someone's obviously been annoyed, as there is a large boot print on the door, but apart from that it's business as usual.~12~0~4~0~0~0
 ~~12~Main Hall~The main hall is almost completely filled with chairs and round tables.  The floor is in a state that can only be described as carnage.  <newline><newline>You're going to need the services of Henry the vacuum cleaner here.~0~0~11~0~0~0
 ~~13~Top Corridor~The top corridor is eerily quiet and dark.  Not even the traffic outside penetrates here.~0~0~0~0~0~7
-~~14~Top Corridor Steps~You stand at the top of two small steps.  In this darkness, they could be dangerous.~15~16~13~17~0~0
-~~15~Top of the balcony~Although the view from the top of the balcony is impressive, so is the mess that last night's revellers have left behind~0~19~14~18~0~0
-~~16~Upper Lift Room~This is a small room with a skylight.  You can hear that it has started to rain gently.  There are two locked doors, and also a toilet and a lift~20~21~0~14~0~0
-~~17~Kitchen~This is a small kitchen and staff room.  There might be something in the fridge, but there's no time for a brew~0~14~0~0~0~0
+~~14~Top corridor steps~You stand on top of two stone steps.  Careful you don't trip~15~16~13~17~0~0
+~~15~Top of the balcony~Although the view of the hall from here is breathtaking, so is the mess from last night's party.~0~19~0~18~0~0
+~~16~Lift room~This is a small room with two mysteriously locked doors, plus a toilet and a lift.~21~20~0~14~0~0
+~~17~Kitchen~This is a small kitchen/staff room.  there is a fridge in here and a kettle.  No time for a cuppa!~0~14~0~0~0~0
+~~18~Balcony west side~This side of the balcony has a few chairs stewn around.  Obviously somebody has been having fun up here~0~0~15~0~0~0
+~~19~Balcony east side~There doesn't seem to have been much chaos on this side of the balcony.  One less cleaning job~0~0~15~0~0~0
+~~20~Upstairs toilet~There is a broken toilet seat, and someone has been doing something rather 'adult' up against the mirror~0~0~0~16~0~0
+~~21~Lift~You press the lift button, and eventually the lift arrives.~0~0~0~0~0~19

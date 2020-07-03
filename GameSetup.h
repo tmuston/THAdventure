@@ -68,6 +68,7 @@ public:
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
 	std::vector<std::string> Prologue();
 	std::vector<std::string> Epilogue();
+	std::vector<std::string> GameOver();
 	
 private:
 	std::string SplashImage; 
@@ -83,7 +84,9 @@ private:
 };
 //////////////////////////////////////////////////////////////////////////////
 // functions that are specific to each game.  Used as function pointers passed
-// to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
+// to AddItemToMap or AddItemAndConversationToMap calls as optional 
+// function pointers.  Must return void and accept only a void*, which the function
+// then casts to a cMain*
 //////////////////////////////////////////////////////////////////////////////
 
 void UseWalkingStick(void* mainwin);

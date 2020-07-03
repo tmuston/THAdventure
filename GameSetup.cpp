@@ -164,6 +164,15 @@ std::vector<std::string> GameSetup::Epilogue()
 	return line;
 }
 
+std::vector<std::string> GameSetup::GameOver()
+{
+	std::vector<std::string> line;
+	line.push_back("\n\n\t\t\t   GAME OVER!\n\n");
+	line.push_back("\t\t        Unfortunately, you lost this time.\n\n");
+	line.push_back("\t\t                     Please try again");
+	return line;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //  functions that are specific to each game.  Used as function pointers passed
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments

@@ -34,6 +34,7 @@ EVT_MEDIA_LOADED(tmID_SFXLOADED, OnSFXLoaded)
 EVT_MEDIA_FINISHED(tmID_MUSICLOADED, OnWAVFinished)
 EVT_IDLE(OnIdle)
 EVT_TIMER(tmID_LOOPTIMER, OnGameLoop)
+EVT_TIMER(tmID_HEALTHTIMER, OnHealthTimer)
 // the nav buttons
 EVT_BUTTON(tmID_NORTH, OnNorth)
 EVT_BUTTON(tmID_EAST, OnEast)
@@ -162,11 +163,15 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	lblPlayerHealth->SetLabelText(HealthText);
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
+	GameOverData = gSetup->GameOver();
 
 	SetGameRunning(true);
 	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
 	loopTimer->Start(30);
+	healthTimer = new wxTimer(this, tmID_HEALTHTIMER);
+	//  for testing healthTimer->Start(100);
+	healthTimer->Start(30000);
 	
 }
 
@@ -192,6 +197,11 @@ cMain::~cMain()
 	{
 		delete loopTimer;
 		loopTimer = nullptr;
+	}
+	if (healthTimer != nullptr)
+	{
+		delete healthTimer;
+		healthTimer = nullptr;
 	}
 	if (player != nullptr)
 	{
@@ -265,7 +275,26 @@ bool cMain::MainLoop()
 	
 	while ( GetGameRunning() == true)
 	{//  process the entire game loop from within here.  Return true if the game is completed
+		uint16_t PlayerHealth = player->GetHealth();
+		wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), PlayerHealth);
 		
+		
+		if (PlayerHealth < 25)  //  give a warning if health is getting low
+		{
+			wxColour colour;
+			colour.Set(180, 0, 0);  // the standard wxRED was too vivid
+			lblPlayerHealth->SetForegroundColour(colour);
+		}
+		else
+			lblPlayerHealth->SetForegroundColour(*wxBLACK);
+
+		lblPlayerHealth->SetLabelText(HealthText);
+		if(PlayerHealth < 1)  // the player died
+		{
+			bRefresh = false;
+			ShowGameOver();
+			return true;
+		}
 		if (bRefresh == true)
 		{
 			if (bGameSaved == true)
@@ -291,11 +320,6 @@ bool cMain::MainLoop()
 			}
 			if (exits > 0)
 				WriteExitInfo(exits);
-			wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
-			
-			lblPlayerHealth->SetLabelText(HealthText);
-
-
 		}
 		else  // no need to update yet
 			wxYield();
@@ -635,6 +659,12 @@ void cMain::OnGameLoop(wxTimerEvent& evt)
 	}
 }
 
+void cMain::OnHealthTimer(wxTimerEvent& evt)
+{
+	if (player != nullptr)
+		player->RemoveHealth(1);
+}
+
 void cMain::OnNorth(wxCommandEvent& evt)
 {// set bRefresh
 	bRefresh = true;
@@ -879,6 +909,38 @@ void cMain::ShowPrologue()
 	}
 	txtDesc->Clear();
 	fileMenu->Enable(wxID_EXIT, true);
+}
+
+void cMain::ShowGameOver()
+{
+	SetGameRunning(false);
+	btnPlayer->Enable(false);
+	btnGo->Enable(false);
+	lbItems->Show(false);
+	lbPlayerItems->Show(false);
+	txtTitle->Clear();
+	txtTitle->SetValue(wxString("The End"));
+	txtDesc->Clear();
+	fileMenu->Enable(wxID_SAVE, false);
+	DisableAllNavButtons();
+	
+
+	for (auto i = GameOverData.begin(); i != GameOverData.end(); i++)
+	{//  need keypress detection, so that the prologue can be cancelled
+		txtDesc->AppendText(*i);
+		txtDesc->HideNativeCaret();
+		
+	}
+	// fade out the music
+	double dVolume = Music->GetVolume();
+	while (dVolume > 0.0)
+	{
+		dVolume -= 0.05;
+		Music->SetVolume(dVolume);
+		wxMilliSleep(200);
+	}
+	Music->Stop();
+	
 }
 
 void cMain::UpdatePlayerListBox()

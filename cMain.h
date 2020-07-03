@@ -60,6 +60,7 @@ enum
 	tmID_LISTBOX,
 	tmID_GOBUTTON,
 	tmID_LOOPTIMER,
+	tmID_HEALTHTIMER,
 	tmID_PLAYERNAME,
 	tmID_PLAYERHEALTH,
 	tmID_PLAYERBUTTON,
@@ -111,6 +112,7 @@ private:
 	void OnWAVFinished(wxMediaEvent& evt);
 	void OnIdle(wxIdleEvent& evt);
 	void OnGameLoop(wxTimerEvent& evt);
+	void OnHealthTimer(wxTimerEvent& evt);
 	bool bRefresh = false;
 	bool bPlayerRefresh = false;
 	// Nav button event handles
@@ -125,6 +127,7 @@ private:
 	void OnPlayerButton(wxCommandEvent& evt);
 	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
 	void ShowPrologue();
+	void ShowGameOver();
 	void UpdatePlayerListBox();
 	void OnKeyDown(wxKeyEvent& evt);
 	bool m_bGameRunning;
@@ -163,6 +166,7 @@ private:
 	bool bGameSaved = false;
 	Player* player = nullptr;
 	wxTimer* loopTimer = nullptr;
+	wxTimer* healthTimer = nullptr;
 	StartDialog* StartWindow = nullptr;
 	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
@@ -170,6 +174,7 @@ private:
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;
+	std::vector<std::string> GameOverData;
 	wxDECLARE_EVENT_TABLE();
 };
 #endif // CMAIN_H

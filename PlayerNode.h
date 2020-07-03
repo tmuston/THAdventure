@@ -30,6 +30,7 @@ public:
 	bool DropItem(Item& item);
 	inline uint16_t GetNumItems() { return numItems; }
 	uint16_t GetActions(uint16_t id);
+	uint16_t GetCombinedItemWeight();
 	std::vector<Item> ItemsInNode;
 private:
 	uint16_t numItems;

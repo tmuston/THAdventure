@@ -41,6 +41,7 @@ enum ItemProperty
 #define INVALID_LOCATION 65535
 #define CARRIED_BY_PLAYER 0
 #define INVALID_ITEM 65535
+#define MAXWEIGHT 10
 void ZeroItemID();
 class Item
 {
@@ -52,6 +53,7 @@ public:
 	inline std::string GetName() { return Name; }
 	inline uint16_t GetID() { return ID; }
 	inline void SetID(uint16_t id) { ID = id; }
+	inline uint16_t GetWeight() { return Weight; }
 	inline std::string GetDescription() { return Description; }
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);

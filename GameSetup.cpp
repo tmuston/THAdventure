@@ -82,7 +82,8 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		GainEntryToTownHall);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
-	
+	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
+	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
 	return true;
 	
 }

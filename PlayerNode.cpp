@@ -59,3 +59,13 @@ uint16_t PlayerNode::GetActions(uint16_t id)
 	}
 	return uActions;
 }
+
+uint16_t PlayerNode::GetCombinedItemWeight()
+{
+	uint16_t TotalWeight = 0;
+	for (auto item : ItemsInNode)
+	{
+		TotalWeight += item.GetWeight();
+	}
+	return TotalWeight;
+}

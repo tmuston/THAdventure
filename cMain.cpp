@@ -813,6 +813,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 	{//  Now we have the Item ID and the action.  
 				
 		std::string conv;
+		uint16_t weight = 0;
 		switch (tmpAction)
 		{
 		case Eatable:// remove from MapNode and increment health
@@ -828,14 +829,22 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			player->AddHealth(20);
 			break;
 		case Takeable:
-			
-			player->AddItemID(id);
-			player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			
-			map->Replace(CurrentMapNode);
-			bPlayerRefresh = true;
-			//  ignoring weight at the moment
+			// firstly need to check that the item isn't too heavy
+			weight = player->pNode.GetCombinedItemWeight();
+			weight += CurrentMapNode.ItemsInNode[found].GetWeight();
+			if (weight > MAXWEIGHT)  // can't take - too heavy
+			{
+				wxMessageBox(wxT("You can't pick this up at the moment.  Try leaving something else behind"), wxT("Items too heavy"));
+			}
+			else
+			{
+				player->AddItemID(id);
+				player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
+				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+
+				map->Replace(CurrentMapNode);
+				bPlayerRefresh = true;
+			}
 			
 			break;
 		

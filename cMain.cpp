@@ -18,6 +18,7 @@
 #include "wx/dir.h"
 #include "GameSetup.h"
 #include "cMain.h"
+#include "version.h"
 
 
 
@@ -28,6 +29,7 @@ EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 EVT_MENU(wxID_NEW, OnNew)  // file>exit
 EVT_MENU(wxID_SAVE, OnSave)
 EVT_MENU(wxID_OPEN, OnOpen)
+EVT_MENU(wxID_HELP, OnHelpAbout)
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
@@ -252,6 +254,7 @@ void cMain::OnNew(wxCommandEvent& evt)
 	
 	bRefresh = true;
 	bPlayerRefresh = true;
+	evt.Skip();
 }
 
 void cMain::OnOpen(wxCommandEvent& evt)
@@ -278,9 +281,11 @@ void cMain::OnOpen(wxCommandEvent& evt)
 			game = nullptr;
 			PrologueDone = true;  // don't run the prologue
 			bRefresh = true;
+			evt.Skip();
 			return;
 		}
 	}// if the dialog was cancelled, carry on
+	evt.Skip();
 }
 
 void cMain::OnSave(wxCommandEvent& evt)
@@ -293,6 +298,14 @@ void cMain::OnSave(wxCommandEvent& evt)
 	bGameSaved = true;
 	delete game;
 	game = nullptr;
+	evt.Skip();
+}
+
+void cMain::OnHelpAbout(wxCommandEvent& evt)
+{
+	std::string Message = "EGM Game engine version "+ (std::string)VERSION_MAJOR + VERSION_MINOR;
+	wxMessageBox(Message, "About ...");
+	evt.Skip();
 }
 
 bool cMain::MainLoop()
@@ -1071,6 +1084,10 @@ void cMain::CreateMenu()
 	soundMenu->AppendSeparator();
 	soundMenu->AppendCheckItem(tmID_SOUNDOFF, _T("Silent Mode"));
 	menuBar->Append(soundMenu, _T("Sounds"));
+	
+	helpMenu = new wxMenu();
+	helpMenu->Append(wxID_HELP, _T("About ..."));
+	menuBar->Append(helpMenu, _T("Help"));
 	SetMenuBar(menuBar);
 }
 

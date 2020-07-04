@@ -79,6 +79,7 @@ public:
 	void OnNew(wxCommandEvent& evt);
 	void OnOpen(wxCommandEvent& evt);
 	void OnSave(wxCommandEvent& evt);
+	void OnHelpAbout(wxCommandEvent& evt);
 
 	void CreateMenu();
 	void SetMusicVol(double dVal);
@@ -140,6 +141,7 @@ private:
 	wxMenuBar* menuBar = nullptr;
 	wxMenu* fileMenu = nullptr;
 	wxMenu* soundMenu = nullptr;
+	wxMenu* helpMenu = nullptr;
 	SoundOptions* soundWindow = nullptr;
 	wxMediaCtrl* Music = nullptr;
 	wxMediaCtrl* Sfx = nullptr;

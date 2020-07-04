@@ -27,6 +27,7 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
 EVT_MENU(wxID_NEW, OnNew)  // file>exit
 EVT_MENU(wxID_SAVE, OnSave)
+EVT_MENU(wxID_OPEN, OnOpen)
 EVT_MENU(tmID_SOUNDOPTIONS, OnSoundOptions)
 EVT_MENU(tmID_SOUNDOFF, OnSoundOnOff)
 EVT_MEDIA_LOADED(tmID_MUSICLOADED, OnWAVLoaded)
@@ -251,6 +252,35 @@ void cMain::OnNew(wxCommandEvent& evt)
 	
 	bRefresh = true;
 	bPlayerRefresh = true;
+}
+
+void cMain::OnOpen(wxCommandEvent& evt)
+{//  open an existing game
+	wxDir d(wxGetCwd());
+	wxString fName;
+	bool bSaveExists = d.GetFirst(&fName, wxT("*.sav"));
+	if (bSaveExists)
+	{
+		wxFileDialog OpenDialog(
+			this, _("Choose a saved game file to open"), wxEmptyString, wxEmptyString,
+			_("Save files (*.sav)|*.sav"),
+			wxFD_OPEN, wxDefaultPosition);
+
+		if (OpenDialog.ShowModal() == wxID_OK) // if the user clicks "Open" instead of "Cancel"
+		{
+			wxString wxFile = OpenDialog.GetPath(); // Set the Title to reflect the file open
+			game = new GameState(*player, *map);
+			uint16_t tmpNodeID;
+			game->LoadFromFile(wxFile.ToStdString(), &tmpNodeID);
+			bGameSaved = true;
+			CurrentRoom = tmpNodeID;
+			delete game;
+			game = nullptr;
+			PrologueDone = true;  // don't run the prologue
+			bRefresh = true;
+			return;
+		}
+	}// if the dialog was cancelled, carry on
 }
 
 void cMain::OnSave(wxCommandEvent& evt)
@@ -492,7 +522,7 @@ void cMain::NewOrOpen()
 			return;
 		}
 	}
-	else // Offer the option to open an existing game
+	else // Offer the option to start a new game
 	{
 		StartWindow = new StartDialog(this, wxID_ANY, "Welcome - first run of the game", wxDefaultPosition, wxSize(400, 200));
 		StartWindow->ShowModal();

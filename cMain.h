@@ -77,6 +77,7 @@ public:
 	// event functions
 	void OnExit(wxCommandEvent& evt);
 	void OnNew(wxCommandEvent& evt);
+	void OnOpen(wxCommandEvent& evt);
 	void OnSave(wxCommandEvent& evt);
 
 	void CreateMenu();

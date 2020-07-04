@@ -70,7 +70,7 @@ GameSetup::~GameSetup()
 
 bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 {// allocates the default Items to the default rooms - called at the start of the game
-	// NOTE:  In general, alny Item that is Takeable should also be Droppable
+	// NOTE:  In general, any Item that is Takeable should also be Droppable
 	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable | Droppable);
 	AddInfoAndConversationToMap(GameMap, 
 		"Lady behind the counter", 
@@ -78,12 +78,13 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		WEIGHTLESS, 
 		TIC, 
 		Talkable, 
-		"\n\tHello.\nLong time no see.\nWould you like me to let you into the Town Hall through the TIC?\n\n", 
+		"\n\n\tHello.\nLong time no see.\nWould you like me to let you into the Town Hall through the TIC?\n\n", 
 		GainEntryToTownHall);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
+	
 	return true;
 	
 }

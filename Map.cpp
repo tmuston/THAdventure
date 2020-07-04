@@ -259,9 +259,11 @@ std::istream& operator>>(std::istream& is, Map& m)  // load
 	while (std::getline(is, tmpMapString))
 	{ // break up the line and store its contents
 		tmpMapNodeID = std::stoi(tmpMapString);
-		while (size_t pos = tmpMapString.find(":") != std::string::npos)
+		while (size_t pos = tmpMapString.find(':') != std::string::npos) // pos gives an incorrect value if the Mapnode ID is greater than 9
 		{
 			tmpMapString = tmpMapString.substr(pos + 1);  // chop the beginning
+			if (tmpMapString[0] == ':')
+				tmpMapString[0] = ' ';// nasty hack.  Will only work up to 99 mapnodes
 			tmpItemID = std::stoi(tmpMapString);
 			MapNode* mn = m.GetMapNodeByID(tmpMapNodeID);
 			std::vector<Item>::iterator it;
@@ -277,6 +279,7 @@ std::istream& operator>>(std::istream& is, Map& m)  // load
 				}
 				
 			}
+			
 		}
 	}
 

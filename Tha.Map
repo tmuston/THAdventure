@@ -7,16 +7,27 @@ THAMap
 ~~6~Lower stairs~A wide set of sweeping stone stairs, with evidence of very recent beer stains.~0~0~0~0~7~4
 ~~7~Upper stairs~Stairs leading to the top corridor.~0~0~0~0~13~6
 ~~8~Corridor to the front toilets~There is rather a lot of toilet paper thrown onto the floor here, and the aroma suggests that someone may well have been slightly unwell last night.~9~4~10~0~0~0
-~~9~Front toilets~Both toilet doors are jammed open bymore toilet paper.  ~0~0~8~0~0~0
+~~9~Front toilets~Both toilet doors are jammed open by more toilet paper.  ~0~0~8~0~0~0
 ~~10~Disabled toilets~Now you know where the smell was coming from.  This is going to need more than a bit of tidying.  ~8~0~0~0~0~0
 ~~11~Bar area~This isn't quite as bad as expected.  Someone's obviously been annoyed, as there is a large boot print on the door, but apart from that it's business as usual.~12~0~4~0~0~0
-~~12~Main Hall~The main hall is almost completely filled with chairs and round tables.  The floor is in a state that can only be described as carnage.  <newline><newline>You're going to need the services of Henry the vacuum cleaner here.~0~0~11~0~0~0
-~~13~Top Corridor~The top corridor is eerily quiet and dark.  Not even the traffic outside penetrates here.~0~0~0~0~0~7
+~~12~Main Hall~The main hall is almost completely filled with chairs and round tables.  The floor is in a state that can only be described as carnage.  <newline><newline>You're going to need the services of Henry the vacuum cleaner here.~23~0~11~25~0~0
+~~13~Top Corridor~The top corridor is eerily quiet and dark.  Not even the traffic outside penetrates here.~14~0~0~0~0~7
 ~~14~Top corridor steps~You stand on top of two stone steps.  Careful you don't trip~15~16~13~17~0~0
 ~~15~Top of the balcony~Although the view of the hall from here is breathtaking, so is the mess from last night's party.~0~19~0~18~0~0
 ~~16~Lift room~This is a small room with two mysteriously locked doors, plus a toilet and a lift.~21~20~0~14~0~0
 ~~17~Kitchen~This is a small kitchen/staff room.  there is a fridge in here and a kettle.  No time for a cuppa!~0~14~0~0~0~0
-~~18~Balcony west side~This side of the balcony has a few chairs stewn around.  Obviously somebody has been having fun up here~0~0~15~0~0~0
+~~18~Balcony west side~This side of the balcony has a few chairs stewn around.  Obviously somebody has been having fun up here~22~0~15~0~0~0
 ~~19~Balcony east side~There doesn't seem to have been much chaos on this side of the balcony.  One less cleaning job~0~0~15~0~0~0
 ~~20~Upstairs toilet~There is a broken toilet seat, and someone has been doing something rather 'adult' up against the mirror~0~0~0~16~0~0
 ~~21~Lift~You press the lift button, and eventually the lift arrives.~0~0~0~0~0~19
+~~22~Rear staircase~This stairwell feels somehow 'creepy'.  There is a room opposite that is locked, although nobody has  had a key to the door for years.~0~0~18~0~0~23
+~~23~Loading bay~This is a small room at the bottom of the rear stairs.  There is a room to the east, a door to the west and a pair of fire doors directly in front of you.~0~0~12~24~22~0
+~~24~Rear store room~This room contains stacks of chairs, pieces of staging and general detritus.~0~23~0~0~0~0
+~~25~Main toilet corridor~This corridor contains the main Gents and Ladies toilets, and also a fire door.~27~12~26~29~0~0
+~~26~Main gents toilets~I bet you wish you'd not looked in here.  It looks like a bomb has hit the place.  Toilet paper and a broken seat litter the floor.  The water is soaked because somebody blocked a sink and flooded the floor, and somebody has been ill in one of the urinals~25~0~0~0~0~0
+~~27~Main ladies toilets~This room is so messed up it's scary.  One of the cubicle doors is hanging off its hinges.  There is toilet paper and face powder covering every surface.~0~0~25~0~0~0
+~~28~Main toilet corridor steps~This corridor steps lead to a service entry door.~0~25~29~0~0~0
+~~29~Dumping ground~You open the service door.  There are a few decorative tables piled against the wall.  There is a staircase going upwards and a door facing you.~28~0~30~31~0~0
+~~30~Rear entrance corridor~This corridor leads out to the kitchen and the rear exit.  The kitchen is locked.~29~0~0~0~0~0
+~~31~Rear office staircase~This staircase leads upwards to a corridor.~0~29~0~0~32~0
+~~32~Rear office upstairs corridor~This corridor gives a nice view of the Town Hall tower.  There are two doors, both locked.~0~0~0~0~0~29

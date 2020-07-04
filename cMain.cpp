@@ -154,7 +154,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	map->LoadMap(gSetup->GetMapName());
 	
 	gSetup->InitFirstRun(*map, *player);
-	player->SetMap(*map);
+	player->SetMap(map);
 	gSetup->SetMap(map);
 	NewOrOpen();
 	wxString NameText = "Player Name: " + player->GetName();
@@ -245,7 +245,8 @@ void cMain::OnNew(wxCommandEvent& evt)
 	vItemInfo.clear();
 	ZeroItemID();
 	gSetup->InitFirstRun(*map, *player);
-	
+	player->SetMap(map);
+	gSetup->SetMap(map);
 	wxString NameText = "Player Name: " + player->GetName();
 	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
 	lblPlayerName->SetLabelText(NameText);
@@ -881,8 +882,8 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			}
 			else
 			{
-				//player->AddItemID(id);
-				player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
+				player->AddItemID(id);
+				//player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
 				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 
 				map->Replace(CurrentMapNode);

@@ -78,7 +78,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		WEIGHTLESS, 
 		TIC, 
 		Talkable, 
-		"\n\n\tHello.\nLong time no see.\nWould you like me to let you into the Town Hall through the TIC?\n\n", 
+		"\n\nThe lady behind the counter says \n\t\"Hello.\nLong time no see.\nI\'ll let you into the Town Hall through the TIC\"\n\n", 
 		GainEntryToTownHall);
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);

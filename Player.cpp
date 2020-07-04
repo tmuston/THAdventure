@@ -86,7 +86,7 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 		switch (tmpAction)
 		{
 		case Eatable:// remove from MapNode and increment health
-			
+			RemoveItemID(id);
 			pNode.DropItem(pNode.ItemsInNode[found]);
 			
 			AddHealth(10);
@@ -94,6 +94,7 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 			break;
 
 		case Drinkable:
+			RemoveItemID(id);
 			pNode.DropItem(pNode.ItemsInNode[found]);
 			
 			AddHealth(20);
@@ -104,13 +105,14 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 
 			if (function)
 			{
-				function(mainwin);// <<<<  Wrong !  Should be the main window, not the player
-				
+				function(mainwin);
+				RemoveItemID(id);
 				pNode.DropItem(pNode.ItemsInNode[found]);
 
 			}
 			break;
 		case Droppable:
+			RemoveItemID(id);
 			pNode.DropItem(pNode.ItemsInNode[found]);
 			break;
 		
@@ -144,15 +146,15 @@ uint16_t Player::RemoveHealth(uint16_t h)
 void Player::AddItemID(const uint16_t& itemID)
 {
 	CarriedItemIDs.push_back(itemID);
-	Map& m = GetMap();
+	Map* m = GetMap();
 	// search the Map's individual MapNodes for Items that match ItemID.
 	// there will only be one match or less
-	uint16_t uMapSize = m.GetMapSize();
+	uint16_t uMapSize = m->GetMapSize();
 	for (auto i = 0; i < uMapSize; i++)
 	{
-		if (m.NodesInMap[i].ItemsInNode.size() > 0)
+		if (m->NodesInMap[i].ItemsInNode.size() > 0)
 		{ // found a node that contains Items
-			MapNode mn = m.NodesInMap[i];
+			MapNode mn = m->NodesInMap[i];
 			
 			for(uint16_t j = 0; j < static_cast<uint16_t>(mn.ItemsInNode.size()); j++)
 			{

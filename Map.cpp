@@ -256,14 +256,16 @@ std::istream& operator>>(std::istream& is, Map& m)  // load
 	uint16_t tmpMapNodeID, tmpItemID;
 	std::getline(is, tmpMapString);  // the first line read is empty for some reason
 	uint16_t NodeID = 1;
+	
 	while (std::getline(is, tmpMapString))
 	{ // break up the line and store its contents
 		tmpMapNodeID = std::stoi(tmpMapString);
-		while (size_t pos = tmpMapString.find(':') != std::string::npos) // pos gives an incorrect value if the Mapnode ID is greater than 9
+		size_t pos = 0;
+		while ((pos = tmpMapString.find(':', pos)) != std::string::npos)
 		{
+			//size_t pos = tmpMapString.find(':');
 			tmpMapString = tmpMapString.substr(pos + 1);  // chop the beginning
-			if (tmpMapString[0] == ':')
-				tmpMapString[0] = ' ';// nasty hack.  Will only work up to 99 mapnodes
+			
 			tmpItemID = std::stoi(tmpMapString);
 			MapNode* mn = m.GetMapNodeByID(tmpMapNodeID);
 			std::vector<Item>::iterator it;

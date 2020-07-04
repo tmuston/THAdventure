@@ -123,7 +123,7 @@ std::string MapNode::GetDesc()
 	std::string search = "<newline>";
 	std::string replace = "\n";
 	
-	while ((pos = Description.find(search, pos)) != std::string::npos)
+	while ((pos = Description.find(search, pos)) != std::string::npos) 
 	{
 		Description.replace(pos, search.length(), replace);
 		pos += replace.length();

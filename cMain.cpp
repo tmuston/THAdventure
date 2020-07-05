@@ -587,15 +587,16 @@ void cMain::PlaySFX(std::string fName)
 void cMain::WaitForAnyKey()
 {
 	bRefresh = false;
-	txtDesc->SetForegroundColour(*wxRED);
+	//txtDesc->SetForegroundColour(*wxRED);
 	this->SetFocus();
+
 	AddToDesc("\n\n\t\t Press any key to continue ...");
 	while (!bRefresh)
 	{
 		wxYield();
 		wxMilliSleep(20);
 	}
-	txtDesc->SetForegroundColour(*wxBLACK);
+	//txtDesc->SetForegroundColour(*wxBLACK);
 
 	
 	

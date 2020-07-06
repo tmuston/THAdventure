@@ -22,11 +22,12 @@
 
 
 #include "wx/wx.h"
+#include "wx/stdpaths.h"
+#include "wx/filename.h"
 #include "wx/utils.h"
 #include <iostream>
 #include "map.h"
 #include "BuildOptions.h"
-//#include <functional>
 #include "Player.h"  // in some games, you might want to give the player some initial items - if you're a wuss
 #include "cMain.h"
 

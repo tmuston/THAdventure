@@ -511,13 +511,14 @@ void cMain::ProcessItems()
 void cMain::NewOrOpen()
 {// If no saved games exist, ask for a player name
  // otherwise ask which saved game to load
- 	wxDir d(wxGetCwd());
+ 	wxDir d(wxStandardPaths::Get().GetUserLocalDataDir());
+	//wxString DataPath = wxStandardPaths::Get().GetUserLocalDataDir();
 	wxString fName;
 	bool bSaveExists = d.GetFirst(&fName, wxT("*.sav"));
 	if(bSaveExists)
 	{
 		wxFileDialog OpenDialog(
-			this, _("Choose a saved game file to open"), wxEmptyString, wxEmptyString,
+			this, _("Choose a saved game file to open"), d.GetName(), wxEmptyString,
 			_("Save files (*.sav)|*.sav"),
 			wxFD_OPEN, wxDefaultPosition);
 

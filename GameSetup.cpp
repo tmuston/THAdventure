@@ -71,11 +71,7 @@ enum
 GameSetup::GameSetup()
 {// constructor
 	wxString DataPath = wxStandardPaths::Get().GetUserLocalDataDir();
-	// if DataPath doesn't exist, create it
-	//wxFileName fName(DataPath);
-	//if (!fName.Mkdir(wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL))
-	//	wxMessageBox("Can't create the data folder", "Oops");
-
+	
 	if (!wxFileName::Mkdir(DataPath, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL))
 		 wxMessageBox("Can't create the data folder", "Oops");
 	MapName = "THA.MAP";

@@ -93,9 +93,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 600));
 	panel->SetBackgroundColour(wxColour(120, 120, 160));
-	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
+	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, MEDIA_BACKEND);
 	
-	Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxMEDIABACKEND_WMP10);
+	Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, MEDIA_BACKEND);
 	Music->SetVolume(0.0);
 	Music->Load(gSetup->GetMusicFile());
 

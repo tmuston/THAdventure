@@ -23,5 +23,17 @@
 	#define NOSPLASH
 	#define NOPROLOGUE
 	#define NOEPILOGUE
+#endif  // TIM_TESTING
+
+#ifdef __WINDOWS__
+#define MEDIA_BACKEND wxMEDIABACKEND_WMP10
 #endif
+
+#ifdef __LINUX__
+#define MEDIA_BACKEND wxMEDIABACKEND_GSTREAMER
 #endif
+#ifdef __APPLE__
+#define MEDIA_BACKEND wxMEDIABACKEND_QUICKTIME
+#endif
+
+#endif  // BUILDOPTS_H

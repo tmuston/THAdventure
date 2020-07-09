@@ -34,6 +34,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "wx/wx.h"
+#include "wx/snglinst.h"
 #include "cMain.h"
 
 
@@ -44,9 +45,12 @@ public:
 	cApp();
 	~cApp();
 	virtual bool OnInit();
+	int OnExit();
+
 	
 private:
 	cMain* m_frame1 = nullptr;
+	wxSingleInstanceChecker* checker = nullptr;
 };
 #endif //APP_H
 

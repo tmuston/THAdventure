@@ -49,7 +49,18 @@ cApp::~cApp()
 }
 
 bool cApp::OnInit()
-{// add a splash screen  id NOSPLASH isn't defined in cApp.h  Less of a pain during testing to not have to wait
+{
+	// if another instance is running, bail out pronto
+	checker = new wxSingleInstanceChecker;
+	if (checker->IsAnotherRunning())
+	{
+		wxMessageBox("Another instance of the program is already running!", "Ooops");
+		delete checker;
+		checker = nullptr;
+		return false;
+	}
+	
+// add a splash screen  id NOSPLASH isn't defined in cApp.h  Less of a pain during testing to not have to wait
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;
@@ -74,4 +85,10 @@ bool cApp::OnInit()
 
 	m_frame1->Show();
 	return true;
+}
+
+int cApp::OnExit()
+{
+	delete checker;
+	return 0;
 }

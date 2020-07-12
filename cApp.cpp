@@ -90,5 +90,6 @@ bool cApp::OnInit()
 int cApp::OnExit()
 {
 	delete checker;
+	checker = nullptr;
 	return 0;
 }

@@ -84,7 +84,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	// create a wxConfig object - in this case an ini file
 	IniConfig = new wxFileConfig(wxT(""), wxT(""), (gSetup->GetIniFileName()), wxT(""), wxCONFIG_USE_RELATIVE_PATH);
-
+	
 	wxConfigBase::Set(IniConfig);
 	IniConfig->EnableAutoSave();
 	IniConfig->SetPath(wxT("/Sound"));
@@ -236,6 +236,11 @@ cMain::~cMain()
 		game = nullptr;
 	}
 
+	if (IniConfig != nullptr)
+	{
+		delete IniConfig;
+		IniConfig = nullptr;
+	}
 }
 
 void cMain::OnExit(wxCommandEvent& evt)

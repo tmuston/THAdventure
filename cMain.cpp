@@ -34,6 +34,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "wx/dir.h"
+#include "wx/html/helpctrl.h"
 #include "GameSetup.h"
 #include "cMain.h"
 #include "version.h"
@@ -164,7 +165,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	lbItems->SetFont(*fntDesc);
 	lbPlayerItems->SetFont(*fntDesc);
 	lbItems->Show(false);
-		
+	
 	btnGo = new wxButton(panel, tmID_GOBUTTON, wxT("Do it!"), wxPoint(100, 490), wxSize(450, 40));
 	btnGo->Enable(false);
 	//Do all the map stuff

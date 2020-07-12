@@ -56,13 +56,7 @@ public:
 	
 private:
 	
-	//bool MakeNodeSection();
-	/*std::string PlayerName = "";
-	uint16_t PlayerWeight = 0;
-	uint16_t PlayerHealth = 0;
-	std::vector<uint16_t> PlayerItemIDs;
-	std::string PlayerSection = "";
-	std::string NodeSection = "";*/
+	
 	Player* localPlayer = nullptr;
 	Map* localMap = nullptr;
 };

@@ -124,7 +124,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		Talkable, 
 		"\n\nThe lady behind the counter says \n\t\"Hello.\nLong time no see.\nI\'ll let you into the Town Hall through the TIC\"\n\n", 
 		GainEntryToTownHall);
-	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable);
+	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable, PressFrontDoorButton);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
@@ -270,4 +270,20 @@ void GainEntryToTownHall(void* mainwin)
 	c->EnableCurrentMapNodeExit(0, OUTER_FOYER);
 	c->Refresh();
 	
+}
+
+void PressFrontDoorButton(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+	c->PlaySFX("weird.wav");
+	c->FlashPanelBlack();
+	c->ClearDesc();
+
+	c->AddToDesc("\nYou press the button.  Slowly the doors start to open,\nand then there is a loud bang and the doors slam shut.\n\n");
+
+
+	c->AddToDesc("That's torn it!\n\n");
+	
+
+	c->WaitForAnyKey();
 }

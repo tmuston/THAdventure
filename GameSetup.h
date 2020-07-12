@@ -109,5 +109,6 @@ private:
 void UseWalkingStick(void* mainwin);
 void TriggerGhosts(void* mainwin);
 void GainEntryToTownHall(void* mainwin);
+void PressFrontDoorButton(void* mainwin);
 
 #endif // GAMESETUP_H

@@ -31,6 +31,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define VERSION_MAJOR "0"
-#define VERSION_MINOR ".9.9.1 BETA 2"
+#define VERSION_MINOR ".9.9.2 BETA 2"
 #endif // VERSION_H
 

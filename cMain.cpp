@@ -67,6 +67,8 @@ EVT_BUTTON(tmID_DOWN, OnDown)
 EVT_BUTTON(tmID_GOBUTTON, OnDoIt)
 EVT_BUTTON(tmID_PLAYERBUTTON, OnPlayerButton)
 EVT_KEY_DOWN(OnKeyDown)
+EVT_LISTBOX_DCLICK(tmID_LISTBOX, OnDoIt)
+EVT_LISTBOX_DCLICK(tmID_PLAYERLISTBOX, OnPlayerButton)
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -143,26 +145,37 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	fntTitle->AddPrivateFont(gSetup->GetTitleFont());
 	fntTitle->SetFaceName(gSetup->GetTitleFaceName());
 	txtTitle->SetFont(*fntTitle);
+	txtTitle->SetToolTip(wxT("This is the name of the current location"));
 	
 	fntDesc = new wxFont(14, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
-
+	fntPlayerInfo = new wxFont(10, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, "Arial");
 	txtDesc->SetFont(*fntDesc);
+	txtDesc->SetToolTip(wxT("This window describes the action of the game"));
 	// player stuff
 
 	box = new wxStaticBox(panel, wxID_ANY, "Player information", wxPoint(50, 340), wxSize(700, 80));
 	lblPlayerName = new wxStaticText(panel, tmID_PLAYERNAME, wxT("Player Name:"), wxPoint(70, 360), wxSize(100, 20));
 	lblPlayerHealth = new wxStaticText(panel, tmID_PLAYERHEALTH, wxT("Player Health:"), wxPoint(70, 380), wxSize(100, 20));
+	lblPlayerName->SetFont(*fntPlayerInfo);
+	lblPlayerHealth->SetFont(*fntPlayerInfo);
 	btnPlayer = new wxButton(panel, tmID_PLAYERBUTTON, wxT("Do it!"), wxPoint(630, 360), wxSize(100, 40));
 	lbPlayerItems = new wxListBox(panel, tmID_PLAYERLISTBOX, wxPoint(250,360), wxSize(370,50));
+	lbPlayerItems->SetToolTip(wxT("Select an option from the list, and press the button to the right"));
 	btnN = new wxButton(panel, tmID_NORTH, wxT("N"), wxPoint(628, 435), wxSize(25, 25));
 	btnE = new wxButton(panel, tmID_EAST, wxT("E"), wxPoint(678, 460), wxSize(25, 25));
 	btnS = new wxButton(panel, tmID_SOUTH, wxT("S"), wxPoint(628, 485), wxSize(25, 25));
 	btnW = new wxButton(panel, tmID_WEST, wxT("W"), wxPoint(578, 460), wxSize(25, 25));
 	btnU = new wxButton(panel, tmID_UP, wxT("U"), wxPoint(725, 435), wxSize(25, 32));
 	btnD = new wxButton(panel, tmID_DOWN, wxT("D"), wxPoint(725, 480), wxSize(25, 32));
-	
+	btnN->SetToolTip(wxT("Go North"));
+	btnE->SetToolTip(wxT("Go East"));
+	btnS->SetToolTip(wxT("Go South"));
+	btnW->SetToolTip(wxT("Go West"));
+	btnU->SetToolTip(wxT("Go Up"));
+	btnD->SetToolTip(wxT("Go Down"));
 	lbItems = new wxListBox(panel, tmID_LISTBOX, wxPoint(100, 430), wxSize(450, 50));
 	lbItems->SetFont(*fntDesc);
+	lbItems->SetToolTip(wxT("Select an option from the list, and press the button below"));
 	lbPlayerItems->SetFont(*fntDesc);
 	lbItems->Show(false);
 	
@@ -182,7 +195,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	UpdatePlayerListBox();
 	
 	lblPlayerName->SetLabelText(NameText);
+	lblPlayerName->SetToolTip(wxT("The player's name"));
 	lblPlayerHealth->SetLabelText(HealthText);
+	lblPlayerHealth->SetToolTip(wxT("The player's level of health.  If this reaches zero, it's goodnight Vienna"));
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	GameOverData = gSetup->GameOver();
@@ -214,6 +229,11 @@ cMain::~cMain()
 	{
 		delete fntTitle;
 		fntTitle = nullptr;
+	}
+	if (fntPlayerInfo != nullptr)
+	{
+		delete fntPlayerInfo;
+		fntPlayerInfo = nullptr;
 	}
 	if (loopTimer != nullptr)
 	{
@@ -1106,6 +1126,7 @@ void cMain::CreateMenu()
 	fileMenu->Append(wxID_EXIT, _T("Exit"));
 
 	menuBar->Append(fileMenu, _T("File"));
+	
 	soundMenu = new wxMenu();
 	soundMenu->Append(tmID_SOUNDOPTIONS, _T("Sound Options"));
 	soundMenu->AppendSeparator();

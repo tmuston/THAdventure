@@ -82,6 +82,7 @@ enum
 	tmID_PLAYERBUTTON,
 	tmID_PLAYERLISTBOX,
 	tmID_KEYPRESS
+	
 };
 
 class cMain : public wxFrame
@@ -166,6 +167,7 @@ private:
 	wxTextCtrl* txtDesc = nullptr;
 	wxFont* fntTitle = nullptr;
 	wxFont* fntDesc = nullptr;
+	wxFont* fntPlayerInfo = nullptr;
 	wxButton* btnN = nullptr;
 	wxButton* btnE = nullptr;
 	wxButton* btnS = nullptr;

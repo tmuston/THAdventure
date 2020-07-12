@@ -73,7 +73,16 @@ enum
 	DUMPING_GROUND,
 	REAR_ENTRANCE_CORRIDOR,
 	REAR_OFFICE_STAIRCASE,
-	REAR_OFFICE_CORRIDOR
+	REAR_OFFICE_CORRIDOR,
+	CLOCK_TOWER,
+	MAGISTRATES_COURT,
+	MAGISTRATES_CHAMBER,
+	OLD_CORRIDOR,
+	OLD_STONE_STEPS,
+	OLD_STAIRCASE,
+	OLD_STAIRCASE_BOTTOM,
+	GRAND_GALLERY,
+	CAMPBELL_SUITE
 
 };
 
@@ -124,10 +133,39 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		Talkable, 
 		"\n\nThe lady behind the counter says \n\t\"Hello.\nLong time no see.\nI\'ll let you into the Town Hall through the TIC\"\n\n", 
 		GainEntryToTownHall);
+
+	AddInfoAndConversationToMap(GameMap,
+		"A small boy",
+		"a scruffy young boy of about ten years old.  \n\nHe looks like he doesn't get much to eat.",
+		WEIGHTLESS,
+		CLOCK_TOWER,
+		Talkable,
+		"\n\nNervously, the frightened young boy says \n\t\"Hello, sir.\nPlease don't tell Darius that I'm hiding here.\"\n\n",
+		BoyConversation1);
+
+	AddInfoAndConversationToMap(GameMap,
+		"The boy",
+		"Looking like he's had to be strong all his short life, but really just wants to cry.  \n\n",
+		WEIGHTLESS,
+		INVALID_LOCATION,
+		Talkable,
+		"\n\nThe  boy says \n\t\"It's the year of our Lord 1885, sir.\nDarius will kill us both if we're not careful\"\n\n",
+		BoyConversation2);
+
+	AddInfoAndConversationToMap(GameMap,
+		"The boy",
+		"Looking like he's had to be strong all his short life, but really just wants to cry.  \n\n",
+		WEIGHTLESS,
+		INVALID_LOCATION,
+		Talkable,
+		"\n\nThe  boy replies \n\t\"I know where he might be.\n We\'ll have to be very careful if we\'re to defeat him.  \n\nFollow me.\"\n\n",
+		BoyConversation3);
+
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable, PressFrontDoorButton);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
+	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable);
 	
 	return true;
 	
@@ -229,17 +267,27 @@ std::vector<std::string> GameSetup::GameOver()
 void UseWalkingStick(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
-	c->PlaySFX("weird.wav");
-	c->FlashPanel();
-	
-	c->ClearDesc();
-	c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
-	
+	if (c->CurrentMapNode.GetID() == CAMPBELL_SUITE)
+	{ // use the walking stick as a weapon
+		c->ClearDesc();
+		c->AddToDesc("\nYou attack the evil Darius with the walking stick,\nIt breaks, but causes a lot of damage to Darius's head.\n\n");
+		c->ReduceEnemyHealth(50);
+		Player* p = c->GetPlayer();
+		p->RemoveHealth(15);
+	}
+	else
+	{
+		c->PlaySFX("weird.wav");
+		c->FlashPanel();
 
-	c->AddToDesc("Ouch!\n\n");
-	Player* p = c->GetPlayer();
-	p->RemoveHealth(15);
-	
+		c->ClearDesc();
+		c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
+
+
+		c->AddToDesc("Ouch!\n\n");
+		Player* p = c->GetPlayer();
+		p->RemoveHealth(15);
+	}
 	c->WaitForAnyKey();
 		
 	
@@ -287,3 +335,18 @@ void PressFrontDoorButton(void* mainwin)
 
 	c->WaitForAnyKey();
 }
+
+void BoyConversation1(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+
+}
+void BoyConversation2(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+}
+void BoyConversation3(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+}
+

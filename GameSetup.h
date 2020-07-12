@@ -111,4 +111,8 @@ void TriggerGhosts(void* mainwin);
 void GainEntryToTownHall(void* mainwin);
 void PressFrontDoorButton(void* mainwin);
 
+void BoyConversation1(void* mainwin);
+void BoyConversation2(void* mainwin);
+void BoyConversation3(void* mainwin);
+
 #endif // GAMESETUP_H

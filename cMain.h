@@ -122,7 +122,9 @@ public:
 	void WaitForAnyKey();
 	void EnableCurrentMapNodeExit(uint16_t num, uint16_t room);
 	inline void Refresh() { bRefresh = true, bPlayerRefresh = true; }
-	
+	inline uint16_t GetEnemyHealth() { return EnemyHealth; }
+	bool  ReduceEnemyHealth(uint16_t h);  // returns false if the enemy health hits zero
+	MapNode CurrentMapNode;
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -151,7 +153,7 @@ private:
 	void OnKeyDown(wxKeyEvent& evt);
 	bool m_bGameRunning;
 	Map* map = nullptr;
-	MapNode CurrentMapNode;
+	
 
 	std::string FileName = "";
 	wxPanel* panel = nullptr;
@@ -181,7 +183,7 @@ private:
 	wxStaticText* lblPlayerHealth = nullptr;
 	wxListBox* lbPlayerItems = nullptr;
 	wxButton* btnPlayer = nullptr;
-
+	uint16_t EnemyHealth = 100;
 	bool bComplete = false;
 	bool PrologueDone = false;
 	bool bGameSaved = false;

@@ -653,6 +653,18 @@ void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
 	map->Replace(CurrentMapNode);
 }
 
+bool cMain::ReduceEnemyHealth(uint16_t h)
+{
+	uint16_t health = GetEnemyHealth();
+	if (health = h < 1)
+	
+		return false;
+	EnemyHealth -= h;
+	return true;
+
+	
+}
+
 
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame

@@ -143,7 +143,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		"\n\nNervously, the frightened young boy says \n\t\"Hello, sir.\nPlease don't tell Darius that I'm hiding here.\"\n\n",
 		BoyConversation1);
 
-	AddInfoAndConversationToMap(GameMap,
+	/*AddInfoAndConversationToMap(GameMap,
 		"The boy",
 		"Looking like he's had to be strong all his short life, but really just wants to cry.  \n\n",
 		WEIGHTLESS,
@@ -159,7 +159,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		INVALID_LOCATION,
 		Talkable,
 		"\n\nThe  boy replies \n\t\"I know where he might be.\n We\'ll have to be very careful if we\'re to defeat him.  \n\nFollow me.\"\n\n",
-		BoyConversation3);
+		BoyConversation3);*/
 
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable, PressFrontDoorButton);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
@@ -272,6 +272,7 @@ void UseWalkingStick(void* mainwin)
 		c->ClearDesc();
 		c->AddToDesc("\nYou attack the evil Darius with the walking stick,\nIt breaks, but causes a lot of damage to Darius's head.\n\n");
 		c->ReduceEnemyHealth(50);
+		
 		Player* p = c->GetPlayer();
 		p->RemoveHealth(15);
 	}
@@ -279,7 +280,7 @@ void UseWalkingStick(void* mainwin)
 	{
 		c->PlaySFX("weird.wav");
 		c->FlashPanel();
-
+		
 		c->ClearDesc();
 		c->AddToDesc("\nYou lean on the walking stick,\nIt breaks, leaving you looking foolish on the floor\n\n");
 

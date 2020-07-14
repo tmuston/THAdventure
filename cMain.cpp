@@ -639,12 +639,11 @@ void cMain::WaitForAnyKey()
 	while (!bRefresh)
 	{
 		wxYield();
+		
 		wxMilliSleep(20);
+
 	}
 	//txtDesc->SetForegroundColour(*wxBLACK);
-
-	
-	
 }
 
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
@@ -955,6 +954,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 				
 			if (function)
 				function(this);
+			
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 			map->Replace(CurrentMapNode);
 			
@@ -972,6 +972,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			bRefresh = true;
 			if (function)
 				function(this);
+			
 			break;
 		case Killable:
 			// add some dialogue here
@@ -998,7 +999,8 @@ void cMain::ShowPrologue()
 	txtTitle->Clear();
 	txtTitle->SetValue(wxString("Prologue"));
 	txtDesc->Clear();
-	fileMenu->Enable(wxID_EXIT, false);
+	//fileMenu->Enable(wxID_EXIT, false);
+	SetCloseAllowed(false);
 	DisableAllNavButtons();
 	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
 	{//  need keypress detection, so that the prologue can be cancelled
@@ -1019,7 +1021,8 @@ void cMain::ShowPrologue()
 		::wxMilliSleep(200);
 	}
 	txtDesc->Clear();
-	fileMenu->Enable(wxID_EXIT, true);
+	//fileMenu->Enable(wxID_EXIT, true);
+	SetCloseAllowed(true);
 }
 
 void cMain::ShowGameOver()

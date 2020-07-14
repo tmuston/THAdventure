@@ -124,7 +124,10 @@ public:
 	inline void Refresh() { bRefresh = true, bPlayerRefresh = true; }
 	inline uint16_t GetEnemyHealth() { return EnemyHealth; }
 	bool  ReduceEnemyHealth(uint16_t h);  // returns false if the enemy health hits zero
+	//inline void SetMusicPlaybackRate(const double r) { Music->SetPlaybackRate(r); }
 	MapNode CurrentMapNode;
+	inline void SetCloseAllowed(bool val) { bCloseAllowed = val; }
+	inline bool GetCloseAllowed() { return bCloseAllowed; }
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -193,6 +196,7 @@ private:
 	StartDialog* StartWindow = nullptr;
 	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
+	bool bCloseAllowed = true;
 	std::vector<std::tuple<uint16_t, uint16_t>> vItemInfo; //stores Item ID and Item Action, used by OnDoIt
 	// data for the prologue and epilogue
 	std::vector<std::string> PrologueData;

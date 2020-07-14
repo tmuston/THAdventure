@@ -69,6 +69,7 @@ EVT_BUTTON(tmID_PLAYERBUTTON, OnPlayerButton)
 EVT_KEY_DOWN(OnKeyDown)
 EVT_LISTBOX_DCLICK(tmID_LISTBOX, OnDoIt)
 EVT_LISTBOX_DCLICK(tmID_PLAYERLISTBOX, OnPlayerButton)
+
 wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
@@ -632,6 +633,9 @@ void cMain::PlaySFX(std::string fName)
 void cMain::WaitForAnyKey()
 {
 	bRefresh = false;
+	
+	EnableCloseButton(false);
+	fileMenu->Enable(wxID_EXIT, false);
 	//txtDesc->SetForegroundColour(*wxRED);
 	this->SetFocus();
 
@@ -644,6 +648,9 @@ void cMain::WaitForAnyKey()
 
 	}
 	//txtDesc->SetForegroundColour(*wxBLACK);
+	
+	EnableCloseButton(true);
+	fileMenu->Enable(wxID_EXIT, true);
 }
 
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
@@ -765,6 +772,8 @@ void cMain::OnHealthTimer(wxTimerEvent& evt)
 	if (player != nullptr)
 		player->RemoveHealth(1);
 }
+
+
 
 void cMain::OnNorth(wxCommandEvent& evt)
 {// set bRefresh
@@ -960,6 +969,8 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			break;
 		case Talkable:
+			EnableCloseButton(false);
+			fileMenu->Enable(wxID_EXIT, false);
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();
 			function = CurrentMapNode.ItemsInNode[found].f;
 			txtDesc->AppendText(conv);
@@ -970,9 +981,15 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 				wxMilliSleep(50);
 			}
 			bRefresh = true;
-			if (function)
-				function(this);
 			
+			if (function)
+			{
+				
+				function(this);
+				
+			}
+			EnableCloseButton(true);
+			fileMenu->Enable(wxID_EXIT, true);
 			break;
 		case Killable:
 			// add some dialogue here
@@ -999,8 +1016,9 @@ void cMain::ShowPrologue()
 	txtTitle->Clear();
 	txtTitle->SetValue(wxString("Prologue"));
 	txtDesc->Clear();
-	//fileMenu->Enable(wxID_EXIT, false);
-	SetCloseAllowed(false);
+	fileMenu->Enable(wxID_EXIT, false);
+	EnableCloseButton(false);
+	
 	DisableAllNavButtons();
 	for (auto i = PrologueData.begin(); i != PrologueData.end(); i++)
 	{//  need keypress detection, so that the prologue can be cancelled
@@ -1021,8 +1039,9 @@ void cMain::ShowPrologue()
 		::wxMilliSleep(200);
 	}
 	txtDesc->Clear();
-	//fileMenu->Enable(wxID_EXIT, true);
-	SetCloseAllowed(true);
+	fileMenu->Enable(wxID_EXIT, true);
+	EnableCloseButton(true);
+	
 }
 
 void cMain::ShowGameOver()

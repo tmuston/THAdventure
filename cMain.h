@@ -137,6 +137,7 @@ private:
 	void OnIdle(wxIdleEvent& evt);
 	void OnGameLoop(wxTimerEvent& evt);
 	void OnHealthTimer(wxTimerEvent& evt);
+	
 	bool bRefresh = false;
 	bool bPlayerRefresh = false;
 	// Nav button event handles

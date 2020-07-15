@@ -74,7 +74,8 @@ public:
 	inline uint16_t GetLocation() { return CurrentLocation; }
 	bool SetLocation(uint16_t loc);
 	inline uint8_t GetProperties() { return Properties; }  // get all properties
-	
+	inline void SetKeep(bool bKeep) { KeepItemAfterUse = bKeep; }
+	inline bool GetKeep() { return KeepItemAfterUse; }
 	inline std::string GetConversation() { return Conversation; }
 	inline void SetConversation(std::string conv) { Conversation = conv; }
 
@@ -93,6 +94,7 @@ private:
 	std::string Conversation = "";
 	// Which room is the item currently in (zero means it's being carried by the player)
 	uint16_t CurrentLocation = 0;
+	bool KeepItemAfterUse = false;
 	
 
 };

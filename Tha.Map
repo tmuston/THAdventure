@@ -13,7 +13,7 @@ THAMap
 ~~12~Main Hall~The main hall is almost completely filled with chairs and round tables.  The floor is in a state that can only be described as carnage.  <newline><newline>You're going to need the services of Henry the vacuum cleaner here.~23~0~11~25~0~0
 ~~13~Top Corridor~The top corridor is eerily quiet and dark.  Not even the traffic outside penetrates here.~14~0~0~0~0~7
 ~~14~Top corridor steps~You stand on top of two stone steps.  Careful you don't trip~15~16~13~17~0~0
-~~15~Top of the balcony~Although the view of the hall from here is breathtaking, so is the mess from last night's party.~0~19~0~18~0~0
+~~15~Top of the balcony~Although the view of the hall from here is breathtaking, so is the mess from last night's party.~0~19~14~18~0~0
 ~~16~Lift room~This is a small room with two mysteriously locked doors, plus a toilet and a lift.~21~20~0~14~0~0
 ~~17~Kitchen~This is a small kitchen/staff room.  there is a fridge in here and a kettle.  No time for a cuppa!~0~14~0~0~0~0
 ~~18~Balcony west side~This side of the balcony has a few chairs stewn around.  Obviously somebody has been having fun up here~22~0~15~0~0~0
@@ -31,12 +31,12 @@ THAMap
 ~~30~Rear entrance corridor~This corridor leads out to the kitchen and the rear exit.  The kitchen is locked.~29~0~0~0~0~0
 ~~31~Rear office staircase~This staircase leads upwards to a corridor.~0~0~0~29~32~0
 ~~32~Rear office upstairs corridor~This corridor gives a nice view of the Town Hall tower.  There are two doors, both locked.~0~0~0~0~0~29
-~~33~Clock Tower~You feel faint.<newline>You are stood inside the clock tower.  Looking down through the slats in the tower you see an odd sight.  Instead of cars and lorries, you see horses and carts.  The streetlights are all gas-powered.~33~0~0~0~0~0
+~~33~Clock Tower~You feel faint.<newline>You are stood inside the clock tower.  Looking down through the slats in the tower you see an odd sight.  Instead of cars and lorries, you see horses and carts.  The streetlights are all gas-powered.~34~0~0~0~0~0
 ~~34~Magistrates court~This is definitely strange.  You are in what appears to be a court room.  There is a dock, and a 'bench' where the three magistrates would sit.<newline>It looks like the room is lit by gaslights.~35~36~33~0~0~0
 ~~35~Magistrates chamber~This room contains various items of finery, a few chairs and some locked cupboards.~0~0~34~0~0~0
 ~~36~Dimly lit corridor~This is a very darkly lit corridor.  The walls are decorated with plaques that show the charitable nature of the town's people in providing for the poor and needy.~37~0~38~34~0~0
-~~37~Stone steps~These steps look familiar, but they are so dimly lit that it's difficult to tell.  There is a door in front of you.~38~0~36~0~0~0
-~~38~Staircase~You stand at the top of a winding stone staircase.  ~36~0~0~0~0~40
+~~37~Stone steps~These steps look familiar, but they are so dimly lit that it's difficult to tell.  There is a door in front of you.~40~0~36~0~0~0
+~~38~Staircase~You stand at the top of a winding stone staircase.  ~36~0~0~0~0~39
 ~~39~Bottom of staircase~You are at the bottom of the stone staircase.<newline>You can go no further, as your path is blocked by a large iron gate.~0~0~0~0~38~0
 ~~40~Grand gallery~This gallery looks familiar, and yet somehow different.  There is an open door at the end of the gallery.~41~0~37~0~0~0
 ~~41~Rear room~This room has windows on two sides, and has a faint aroma of cigar smoke.<newline>It feels really unpleasantly oppressive.~0~0~40~0~0~0

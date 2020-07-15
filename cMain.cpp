@@ -644,7 +644,7 @@ void cMain::WaitForAnyKey()
 	{
 		wxYield();
 		
-		wxMilliSleep(20);
+		wxMilliSleep(5);
 
 	}
 	//txtDesc->SetForegroundColour(*wxBLACK);
@@ -963,9 +963,11 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 				
 			if (function)
 				function(this);
-			
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			map->Replace(CurrentMapNode);
+			if (CurrentMapNode.ItemsInNode[found].GetKeep() == false)
+			{
+				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+				map->Replace(CurrentMapNode);
+			}
 			
 			break;
 		case Talkable:

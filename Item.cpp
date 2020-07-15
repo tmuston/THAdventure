@@ -58,6 +58,7 @@ Item::Item(const Item& i)
 	Conversation = i.Conversation;
 	CurrentLocation = i.CurrentLocation;
 	f = i.f;
+	KeepItemAfterUse = i.KeepItemAfterUse;
 }
 
 Item::~Item()

@@ -166,7 +166,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable);
-	
+	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
 	return true;
 	
 }
@@ -178,12 +178,15 @@ void GameSetup::AddInfoToMap(Map& theMap,
 	uint16_t location, 
 	uint8_t props, 
 	
-	void(*func)(void* mainwin))
+	void(*func)(void* mainwin),
+	bool KeepAfterUse)
 {
 	Item* newItem = new Item(title, desc, weight,props);
 	
 	if (func != nullptr)
 		newItem->f = func;
+	if (KeepAfterUse)
+		newItem->SetKeep(true);
 	theMap.PlaceItemInNode(*newItem, location);
 	delete newItem;
 	
@@ -334,6 +337,49 @@ void PressFrontDoorButton(void* mainwin)
 	c->AddToDesc("That's torn it!\n\n");
 	
 
+	c->WaitForAnyKey();
+}
+
+void UseKey(void* mainwin)
+{// use the key.  It does nothing if not in the correct location
+	cMain* c = (cMain*)mainwin;
+	c->ClearDesc();
+	uint16_t MapNodeID = c->CurrentMapNode.GetID();
+	if (MapNodeID == REAR_STAIRCASE)
+	{
+		c->AddToDesc("The ancient door opens slowly, with an ominous creak\n\nSuddenly you feel faint.\n\nYou pass out briefly\n\n");
+		c->AddToDesc("You feel disoriented\n\n");
+		
+		c->SetCurrentRoom(CLOCK_TOWER);
+		bool found = false;
+		for (auto& ItemID : c->CurrentMapNode.ItemsInNode)
+		{// find the item in the current MapNode that matches the Key's ID
+			if (ItemID.GetName() == "Brass key")
+			{
+				ItemID.SetKeep(false);
+				found = true;
+			}
+		}
+		if (!found)
+		{ // the item should be among the player's carried items
+			for (auto& ItemID : c->player->pNode.ItemsInNode )
+			{// find the item in the current MapNode that matches the Key's ID
+				if (ItemID.GetName() == "Brass key")
+				{
+					ItemID.SetKeep(false);
+					found = true;
+				}
+			}
+
+		}
+		
+		
+		
+	}
+	else
+	{
+		c->AddToDesc("There aren't any locks that fit this key here.\n\n");
+	}
 	c->WaitForAnyKey();
 }
 

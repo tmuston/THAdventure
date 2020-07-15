@@ -63,7 +63,8 @@ public:
 		uint16_t weight, 
 		uint16_t location, 
 		uint8_t props = 0, 
-		void(*func)(void* mainwin) = nullptr);
+		void(*func)(void* mainwin) = nullptr,
+		bool KeepAfterUse = false);
 
 	void AddInfoAndConversationToMap(Map& theMap,
 		std::string title,
@@ -110,6 +111,7 @@ void UseWalkingStick(void* mainwin);
 void TriggerGhosts(void* mainwin);
 void GainEntryToTownHall(void* mainwin);
 void PressFrontDoorButton(void* mainwin);
+void UseKey(void* mainwin);
 
 void BoyConversation1(void* mainwin);
 void BoyConversation2(void* mainwin);

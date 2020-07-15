@@ -122,8 +122,12 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 			if (function)
 			{
 				function(mainwin);
-				RemoveItemID(id);
-				pNode.DropItem(pNode.ItemsInNode[found]);
+				bool keep = pNode.ItemsInNode[found].GetKeep();
+				if (!keep)
+				{
+					RemoveItemID(id);
+					pNode.DropItem(pNode.ItemsInNode[found]);
+				}
 
 			}
 			break;

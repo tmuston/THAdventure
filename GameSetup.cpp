@@ -169,7 +169,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
 	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Usable | Takeable | Droppable);
 	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE, Usable | Takeable | Droppable);
-	AddInfoToMap(GameMap, "Vacuum cleaner base", "The base of the vacuum cleaner.  ", MIDDLEWEIGHT, CAMPBELL_SUITE, Usable | Takeable | Droppable, AssembleVacuum, true);
+	AddInfoToMap(GameMap, "Vacuum cleaner base", "The base of the vacuum cleaner.  ", MIDDLEWEIGHT, INVALID_LOCATION, Usable | Takeable | Droppable, AssembleVacuum, true);
 	AddInfoAndConversationToMap(GameMap,
 		"Darius",
 		"An intensely evil presence \n\nHe has kept the poor boy captive since 1885, and now he \n\nwants to do the same to you.",
@@ -354,14 +354,13 @@ void PressFrontDoorButton(void* mainwin)
 void AssembleVacuum(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
-	c->PlaySFX("weird.wav");
-	c->FlashPanelBlack();
+	
 	c->ClearDesc();
 
-	c->AddToDesc("\nYou press the button.  Slowly the doors start to open,\nand then there is a loud bang and the doors slam shut.\n\n");
+	c->AddToDesc("\nYou see before you the pieces of the vacuum cleaner.\nWith an expertise borne of great experience, you assemble the vacuum and begin work on cleaning the Main Hall.\n\n");
 
 
-	c->AddToDesc("That's torn it!\n\n");
+	c->ShowEpilogue();
 
 
 	c->WaitForAnyKey();

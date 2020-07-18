@@ -329,8 +329,10 @@ void cMain::OnOpen(wxCommandEvent& evt)
 			bRefresh = true;
 			evt.Skip();
 			return;
-		}
-	}// if the dialog was cancelled, carry on
+		}// if the dialog was cancelled, carry on
+	}
+	else
+		wxMessageBox("There are no saved games to open", "Ooops");
 	evt.Skip();
 }
 
@@ -1029,21 +1031,58 @@ void cMain::ShowPrologue()
 		for (int j = 0; j < 10; j++)
 		{// to make the menus a bit more responsive during the prologue
 			wxYield();
-
+			
+				
 			::wxMilliSleep(200);
 		}
 	}
 	
-	for (int j = 0; j < 15; j++)
+	for (int j = 0; j < 150; j++)
 	{// to make the menus a bit more responsive during the prologue
 		wxYield();
-
-		::wxMilliSleep(200);
+		
+		::wxMilliSleep(20);
 	}
+	bRefresh = true;
 	txtDesc->Clear();
 	fileMenu->Enable(wxID_EXIT, true);
 	EnableCloseButton(true);
 	
+}
+
+void cMain::ShowEpilogue()
+{
+	txtTitle->Clear();
+	txtTitle->SetValue(wxString("You won!"));
+	txtDesc->Clear();
+	fileMenu->Enable(wxID_EXIT, false);
+	EnableCloseButton(false);
+
+	DisableAllNavButtons();
+	for (auto i = EpilogueData.begin(); i != EpilogueData.end(); i++)
+	{//  need keypress detection, so that the Eiplogue can be cancelled
+		txtDesc->AppendText(*i);
+		txtDesc->HideNativeCaret();
+		for (int j = 0; j < 10; j++)
+		{// to make the menus a bit more responsive during the prologue
+			wxYield();
+			
+
+			::wxMilliSleep(200);
+		}
+	}
+
+	for (int j = 0; j < 150; j++)
+	{// to make the menus a bit more responsive during the prologue
+		wxYield();
+		if (bRefresh)
+		
+		::wxMilliSleep(20);
+	}
+	txtDesc->Clear();
+	fileMenu->Enable(wxID_EXIT, true);
+	EnableCloseButton(true);
+
 }
 
 void cMain::ShowGameOver()

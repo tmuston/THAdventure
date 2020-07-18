@@ -129,7 +129,7 @@ public:
 	MapNode CurrentMapNode;
 	Map* map = nullptr;
 	Player* player = nullptr;
-	
+	void ShowEpilogue();
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);
@@ -154,6 +154,7 @@ private:
 	void OnPlayerButton(wxCommandEvent& evt);
 	bool ProcessItemAction(uint16_t id, const std::string& action_string, uint16_t possible_actions);
 	void ShowPrologue();
+	
 	void ShowGameOver();
 	void UpdatePlayerListBox();
 	void OnKeyDown(wxKeyEvent& evt);

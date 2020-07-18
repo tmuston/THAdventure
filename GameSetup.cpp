@@ -167,6 +167,17 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable);
 	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
+	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Usable | Takeable | Droppable);
+	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE, Usable | Takeable | Droppable);
+	AddInfoToMap(GameMap, "Vacuum cleaner base", "The base of the vacuum cleaner.  ", MIDDLEWEIGHT, CAMPBELL_SUITE, Usable | Takeable | Droppable, AssembleVacuum, true);
+	AddInfoAndConversationToMap(GameMap,
+		"Darius",
+		"An intensely evil presence \n\nHe has kept the poor boy captive since 1885, and now he \n\nwants to do the same to you.",
+		WEIGHTLESS,
+		CAMPBELL_SUITE,
+		Talkable | Killable,
+		"\n\nDarius hisses\n\t\"This is MY domain.\nYou have violated it with your presence, and\"\n\nyou must die!\n\n",
+		DariusConversation);
 	return true;
 	
 }
@@ -340,6 +351,22 @@ void PressFrontDoorButton(void* mainwin)
 	c->WaitForAnyKey();
 }
 
+void AssembleVacuum(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+	c->PlaySFX("weird.wav");
+	c->FlashPanelBlack();
+	c->ClearDesc();
+
+	c->AddToDesc("\nYou press the button.  Slowly the doors start to open,\nand then there is a loud bang and the doors slam shut.\n\n");
+
+
+	c->AddToDesc("That's torn it!\n\n");
+
+
+	c->WaitForAnyKey();
+}
+
 void UseKey(void* mainwin)
 {// use the key.  It does nothing if not in the correct location
 	cMain* c = (cMain*)mainwin;
@@ -393,6 +420,11 @@ void BoyConversation2(void* mainwin)
 	cMain* c = (cMain*)mainwin;
 }
 void BoyConversation3(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+}
+
+void DariusConversation(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
 }

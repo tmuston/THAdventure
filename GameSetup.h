@@ -111,10 +111,12 @@ void UseWalkingStick(void* mainwin);
 void TriggerGhosts(void* mainwin);
 void GainEntryToTownHall(void* mainwin);
 void PressFrontDoorButton(void* mainwin);
+void AssembleVacuum(void* mainwin);
 void UseKey(void* mainwin);
 
 void BoyConversation1(void* mainwin);
 void BoyConversation2(void* mainwin);
 void BoyConversation3(void* mainwin);
+void DariusConversation(void* mainwin);
 
 #endif // GAMESETUP_H

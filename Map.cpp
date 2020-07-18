@@ -101,6 +101,7 @@ bool Map::SaveMap(std::string fName)
 
 bool Map::LoadMap(std::string fName)
 {
+	
 	std::ifstream file;
 	std::string line; // the line to be read in
 	file.open(fName);
@@ -128,6 +129,11 @@ bool Map::LoadMap(std::string fName)
 	}
 
 	file.close();
+	// add the invisible MapNode, so that items can be hidden until required
+	Nodes* n = new Nodes();
+	MapNode m(INVALID_LOCATION, *n, "Hidden", "Hidden MapNode");
+	this->Add(m);
+	delete n;
 	return true;
 }
 

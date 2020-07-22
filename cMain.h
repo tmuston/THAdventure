@@ -130,6 +130,7 @@ public:
 	Map* map = nullptr;
 	Player* player = nullptr;
 	void ShowEpilogue();
+	bool bBossKilled = false;
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
 	void OnSoundOnOff(wxCommandEvent& evt);

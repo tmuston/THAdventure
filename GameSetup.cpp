@@ -34,6 +34,7 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "GameSetup.h"
+#include <cstdlib>
 
 
 
@@ -176,7 +177,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		WEIGHTLESS,
 		CAMPBELL_SUITE,
 		Talkable | Killable,
-		"\n\nDarius hisses\n\t\"This is MY domain.\nYou have violated it with your presence, and\"\n\nyou must die!\n\n",
+		"\n\nDarius hisses\n\t\"This is MY domain.\nYou have violated it with your presence, and you must die!\n\n",
 		DariusConversation);
 	return true;
 	
@@ -330,7 +331,7 @@ void GainEntryToTownHall(void* mainwin)
 { // this function alters the map to allow a door to open
 	cMain* c = (cMain*)mainwin;
 	// the current MapNode needs it's first exit opening
-	c->EnableCurrentMapNodeExit(0, OUTER_FOYER);
+	c->EnableCurrentMapNodeExit(North, OUTER_FOYER);
 	c->Refresh();
 	
 }
@@ -356,11 +357,28 @@ void AssembleVacuum(void* mainwin)
 	cMain* c = (cMain*)mainwin;
 	
 	c->ClearDesc();
+	// need to check that all pieces of the vacuum are in the current location
+	bool bBase = false;
+	bool bHose = false;
+	bool bTop = false;
+	for (auto items : c->CurrentMapNode.ItemsInNode)
+	{
+		if (items.GetName() == "Vacuum cleaner hose")
+			bHose = true;
+		if (items.GetName() == "Vacuum cleaner base")
+			bBase = true;
+		if (items.GetName() == "Vacuum cleaner top")
+			bTop = true;
+	}
+	if (bHose && bBase && bTop)  // all three elements in the same room
+	{
+		c->AddToDesc("\nYou see before you the pieces of the vacuum cleaner.\nWith an expertise borne of great experience, you assemble the vacuum and begin work on cleaning the Main Hall.\n\n");
 
-	c->AddToDesc("\nYou see before you the pieces of the vacuum cleaner.\nWith an expertise borne of great experience, you assemble the vacuum and begin work on cleaning the Main Hall.\n\n");
 
-
-	c->ShowEpilogue();
+		c->ShowEpilogue();
+	}
+	else
+		c->AddToDesc("\nSorry, you haven't got all the pieces of the vacuum cleaner yet.");
 
 
 	c->WaitForAnyKey();
@@ -426,5 +444,31 @@ void BoyConversation3(void* mainwin)
 void DariusConversation(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
+
+	//  move the remaining piece of the vacuum cleaner to a random room
+	MapNode* mn = c->map->GetMapNodeByID(INVALID_LOCATION);
+	std::srand(std::time(0));
+	
+	
+	for (auto i : mn->ItemsInNode)
+	{  // place all of the items in the hidden node somewhere in the map
+		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
+		/*c->map->PlaceItemInNode(i, iRandVal);
+		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);*/
+		c->map->PlaceItemInNode(i, 4);
+		MapNode* mnNew = c->map->GetMapNodeByID(4);
+		c->map->Replace(*mnNew);
+
+	}
+	if (c->bBossKilled)  // Darius is dead
+	{
+		
+		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
+		c->SetCurrentRoom((uint16_t)iRandVal);
+
+	}
+		
+	
+	
 }
 

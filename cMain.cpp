@@ -999,8 +999,29 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			// add some dialogue here
 			// battles can be tiring.  Remove some health
 			player->RemoveHealth(15);
-			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			map->Replace(CurrentMapNode);
+			
+			bBossKilled = true;
+			EnableCloseButton(false);
+			fileMenu->Enable(wxID_EXIT, false);
+			
+			function = CurrentMapNode.ItemsInNode[found].f;
+			txtDesc->AppendText("\n\n\tYou fight valiantly, and eventually you defeat the enemy\n\n");
+			bRefresh = false;
+			for (uint8_t i = 0; i < 100; i++)
+			{
+				wxYield();
+				wxMilliSleep(50);
+			}
+			bRefresh = true;
+
+			if (function)
+			{
+
+				function(this);
+
+			}
+			EnableCloseButton(true);
+			fileMenu->Enable(wxID_EXIT, true);
 			break;
 		default: //should never happen
 			wxMessageBox("Invalid Item option", "This is embarrassing");

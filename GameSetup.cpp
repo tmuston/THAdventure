@@ -168,8 +168,8 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable);
 	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
-	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Usable | Takeable | Droppable);
-	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE, Usable | Takeable | Droppable);
+	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Takeable | Droppable);
+	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE,  Takeable | Droppable);
 	AddInfoToMap(GameMap, "Vacuum cleaner base", "The base of the vacuum cleaner.  ", MIDDLEWEIGHT, INVALID_LOCATION, Usable | Takeable | Droppable, AssembleVacuum, true);
 	AddInfoAndConversationToMap(GameMap,
 		"Darius",
@@ -461,10 +461,10 @@ void DariusConversation(void* mainwin)
 	for (auto i : mn->ItemsInNode)
 	{  // place all of the items in the hidden node somewhere in the map
 		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
-		/*c->map->PlaceItemInNode(i, iRandVal);
-		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);*/
-		c->map->PlaceItemInNode(i, 4);
-		MapNode* mnNew = c->map->GetMapNodeByID(4);
+		c->map->PlaceItemInNode(i, iRandVal);
+		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);
+		/*c->map->PlaceItemInNode(i, 4);
+		MapNode* mnNew = c->map->GetMapNodeByID(4);*/
 		c->map->Replace(*mnNew);
 
 	}

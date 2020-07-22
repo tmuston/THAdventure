@@ -657,7 +657,7 @@ void cMain::WaitForAnyKey()
 
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
 {// change the room that a MamNode's Exits point towards, or alternatively disable that exit
-	CurrentMapNode.SetExit(num, room);
+	CurrentMapNode.SetExit(num-1, room);
 	map->Replace(CurrentMapNode);
 }
 

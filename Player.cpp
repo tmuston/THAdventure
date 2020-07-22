@@ -182,6 +182,7 @@ void Player::AddItemID(const uint16_t& itemID)
 				{
 					Item item = mn.ItemsInNode[j];
 					pNode.AddItem(item);
+					return;
 				}
 			}
 		}

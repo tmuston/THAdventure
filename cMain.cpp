@@ -951,7 +951,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			else
 			{
 				player->AddItemID(id);
-				//player->pNode.AddItem(CurrentMapNode.ItemsInNode[found]);
+				
 				CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
 
 				map->Replace(CurrentMapNode);
@@ -1103,7 +1103,7 @@ void cMain::ShowEpilogue()
 	txtDesc->Clear();
 	fileMenu->Enable(wxID_EXIT, true);
 	EnableCloseButton(true);
-
+	
 }
 
 void cMain::ShowGameOver()

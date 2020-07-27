@@ -106,6 +106,7 @@ GameSetup::GameSetup()
 	SplashImage = "Splash.png";
 	TitleFont = "England.ttf";
 	TitleFaceName = "England Hand DB";
+	GameTitle = "Town Hall Text Adventure - episode one : The hunt for Henry";
 	
 }
 
@@ -125,7 +126,7 @@ GameSetup::~GameSetup()
 bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 {// allocates the default Items to the default rooms - called at the start of the game
 	// NOTE:  In general, any Item that is Takeable should also be Droppable
-	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable | Droppable);
+	AddInfoToMap(GameMap, "Sandwich", "A Cheese and pickle sandwich - slightly curled", LIGHTWEIGHT, INNER_FOYER, Eatable | Takeable | Droppable, EatFood);
 	AddInfoAndConversationToMap(GameMap, 
 		"Lady behind the counter", 
 		"A very pleasant lady in the prime of her life.  Always ready with a smile.", 
@@ -166,7 +167,7 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
 	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
-	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable);
+	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable, Drink);
 	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
 	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE,  Takeable | Droppable);
@@ -427,6 +428,20 @@ void UseKey(void* mainwin)
 	c->WaitForAnyKey();
 }
 
+void EatFood(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+	c->PlaySFX("yum.wav");
+}
+
+void Drink(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+
+	c->PlaySFX("drink2.wav");
+
+}
+
 void BoyConversation1(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
@@ -463,8 +478,7 @@ void DariusConversation(void* mainwin)
 		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
 		c->map->PlaceItemInNode(i, iRandVal);
 		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);
-		/*c->map->PlaceItemInNode(i, 4);
-		MapNode* mnNew = c->map->GetMapNodeByID(4);*/
+		
 		c->map->Replace(*mnNew);
 
 	}

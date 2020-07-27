@@ -74,7 +74,7 @@ wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
 double gdSfxVolume;
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode one:  The hunt for Henry", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	player = new Player("");
 	map = new Map();
@@ -125,6 +125,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 
 	Centre();
 	CreateMenu();
+	
 	if (IniConfig->Exists(wxT("SoundOn")))
 	{
 		bSoundOn = IniConfig->ReadBool(wxT("SoundOn"), bSoundOn);
@@ -193,6 +194,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Town Hall Text Adventure - episode 
 	wxString NameText = "Player Name: " + player->GetName();
 	wxString HealthText = "Player Health: " + wxString::Format(wxT("%u"), player->GetHealth());
 	bPlayerRefresh = true;
+	wxTopLevelWindow::SetTitle(gSetup->GetGameTitle());
 	UpdatePlayerListBox();
 	
 	lblPlayerName->SetLabelText(NameText);
@@ -929,16 +931,24 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		switch (tmpAction)
 		{
 		case Eatable:// remove from MapNode and increment health
+			function = CurrentMapNode.ItemsInNode[found].f;
+
+			if (function)
+				function(this);
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			PlaySFX("yum.wav");
+			
 			map->Replace(CurrentMapNode);
 			player->AddHealth(10);
 			// need to set health
 			break;
 		
 		case Drinkable:
+			function = CurrentMapNode.ItemsInNode[found].f;
+
+			if (function)
+				function(this);
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
-			PlaySFX("drink2.wav");
+			
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
 			break;

@@ -84,18 +84,19 @@ public:
 	inline std::string GetIniFileName() { return IniFileName; }
 	inline std::string GetTitleFont() { return TitleFont; }
 	inline std::string GetTitleFaceName() { return TitleFaceName; }
+	inline std::string GetGameTitle() { return GameTitle; }
 	std::vector<std::string> Prologue();
 	std::vector<std::string> Epilogue();
 	std::vector<std::string> GameOver();
 	
 private:
-	std::string SplashImage; 
-	std::string MusicFile;
-	std::string MapName;
-	std::string GameTitle;
-	std::string IniFileName;
-	std::string TitleFont;
-	std::string TitleFaceName;
+	std::string SplashImage = "";
+	std::string MusicFile = "";
+	std::string MapName = "";
+	std::string GameTitle = "";
+	std::string IniFileName = "";
+	std::string TitleFont = "";
+	std::string TitleFaceName = "";
 
 	
 	
@@ -113,6 +114,8 @@ void GainEntryToTownHall(void* mainwin);
 void PressFrontDoorButton(void* mainwin);
 void AssembleVacuum(void* mainwin);
 void UseKey(void* mainwin);
+void EatFood(void* mainwin);
+void Drink(void* mainwin);
 
 void BoyConversation1(void* mainwin);
 void BoyConversation2(void* mainwin);

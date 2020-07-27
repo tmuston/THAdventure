@@ -293,7 +293,7 @@ void UseWalkingStick(void* mainwin)
 	}
 	else
 	{
-		c->PlaySFX("weird.wav");
+		c->PlaySFX("break.wav");
 		c->FlashPanel();
 		
 		c->ClearDesc();
@@ -339,7 +339,7 @@ void GainEntryToTownHall(void* mainwin)
 void PressFrontDoorButton(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
-	c->PlaySFX("weird.wav");
+	c->PlaySFX("door.wav");
 	c->FlashPanelBlack();
 	c->ClearDesc();
 

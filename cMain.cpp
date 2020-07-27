@@ -930,6 +930,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		{
 		case Eatable:// remove from MapNode and increment health
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+			PlaySFX("yum.wav");
 			map->Replace(CurrentMapNode);
 			player->AddHealth(10);
 			// need to set health
@@ -937,6 +938,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		
 		case Drinkable:
 			CurrentMapNode.DropItem(CurrentMapNode.ItemsInNode[found]);
+			PlaySFX("drink2.wav");
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
 			break;

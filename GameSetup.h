@@ -116,6 +116,7 @@ void AssembleVacuum(void* mainwin);
 void UseKey(void* mainwin);
 void EatFood(void* mainwin);
 void Drink(void* mainwin);
+void Drink2(void* mainwin);
 
 void BoyConversation1(void* mainwin);
 void BoyConversation2(void* mainwin);

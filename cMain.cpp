@@ -329,7 +329,7 @@ void cMain::OnOpen(wxCommandEvent& evt)
 			game = nullptr;
 			PrologueDone = true;  // don't run the prologue
 			bRefresh = true;
-			evt.Skip();
+			//evt.Skip();
 			return;
 		}// if the dialog was cancelled, carry on
 	}
@@ -641,14 +641,15 @@ void cMain::WaitForAnyKey()
 	EnableCloseButton(false);
 	fileMenu->Enable(wxID_EXIT, false);
 	//txtDesc->SetForegroundColour(*wxRED);
-	this->SetFocus();
+	
 
 	AddToDesc("\n\n\t\t Press any key to continue ...");
 	while (!bRefresh)
 	{
+		this->SetFocus();
 		wxYield();
 		
-		wxMilliSleep(5);
+		wxMilliSleep(10);
 
 	}
 	//txtDesc->SetForegroundColour(*wxBLACK);
@@ -751,6 +752,7 @@ void cMain::OnIdle(wxIdleEvent& evt)
 
 void cMain::OnGameLoop(wxTimerEvent& evt)
 {
+	//evt.Skip();
 	if (!PrologueDone)
 	{// stop the timer, show the prologue (which takes several seconds) and then restart the timer.
 		loopTimer->Stop();
@@ -775,6 +777,7 @@ void cMain::OnHealthTimer(wxTimerEvent& evt)
 {
 	if (player != nullptr)
 		player->RemoveHealth(1);
+	evt.Skip();
 }
 
 
@@ -985,18 +988,19 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			break;
 		case Talkable:
-			EnableCloseButton(false);
-			fileMenu->Enable(wxID_EXIT, false);
+			/*EnableCloseButton(false);
+			fileMenu->Enable(wxID_EXIT, false);*/
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();
 			function = CurrentMapNode.ItemsInNode[found].f;
 			txtDesc->AppendText(conv);
 			bRefresh = false;
-			for (uint8_t i = 0; i < 100; i++)
+			/*for (uint8_t i = 0; i < 100; i++)
 			{
 				wxYield();
 				wxMilliSleep(50);
 			}
-			bRefresh = true;
+			bRefresh = true;*/
+			WaitForAnyKey();
 			
 			if (function)
 			{
@@ -1004,8 +1008,8 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 				function(this);
 				
 			}
-			EnableCloseButton(true);
-			fileMenu->Enable(wxID_EXIT, true);
+			/*EnableCloseButton(true);
+			fileMenu->Enable(wxID_EXIT, true);*/
 			break;
 		case Killable:
 			// add some dialogue here
@@ -1019,12 +1023,13 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			function = CurrentMapNode.ItemsInNode[found].f;
 			txtDesc->AppendText("\n\n\tYou fight valiantly, and eventually you defeat the enemy\n\n");
 			bRefresh = false;
-			for (uint8_t i = 0; i < 100; i++)
+			/*for (uint8_t i = 0; i < 100; i++)
 			{
 				wxYield();
 				wxMilliSleep(50);
 			}
-			bRefresh = true;
+			bRefresh = true;*/
+			WaitForAnyKey();
 
 			if (function)
 			{

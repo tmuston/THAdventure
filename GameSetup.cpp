@@ -145,29 +145,12 @@ bool GameSetup::InitFirstRun(Map& GameMap, Player& GamePlayer)
 		"\n\nNervously, the frightened young boy says \n\t\"Hello, sir.\nPlease don't tell Darius that I'm hiding here.\"\n\n",
 		BoyConversation1);
 
-	/*AddInfoAndConversationToMap(GameMap,
-		"The boy",
-		"Looking like he's had to be strong all his short life, but really just wants to cry.  \n\n",
-		WEIGHTLESS,
-		INVALID_LOCATION,
-		Talkable,
-		"\n\nThe  boy says \n\t\"It's the year of our Lord 1885, sir.\nDarius will kill us both if we're not careful\"\n\n",
-		BoyConversation2);
-
-	AddInfoAndConversationToMap(GameMap,
-		"The boy",
-		"Looking like he's had to be strong all his short life, but really just wants to cry.  \n\n",
-		WEIGHTLESS,
-		INVALID_LOCATION,
-		Talkable,
-		"\n\nThe  boy replies \n\t\"I know where he might be.\n We\'ll have to be very careful if we\'re to defeat him.  \n\nFollow me.\"\n\n",
-		BoyConversation3);*/
 
 	AddInfoToMap(GameMap, "Door Button", "A metal button marked 'Open Door'", WEIGHTLESS, INNER_FOYER, Usable, PressFrontDoorButton);
 	AddInfoToMap(GameMap, "Walking stick", "A rather battered tubular metal folding walking stick", MIDDLEWEIGHT, FIRSTAID_ROOM, Usable | Takeable | Droppable, UseWalkingStick);
-	AddInfoToMap(GameMap, "Sewing machine", "An old Singer treddle sewing machine", HEAVYWEIGHT, INNER_FOYER, Takeable | Droppable);
+	AddInfoToMap(GameMap, "Drink can", "A can of fizzy energy drink", LIGHTWEIGHT, INNER_FOYER, Takeable | Droppable | Drinkable, Drink);
 	AddInfoToMap(GameMap, "Rubbish sack", "A heavy sack of something awful", HEAVYWEIGHT, BAR_AREA, Takeable | Droppable);
-	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable, Drink);
+	AddInfoToMap(GameMap, "Brandy bottle", "A bottle of brandy, containing little more than a mouthful of liquor", LIGHTWEIGHT, MAGISTRATES_CHAMBER, Takeable | Droppable | Drinkable, Drink2);
 	AddInfoToMap(GameMap, "Brass key", "A dull brass key that looks like it hasn't been cleaned this century.", LIGHTWEIGHT, TOP_CORRIDOR, Usable | Takeable | Droppable, UseKey, true);
 	AddInfoToMap(GameMap, "Vacuum cleaner hose", "A black, curly hose that is essential if you want to use the vacuum cleaner", LIGHTWEIGHT, INVALID_LOCATION, Takeable | Droppable);
 	AddInfoToMap(GameMap, "Vacuum cleaner top", "The top of the vacuum cleaner.  ", MIDDLEWEIGHT, REAR_STORE,  Takeable | Droppable);
@@ -438,8 +421,15 @@ void Drink(void* mainwin)
 {
 	cMain* c = (cMain*)mainwin;
 
-	c->PlaySFX("drink2.wav");
+	c->PlaySFX("drink1.wav");
 
+}
+
+void Drink2(void* mainwin)
+{
+	cMain* c = (cMain*)mainwin;
+
+	c->PlaySFX("drink2.wav");
 }
 
 void BoyConversation1(void* mainwin)
@@ -468,21 +458,21 @@ void DariusConversation(void* mainwin)
 	if (c->bBossKilled)  // Darius is dead
 	{
 
-		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
+		int iRandVal = (std::rand() % MAIN_BOG_CORRIDOR_STEPS) + 4;
 		c->SetCurrentRoom((uint16_t)iRandVal);
 		return;
 
 	}
 	for (auto i : mn->ItemsInNode)
 	{  // place all of the items in the hidden node somewhere in the map
-		int iRandVal = (std::rand() % DUMPING_GROUND) + 3;
+		int iRandVal = (std::rand() % MAIN_BOG_CORRIDOR_STEPS) + 4;
 		c->map->PlaceItemInNode(i, iRandVal);
 		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);
-		
+
 		c->map->Replace(*mnNew);
 
 	}
-	
+		
 		
 	
 	

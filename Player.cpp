@@ -102,6 +102,10 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 		switch (tmpAction)
 		{
 		case Eatable:// remove from MapNode and increment health
+			function = pNode.ItemsInNode[found].f;
+
+			if (function)
+				function(mainwin);
 			RemoveItemID(id);
 			pNode.DropItem(pNode.ItemsInNode[found]);
 			
@@ -110,6 +114,10 @@ bool Player::ProcessItemAction(cMain* mainwin,uint16_t id, const std::string& ac
 			break;
 
 		case Drinkable:
+			function = pNode.ItemsInNode[found].f;
+
+			if (function)
+				function(mainwin);
 			RemoveItemID(id);
 			pNode.DropItem(pNode.ItemsInNode[found]);
 			

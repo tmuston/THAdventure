@@ -195,6 +195,7 @@ private:
 	bool bComplete = false;
 	bool PrologueDone = false;
 	bool bGameSaved = false;
+	bool bSoundOptionsActive = false;
 	
 	wxTimer* loopTimer = nullptr;
 	wxTimer* healthTimer = nullptr;

@@ -640,10 +640,11 @@ void cMain::WaitForAnyKey()
 	
 	EnableCloseButton(false);
 	fileMenu->Enable(wxID_EXIT, false);
-	//txtDesc->SetForegroundColour(*wxRED);
-	
+	soundMenu->Enable(tmID_SOUNDOPTIONS, false);
+	helpMenu->Enable(wxID_HELP, false);
 
 	AddToDesc("\n\n\t\t Press any key to continue ...");
+
 	while (!bRefresh)
 	{
 		this->SetFocus();
@@ -656,6 +657,8 @@ void cMain::WaitForAnyKey()
 	
 	EnableCloseButton(true);
 	fileMenu->Enable(wxID_EXIT, true);
+	soundMenu->Enable(tmID_SOUNDOPTIONS, true);
+	helpMenu->Enable(wxID_HELP, true);
 }
 
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
@@ -680,7 +683,9 @@ bool cMain::ReduceEnemyHealth(uint16_t h)
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
+	bSoundOptionsActive = true;
 	soundWindow->Show();
+	bSoundOptionsActive = false;
 
 	evt.Skip();
 }
@@ -711,9 +716,9 @@ void cMain::OnWAVLoaded(wxMediaEvent& evt)
 
 void cMain::OnSFXLoaded(wxMediaEvent& evt)
 {
-	Sfx->SetVolume(0.05);
+	Sfx->SetVolume(gdSfxVolume);
 	Sfx->Play();
-	SetSfxVol(gdSfxVolume);
+	
 
 	evt.Skip();
 }
@@ -743,6 +748,8 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			Sfx->SetVolume(gdSfxVolume);
 			// save the value to the ini file
 			IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
+			//if(bSoundOptionsActive)
+				PlaySFX("weird.wav");
 
 		}
 	
@@ -1247,7 +1254,7 @@ void cMain::SetMusicVol(double dVal)
 void cMain::SetSfxVol(double dVal)
 {
 	Sfx->SetVolume(dVal);
-	PlaySFX("yum.wav");
+	//PlaySFX("yum.wav");
 }
 
 void cMain::ClearTitle()

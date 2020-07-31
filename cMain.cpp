@@ -988,18 +988,12 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			break;
 		case Talkable:
-			/*EnableCloseButton(false);
-			fileMenu->Enable(wxID_EXIT, false);*/
+			
 			conv = CurrentMapNode.ItemsInNode[found].GetConversation();
 			function = CurrentMapNode.ItemsInNode[found].f;
 			txtDesc->AppendText(conv);
 			bRefresh = false;
-			/*for (uint8_t i = 0; i < 100; i++)
-			{
-				wxYield();
-				wxMilliSleep(50);
-			}
-			bRefresh = true;*/
+			
 			WaitForAnyKey();
 			
 			if (function)
@@ -1008,8 +1002,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 				function(this);
 				
 			}
-			/*EnableCloseButton(true);
-			fileMenu->Enable(wxID_EXIT, true);*/
+			
 			break;
 		case Killable:
 			// add some dialogue here
@@ -1023,12 +1016,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			function = CurrentMapNode.ItemsInNode[found].f;
 			txtDesc->AppendText("\n\n\tYou fight valiantly, and eventually you defeat the enemy\n\n");
 			bRefresh = false;
-			/*for (uint8_t i = 0; i < 100; i++)
-			{
-				wxYield();
-				wxMilliSleep(50);
-			}
-			bRefresh = true;*/
+			
 			WaitForAnyKey();
 
 			if (function)
@@ -1069,8 +1057,7 @@ void cMain::ShowPrologue()
 		for (int j = 0; j < 10; j++)
 		{// to make the menus a bit more responsive during the prologue
 			wxYield();
-			
-				
+							
 			::wxMilliSleep(200);
 		}
 	}
@@ -1098,11 +1085,11 @@ void cMain::ShowEpilogue()
 
 	DisableAllNavButtons();
 	for (auto i = EpilogueData.begin(); i != EpilogueData.end(); i++)
-	{//  need keypress detection, so that the Eiplogue can be cancelled
+	{//  need keypress detection, so that the epilogue can be cancelled
 		txtDesc->AppendText(*i);
 		txtDesc->HideNativeCaret();
 		for (int j = 0; j < 10; j++)
-		{// to make the menus a bit more responsive during the prologue
+		{// to make the menus a bit more responsive during the epilogue
 			wxYield();
 			
 
@@ -1111,7 +1098,7 @@ void cMain::ShowEpilogue()
 	}
 
 	for (int j = 0; j < 150; j++)
-	{// to make the menus a bit more responsive during the prologue
+	{// to make the menus a bit more responsive during the epilogue
 		wxYield();
 		if (bRefresh)
 		
@@ -1138,7 +1125,7 @@ void cMain::ShowGameOver()
 	
 
 	for (auto i = GameOverData.begin(); i != GameOverData.end(); i++)
-	{//  need keypress detection, so that the prologue can be cancelled
+	{
 		txtDesc->AppendText(*i);
 		txtDesc->HideNativeCaret();
 		

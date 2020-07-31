@@ -1246,6 +1246,8 @@ void cMain::SetMusicVol(double dVal)
 
 void cMain::SetSfxVol(double dVal)
 {
+	Sfx->SetVolume(dVal);
+	PlaySFX("yum.wav");
 }
 
 void cMain::ClearTitle()

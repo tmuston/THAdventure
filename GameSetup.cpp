@@ -106,7 +106,7 @@ GameSetup::GameSetup()
 	SplashImage = "Splash.png";
 	TitleFont = "England.ttf";
 	TitleFaceName = "England Hand DB";
-	GameTitle = "Town Hall Text Adventure - episode one : The hunt for Henry";
+	GameTitle = "Town Hall Text Adventure - episode one: The hunt for Henry";
 	
 }
 

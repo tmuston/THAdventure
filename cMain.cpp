@@ -115,6 +115,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 
 	panel = new wxPanel(this, id_panel, wxPoint(0, 0), wxSize(800, 600));
 	panel->SetBackgroundColour(wxColour(120, 120, 160));
+	
 	Music = new wxMediaCtrl(this, tmID_MUSICLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, MEDIA_BACKEND);
 	
 	Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, MEDIA_BACKEND);
@@ -1014,8 +1015,8 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 		case Killable:
 			// add some dialogue here
 			// battles can be tiring.  Remove some health
-			player->RemoveHealth(15);
-			
+			player->RemoveHealth(40);
+			//ReduceEnemyHealth(60);
 			bBossKilled = true;
 			EnableCloseButton(false);
 			fileMenu->Enable(wxID_EXIT, false);
@@ -1090,6 +1091,9 @@ void cMain::ShowEpilogue()
 	fileMenu->Enable(wxID_EXIT, false);
 	EnableCloseButton(false);
 
+	// fade out the music
+	Music->Stop();
+
 	DisableAllNavButtons();
 	for (auto i = EpilogueData.begin(); i != EpilogueData.end(); i++)
 	{//  need keypress detection, so that the epilogue can be cancelled
@@ -1114,7 +1118,7 @@ void cMain::ShowEpilogue()
 	txtDesc->Clear();
 	fileMenu->Enable(wxID_EXIT, true);
 	EnableCloseButton(true);
-	
+	SetGameRunning(false);
 }
 
 void cMain::ShowGameOver()

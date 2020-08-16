@@ -130,6 +130,7 @@ public:
 	Map* map = nullptr;
 	Player* player = nullptr;
 	void ShowEpilogue();
+	void FadeMusic();
 	bool bBossKilled = false;
 private:
 	void OnSoundOptions(wxCommandEvent& evt);
@@ -164,6 +165,7 @@ private:
 	
 
 	std::string FileName = "";
+	std::string EndChimeFilename = "";
 	wxPanel* panel = nullptr;
 	wxMenuBar* menuBar = nullptr;
 	wxMenu* fileMenu = nullptr;

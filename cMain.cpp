@@ -121,7 +121,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	Sfx = new wxMediaCtrl(this, tmID_SFXLOADED, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, MEDIA_BACKEND);
 	Music->SetVolume(0.0);
 	Music->Load(gSetup->GetMusicFile());
-
+	EndChimeFilename = gSetup->GetEndChimeFile();
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -213,6 +213,8 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	healthTimer = new wxTimer(this, tmID_HEALTHTIMER);
 	//  for testing healthTimer->Start(100);
 	healthTimer->Start(30000);
+
+	
 	
 }
 
@@ -749,8 +751,8 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			Sfx->SetVolume(gdSfxVolume);
 			// save the value to the ini file
 			IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
-			//if(bSoundOptionsActive)
-				PlaySFX("weird.wav");
+			if(bSoundOptionsActive)
+				PlaySFX("ting.wav");
 
 		}
 	
@@ -962,7 +964,10 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
+			
 			break;
+
+			
 		case Takeable:
 			// firstly need to check that the item isn't too heavy
 			weight = player->pNode.GetCombinedItemWeight();
@@ -1092,7 +1097,11 @@ void cMain::ShowEpilogue()
 	EnableCloseButton(false);
 
 	// fade out the music
+	FadeMusic();
 	Music->Stop();
+	
+	Sfx->Load(EndChimeFilename);
+	
 
 	DisableAllNavButtons();
 	for (auto i = EpilogueData.begin(); i != EpilogueData.end(); i++)
@@ -1119,6 +1128,16 @@ void cMain::ShowEpilogue()
 	fileMenu->Enable(wxID_EXIT, true);
 	EnableCloseButton(true);
 	SetGameRunning(false);
+}
+
+void cMain::FadeMusic()
+{// fade the music out to zero
+	double vol = Music->GetVolume() / 10;
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		Music->SetVolume(Music->GetVolume() - vol);
+		wxMilliSleep(250);
+	}
 }
 
 void cMain::ShowGameOver()
@@ -1258,7 +1277,7 @@ void cMain::SetMusicVol(double dVal)
 void cMain::SetSfxVol(double dVal)
 {
 	Sfx->SetVolume(dVal);
-	//PlaySFX("yum.wav");
+	PlaySFX("ting.wav");
 }
 
 void cMain::ClearTitle()

@@ -102,7 +102,8 @@ GameSetup::GameSetup()
 		 wxMessageBox("Can't create the data folder", "Oops");
 	MapName = "THA.MAP";
 	IniFileName = DataPath + "\\tha.ini";
-	MusicFile = "Game.wav";
+	MusicFile = "game.wav";
+	EndChimeFile = "game_end.wav";
 	SplashImage = "Splash.png";
 	TitleFont = "England.ttf";
 	TitleFaceName = "England Hand DB";

@@ -120,6 +120,7 @@ public:
 	void FlashPanelBlack();
 	void PlaySFX(std::string fName);
 	void WaitForAnyKey();
+	void StartNewGame();
 	inline void SetCurrentRoom(uint16_t room) { CurrentRoom = room; }
 	void EnableCurrentMapNodeExit(uint16_t num, uint16_t room);
 	inline void Refresh() { bRefresh = true, bPlayerRefresh = true; }
@@ -197,7 +198,7 @@ private:
 	bool bComplete = false;
 	bool PrologueDone = false;
 	bool bGameSaved = false;
-	bool bSoundOptionsActive = false;
+	//bool bSoundOptionsActive = false;
 	
 	wxTimer* loopTimer = nullptr;
 	wxTimer* healthTimer = nullptr;

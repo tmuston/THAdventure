@@ -74,11 +74,12 @@ wxEND_EVENT_TABLE()
 
 double gdMusicVolume;
 double gdSfxVolume;
+bool gSoundOptions;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	player = new Player("");
 	map = new Map();
-	
+	gSoundOptions = false;
 	SetGameRunning(false);
 	double dReadVal = -1.0;
 	double dSfxVal = -1.0;
@@ -664,6 +665,16 @@ void cMain::WaitForAnyKey()
 	helpMenu->Enable(wxID_HELP, true);
 }
 
+void cMain::StartNewGame()
+{
+	StartWindow = new StartDialog(this, wxID_ANY, "Welcome to the game", wxDefaultPosition, wxSize(400, 200));
+	if (StartWindow->ShowModal() == wxID_CANCEL)
+		Close();
+	
+	player->SetName(StartWindow->GetText().ToStdString());
+	StartWindow->Destroy();
+}
+
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
 {// change the room that a MamNode's Exits point towards, or alternatively disable that exit
 	CurrentMapNode.SetExit(num-1, room);
@@ -686,9 +697,9 @@ bool cMain::ReduceEnemyHealth(uint16_t h)
 void cMain::OnSoundOptions(wxCommandEvent& evt)
 {//  Create a new SoundOptions wxFrame
 	soundWindow = new SoundOptions();
-	bSoundOptionsActive = true;
+	//bSoundOptionsActive = true;
 	soundWindow->Show();
-	bSoundOptionsActive = false;
+	//bSoundOptionsActive = false;
 
 	evt.Skip();
 }
@@ -751,7 +762,7 @@ void cMain::OnIdle(wxIdleEvent& evt)
 			Sfx->SetVolume(gdSfxVolume);
 			// save the value to the ini file
 			IniConfig->Write(wxT("SfxVol"), gdSfxVolume);
-			if(bSoundOptionsActive)
+			if(gSoundOptions)
 				PlaySFX("ting.wav");
 
 		}
@@ -1277,7 +1288,8 @@ void cMain::SetMusicVol(double dVal)
 void cMain::SetSfxVol(double dVal)
 {
 	Sfx->SetVolume(dVal);
-	PlaySFX("ting.wav");
+	if(gSoundOptions)
+		PlaySFX("ting.wav");
 }
 
 void cMain::ClearTitle()

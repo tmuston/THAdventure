@@ -361,12 +361,15 @@ void AssembleVacuum(void* mainwin)
 
 
 		c->ShowEpilogue();
+		// ask to start a new game or exit
+		c->StartNewGame();
 	}
 	else
-		c->AddToDesc("\nSorry, you haven't got all the pieces of the vacuum cleaner yet.");
+	c->AddToDesc("\nSorry, you haven't got all the pieces of the vacuum cleaner yet.");
+	{
 
-
-	c->WaitForAnyKey();
+		c->WaitForAnyKey();
+	}
 }
 
 void UseKey(void* mainwin)
@@ -468,6 +471,7 @@ void DariusConversation(void* mainwin)
 	{  // place all of the items in the hidden node somewhere in the map
 		int iRandVal = (std::rand() % MAIN_BOG_CORRIDOR_STEPS) + 4;
 		c->map->PlaceItemInNode(i, iRandVal);
+		
 		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);
 
 		c->map->Replace(*mnNew);

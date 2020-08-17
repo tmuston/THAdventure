@@ -124,6 +124,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	Music->SetVolume(0.0);
 	Music->Load(gSetup->GetMusicFile());
 	EndChimeFilename = gSetup->GetEndChimeFile();
+	GameLostMusic = gSetup->GetGameLostFile();
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -692,7 +693,7 @@ void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
 bool cMain::ReduceEnemyHealth(uint16_t h)
 {
 	uint16_t health = GetEnemyHealth();
-	if (health = h < 1)
+	if (health  < 1)
 	
 		return false;
 	EnemyHealth -= h;
@@ -983,7 +984,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
-			StartNewGame();
+			
 			break;
 
 			
@@ -1037,20 +1038,25 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			break;
 		case Killable:
-			// add some dialogue here
-			// battles can be tiring.  Remove some health
-			player->RemoveHealth(40);
-			//ReduceEnemyHealth(60);
-			bBossKilled = true;
+			
+						
 			EnableCloseButton(false);
 			fileMenu->Enable(wxID_EXIT, false);
-			
-			function = CurrentMapNode.ItemsInNode[found].f;
+			// while neither player is dead, continue fighting
+			while (ReduceEnemyHealth(20)) 
+			{
+				player->RemoveHealth(10);
+				txtDesc->AppendText("\nOuch!");
+				wxYield();
+				wxMilliSleep(500);
+				
+			}
+			bBossKilled = true;
 			txtDesc->AppendText("\n\n\tYou fight valiantly, and eventually you defeat the enemy\n\n");
 			bRefresh = false;
 			
 			WaitForAnyKey();
-
+			function = CurrentMapNode.ItemsInNode[found].f;
 			if (function)
 			{
 
@@ -1179,15 +1185,11 @@ void cMain::ShowGameOver()
 		txtDesc->HideNativeCaret();
 		
 	}
-	// fade out the music
-	double dVolume = Music->GetVolume();
-	while (dVolume > 0.0)
-	{
-		dVolume -= 0.05;
-		Music->SetVolume(dVolume);
-		wxMilliSleep(200);
-	}
+	
+	FadeMusic();
 	Music->Stop();
+
+	Sfx->Load(GameLostMusic);
 	
 }
 

@@ -81,6 +81,7 @@ public:
 	Map* gmap = nullptr;
 	inline std::string GetMusicFile() { return MusicFile; }
 	inline std::string GetEndChimeFile() { return EndChimeFile; }
+	inline std::string GetGameLostFile() { return GameLostFile; }
 	inline std::string GetMapName() { return MapName; }
 	inline std::string GetIniFileName() { return IniFileName; }
 	inline std::string GetTitleFont() { return TitleFont; }
@@ -94,6 +95,7 @@ private:
 	std::string SplashImage = "";
 	std::string MusicFile = "";
 	std::string EndChimeFile = "";
+	std::string GameLostFile = "";
 	std::string MapName = "";
 	std::string GameTitle = "";
 	std::string IniFileName = "";

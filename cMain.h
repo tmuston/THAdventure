@@ -168,6 +168,7 @@ private:
 
 	std::string FileName = "";
 	std::string EndChimeFilename = "";
+	std::string GameLostMusic = "";
 	wxPanel* panel = nullptr;
 	wxMenuBar* menuBar = nullptr;
 	wxMenu* fileMenu = nullptr;
@@ -213,6 +214,7 @@ private:
 	std::vector<std::string> PrologueData;
 	std::vector<std::string> EpilogueData;
 	std::vector<std::string> GameOverData;
+	std::vector<std::string> FightDialogue;
 	wxDECLARE_EVENT_TABLE();
 };
 #endif // CMAIN_H

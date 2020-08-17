@@ -104,6 +104,7 @@ GameSetup::GameSetup()
 	IniFileName = DataPath + "\\tha.ini";
 	MusicFile = "game.wav";
 	EndChimeFile = "game_end.wav";
+	GameLostFile = "game_lose.wav";
 	SplashImage = "Splash.png";
 	TitleFont = "England.ttf";
 	TitleFaceName = "England Hand DB";

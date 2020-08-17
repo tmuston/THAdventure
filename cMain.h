@@ -54,6 +54,7 @@
 #include "Player.h"
 #include "StartDialog.h"
 #include "GameState.h"
+#include "RestartDialog.h"
 
 
 
@@ -203,6 +204,7 @@ private:
 	wxTimer* loopTimer = nullptr;
 	wxTimer* healthTimer = nullptr;
 	StartDialog* StartWindow = nullptr;
+	RestartDialog* RestartWindow = nullptr;
 	GameState* game = nullptr;
 	uint16_t CurrentRoom = 1;
 	

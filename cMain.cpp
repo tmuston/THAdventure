@@ -42,6 +42,7 @@
 
 
 
+
 #define id_panel 100
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_MENU(wxID_EXIT, OnExit)  // file>exit
@@ -667,12 +668,19 @@ void cMain::WaitForAnyKey()
 
 void cMain::StartNewGame()
 {
-	StartWindow = new StartDialog(this, wxID_ANY, "Welcome to the game", wxDefaultPosition, wxSize(400, 200));
-	if (StartWindow->ShowModal() == wxID_CANCEL)
+	RestartWindow = new RestartDialog(this, wxID_ANY, "Choose a new player name, or press Exit to leave", wxDefaultPosition, wxSize(400, 200));
+	//if (RestartWindow->ShowModal() == wxID_CANCEL)
+	int retval = RestartWindow->ShowModal();
+	if (wxID_CANCEL == retval)
+	{
+		RestartWindow->Destroy();
+		FadeMusic();
+		wxMessageBox("Byee!", "Thank you for playing");
 		Close();
+	}
 	
-	player->SetName(StartWindow->GetText().ToStdString());
-	StartWindow->Destroy();
+	player->SetName(RestartWindow->GetText().ToStdString());
+	RestartWindow->Destroy();
 }
 
 void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
@@ -975,7 +983,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			
 			map->Replace(CurrentMapNode);
 			player->AddHealth(20);
-			
+			StartNewGame();
 			break;
 
 			

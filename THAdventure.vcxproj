@@ -29,6 +29,7 @@
     <ClCompile Include="MapNode.cpp" />
     <ClCompile Include="PerformanceTimer.cpp" />
     <ClCompile Include="PlayerNode.cpp" />
+    <ClCompile Include="RestartDialog.cpp" />
     <ClCompile Include="StartDialog.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SoundOptions.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="MapNode.h" />
     <ClInclude Include="PerformanceTimer.h" />
     <ClInclude Include="PlayerNode.h" />
+    <ClInclude Include="RestartDialog.h" />
     <ClInclude Include="StartDialog.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />

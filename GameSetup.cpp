@@ -462,14 +462,14 @@ void DariusConversation(void* mainwin)
 	if (c->bBossKilled)  // Darius is dead
 	{
 
-		int iRandVal = (std::rand() % MAIN_BOG_CORRIDOR_STEPS) + 4;
+		int iRandVal = (std::rand() % MAIN_LADIES) + 4;
 		c->SetCurrentRoom((uint16_t)iRandVal);
 		return;
 
 	}
 	for (auto i : mn->ItemsInNode)
 	{  // place all of the items in the hidden node somewhere in the map
-		int iRandVal = (std::rand() % MAIN_BOG_CORRIDOR_STEPS) + 4;
+		int iRandVal = (std::rand() % MAIN_LADIES) + 4;
 		c->map->PlaceItemInNode(i, iRandVal);
 		
 		MapNode* mnNew = c->map->GetMapNodeByID(iRandVal);

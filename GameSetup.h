@@ -91,6 +91,8 @@ public:
 	std::vector<std::string> Epilogue();
 	std::vector<std::string> GameOver();
 	
+	std::vector<std::string> FightDialogue();  // not always needed, but useful if your game involves a fight
+	
 private:
 	std::string SplashImage = "";
 	std::string MusicFile = "";

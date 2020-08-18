@@ -258,6 +258,24 @@ std::vector<std::string> GameSetup::GameOver()
 	return line;
 }
 
+std::vector<std::string> GameSetup::FightDialogue()
+{
+	std::vector<std::string> line;
+	line.push_back("\nDarius deals you a mighty blow");
+	line.push_back("\nYou fight like a wounded tiger");
+	line.push_back("\nBoth you and your enemy are beginning to weaken");
+	line.push_back("\nOuch!");
+	line.push_back("\nThe fight is getting messy");
+	line.push_back("\nThe red mist of anger descends");
+	line.push_back("\nAaaargh!!");
+	line.push_back("\nBlow after blow rain down on you");
+	line.push_back("\nYou are both breathing heavily");
+	line.push_back("\nThe battle is long and tiring");
+	line.push_back("\nYou are almost worn down");
+	line.push_back("\nThis could have been a quiet day");
+	return line;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //  functions that are specific to each game.  Used as function pointers passed
 // to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
@@ -364,6 +382,7 @@ void AssembleVacuum(void* mainwin)
 		c->ShowEpilogue();
 		// ask to start a new game or exit
 		c->StartNewGame();
+		return;
 	}
 	else
 	c->AddToDesc("\nSorry, you haven't got all the pieces of the vacuum cleaner yet.");
@@ -457,7 +476,7 @@ void DariusConversation(void* mainwin)
 
 	//  move the remaining piece of the vacuum cleaner to a random room
 	MapNode* mn = c->map->GetMapNodeByID(INVALID_LOCATION);
-	std::srand(std::time(0));
+	
 	
 	
 	if (c->bBossKilled)  // Darius is dead

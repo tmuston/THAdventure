@@ -78,6 +78,7 @@ void RestartDialog::OnOK(wxCommandEvent& evt)
 
 void RestartDialog::OnCancel(wxCommandEvent& evt)
 {
+
 	EndModal(wxID_CANCEL);
 	evt.Skip();
 }

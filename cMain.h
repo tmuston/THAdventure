@@ -162,6 +162,7 @@ private:
 	void ShowGameOver();
 	void UpdatePlayerListBox();
 	void OnKeyDown(wxKeyEvent& evt);
+	std::string GetRandomFightPhrase();
 	bool m_bGameRunning;
 	
 	
@@ -169,6 +170,7 @@ private:
 	std::string FileName = "";
 	std::string EndChimeFilename = "";
 	std::string GameLostMusic = "";
+	std::string GameTitle = "";
 	wxPanel* panel = nullptr;
 	wxMenuBar* menuBar = nullptr;
 	wxMenu* fileMenu = nullptr;

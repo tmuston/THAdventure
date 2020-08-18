@@ -38,6 +38,7 @@
 #include "GameSetup.h"
 #include "cMain.h"
 #include "version.h"
+#include <cstdlib>
 
 
 
@@ -80,6 +81,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 {
 	player = new Player("");
 	map = new Map();
+	std::srand(std::time(0));
 	gSoundOptions = false;
 	SetGameRunning(false);
 	double dReadVal = -1.0;
@@ -125,6 +127,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	Music->Load(gSetup->GetMusicFile());
 	EndChimeFilename = gSetup->GetEndChimeFile();
 	GameLostMusic = gSetup->GetGameLostFile();
+	GameTitle = gSetup->GetGameTitle();
 	SetMusicVol(gdMusicVolume);
 
 	Centre();
@@ -208,7 +211,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	PrologueData = gSetup->Prologue();
 	EpilogueData = gSetup->Epilogue();
 	GameOverData = gSetup->GameOver();
-
+	FightDialogue = gSetup->FightDialogue();
 	SetGameRunning(true);
 	bRefresh = true;
 	loopTimer = new wxTimer(this, tmID_LOOPTIMER);
@@ -359,7 +362,7 @@ void cMain::OnSave(wxCommandEvent& evt)
 
 void cMain::OnHelpAbout(wxCommandEvent& evt)
 {
-	std::string Message = "EGM Game engine version "+ (std::string)VERSION_MAJOR + VERSION_MINOR;
+	std::string Message = (std::string)GameTitle + "\nversion " + (std::string)VERSION_MAJOR + VERSION_MINOR;
 	wxMessageBox(Message, "About ...");
 	evt.Skip();
 }
@@ -660,24 +663,28 @@ void cMain::WaitForAnyKey()
 
 	}
 	//txtDesc->SetForegroundColour(*wxBLACK);
-	
 	EnableCloseButton(true);
 	fileMenu->Enable(wxID_EXIT, true);
 	soundMenu->Enable(tmID_SOUNDOPTIONS, true);
 	helpMenu->Enable(wxID_HELP, true);
+	//wxMessageBox("End of WaitForAnyKey", "Wheee");
 }
 
 void cMain::StartNewGame()
 {
 	RestartWindow = new RestartDialog(this, wxID_ANY, "Choose a new player name, or press Exit to leave", wxDefaultPosition, wxSize(400, 200));
-	//if (RestartWindow->ShowModal() == wxID_CANCEL)
+	
 	int retval = RestartWindow->ShowModal();
 	if (wxID_CANCEL == retval)
 	{
 		RestartWindow->Destroy();
-		FadeMusic();
 		wxMessageBox("Byee!", "Thank you for playing");
+		FadeMusic();
+		
+		//bRefresh = true;
+		//wxYield();
 		Close();
+		return;
 	}
 	
 	player->SetName(RestartWindow->GetText().ToStdString());
@@ -693,10 +700,11 @@ void cMain::EnableCurrentMapNodeExit(uint16_t num, uint16_t room)
 bool cMain::ReduceEnemyHealth(uint16_t h)
 {
 	uint16_t health = GetEnemyHealth();
-	if (health  < 1)
+	EnemyHealth -= h;
+	if (health  > 100)
 	
 		return false;
-	EnemyHealth -= h;
+	
 	return true;
 
 	
@@ -1043,12 +1051,16 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 			EnableCloseButton(false);
 			fileMenu->Enable(wxID_EXIT, false);
 			// while neither player is dead, continue fighting
-			while (ReduceEnemyHealth(20)) 
+			
+			while (ReduceEnemyHealth(std::rand() % 5 + 20))
 			{
-				player->RemoveHealth(10);
-				txtDesc->AppendText("\nOuch!");
+				//EnemyHealth
+				player->RemoveHealth((std::rand() % 10) + 5);
+				txtDesc->AppendText(GetRandomFightPhrase());
 				wxYield();
 				wxMilliSleep(500);
+				if (player->GetHealth() < 1)
+					ShowGameOver();
 				
 			}
 			bBossKilled = true;
@@ -1259,6 +1271,17 @@ void cMain::OnKeyDown(wxKeyEvent& evt)
 
 	bRefresh = true;
 	evt.Skip();
+}
+
+std::string cMain::GetRandomFightPhrase()
+{// find a random phrase from the FightDialogue vector, delete it from the vector and then return the phrase
+	uint16_t VecSize = FightDialogue.size();
+	if (VecSize < 1)
+		return "";
+	uint16_t VecIndex = std::rand() % VecSize;
+	std::string str = FightDialogue[VecIndex];
+	FightDialogue.erase(FightDialogue.begin() + VecIndex);
+	return str;
 }
 
 void cMain::CreateMenu()

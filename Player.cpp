@@ -167,6 +167,8 @@ void Player::AddHealth(uint16_t h)
 uint16_t Player::RemoveHealth(uint16_t h)
 {
 	health -= h;
+	if (health > 100)
+		health = 0;
 	
 	return health; // so that the caller can check if we're dead
 }

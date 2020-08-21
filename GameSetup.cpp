@@ -100,13 +100,13 @@ GameSetup::GameSetup()
 	
 	if (!wxFileName::Mkdir(DataPath, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL))
 		 wxMessageBox("Can't create the data folder", "Oops");
-	MapName = "THA.MAP";
+	MapName = "Tha.Map";
 	IniFileName = DataPath + "\\tha.ini";
 	MusicFile = "game.wav";
 	EndChimeFile = "game_end.wav";
 	GameLostFile = "game_lose.wav";
-	SplashImage = "Splash.png";
-	TitleFont = "England.ttf";
+	SplashImage = "splash.png";
+	TitleFont = "england.ttf";
 	TitleFaceName = "England Hand DB";
 	GameTitle = "Town Hall Text Adventure - episode one: The hunt for Henry";
 	

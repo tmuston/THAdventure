@@ -36,11 +36,7 @@
 #include "GameSetup.h"
 #include <cstdlib>
 
-
-
 // various rooms
-
-
 enum
 {
 	ENTRANCE = 1,	

@@ -950,7 +950,7 @@ bool cMain::ProcessItemAction(uint16_t id, const std::string& action_string, uin
 	if (action_string == "Kill")
 		tmpAction = Killable;  //64
 
-	uint16_t theItemID = 0;
+	//uint16_t theItemID = 0;
 	// find the item that has the correct ID
 	std::vector<Item>::iterator it;
 	uint16_t found = 0;

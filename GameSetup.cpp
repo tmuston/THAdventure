@@ -28,9 +28,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //                                                                           //
 //    This file, along with GameSetup.h, are the two files needed in         //
-//    order to create your own unique game.  The only other modification     //
-//    necessary is to change the title in the constructor of the cMain       //
-//    object in cMain.cpp.  All other files can be left untouched.           //
+//    order to create your own unique game.                                  //
+//    All other files can be left untouched.                                 //
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 #include "GameSetup.h"

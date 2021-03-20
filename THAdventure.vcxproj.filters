@@ -117,9 +117,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\WinMapMaker\Silly.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="tha.ico">
       <Filter>Resource Files</Filter>
     </Image>

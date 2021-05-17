@@ -59,9 +59,6 @@
   <ItemGroup>
     <Image Include="tha.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Makefile" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{2221A24D-2A72-4B43-9430-5863C1094701}</ProjectGuid>

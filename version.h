@@ -31,6 +31,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define VERSION_MAJOR "1"
-#define VERSION_MINOR ".00"
+#define VERSION_MINOR ".01"
 #endif // VERSION_H
 

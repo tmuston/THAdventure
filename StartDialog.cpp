@@ -45,7 +45,7 @@ StartDialog::StartDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	: wxDialog(parent, id, title, position, size, style)
 {//  construct a wxDialog to allow the player to enter their name
 	Centre();
-	lblBlurb = new wxStaticText(this, wxID_ANY, wxT("Please enter a player name"), wxPoint(120, 20), wxSize(150,30));
+	lblBlurb = new wxStaticText(this, wxID_ANY, wxT("Please enter a player name"), wxPoint(120, 20), wxSize(190,30));
 	txtName = new wxTextCtrl(this, tmID_NAME, "", wxPoint(80,60), wxSize(240, 25), wxTE_CENTRE | wxTE_PROCESS_ENTER);
 	txtName->SetMaxLength(15);
 	txtName->SetToolTip(wxT("Enter a name (max 15 characters)"));

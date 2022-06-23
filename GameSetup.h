@@ -47,6 +47,12 @@
 #include "Player.h"  // in some games, you might want to give the player some initial items - if you're a wuss
 #include "cMain.h"
 
+#ifdef __GNUC__		// Set OS specific flags
+#define LINUX
+#else
+#define WINDOWS
+#endif
+
 
 
 class GameSetup

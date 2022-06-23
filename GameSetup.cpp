@@ -96,7 +96,12 @@ GameSetup::GameSetup()
 	if (!wxFileName::Mkdir(DataPath, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL))
 		 wxMessageBox("Can't create the data folder", "Oops");
 	MapName = "Tha.Map";
-	IniFileName = DataPath + "\\tha.ini";  //Needs changing for mac or linux builds
+#ifdef WINDOWS
+	IniFileName = DataPath + "\\tha.ini";  //Windows builds
+#endif
+#ifndef WINDOWS
+	IniFileName = DataPath + "./tha.ini";  //Mac or linux builds
+#endif
 	MusicFile = "game.wav";
 	EndChimeFile = "game_end.wav";
 	GameLostFile = "game_lose.wav";

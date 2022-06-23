@@ -98,8 +98,7 @@ GameSetup::GameSetup()
 	MapName = "Tha.Map";
 #ifdef WINDOWS
 	IniFileName = DataPath + "\\tha.ini";  //Windows builds
-#endif
-#ifndef WINDOWS
+#else
 	IniFileName = DataPath + "./tha.ini";  //Mac or linux builds
 #endif
 	MusicFile = "game.wav";

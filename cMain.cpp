@@ -358,12 +358,11 @@ void cMain::OnSave(wxCommandEvent& evt)
 {//save the game state 
 	uint16_t nodeID = CurrentMapNode.GetID();
 	
-	game = new GameState(*player, *map);
+	std::unique_ptr<GameState> game(new GameState(*player, *map));
 
 	game->SaveToFile(nodeID);
 	bGameSaved = true;
-	delete game;
-	game = nullptr;
+	
 	evt.Skip();
 }
 
@@ -590,13 +589,12 @@ void cMain::NewOrOpen()
 		if (OpenDialog.ShowModal() == wxID_OK) // if the user clicks "Open" instead of "Cancel"
 		{
 			wxString wxFile = OpenDialog.GetPath(); // Set the Title to reflect the file open
-			game = new GameState(*player, *map);
+			std::unique_ptr<GameState> game(new GameState(*player, *map));
 			uint16_t tmpNodeID;
 			game->LoadFromFile(wxFile.ToStdString(), &tmpNodeID);
 			bGameSaved = true;
 			CurrentRoom = tmpNodeID;
-			delete game;
-			game = nullptr;
+			
 			PrologueDone = true;  // don't run the prologue
 			bRefresh = true;
 			return;

@@ -64,8 +64,8 @@ bool cApp::OnInit()
 #ifndef NOSPLASH
 	wxImage::AddHandler(new wxPNGHandler);
 	wxBitmap bitmap;
-	wxSplashScreen* splash = nullptr;
-	GameSetup *setup =new GameSetup();  
+	wxSplashScreen* splash = nullptr;	// can't use smart pointer here
+	std::unique_ptr<GameSetup> setup(new GameSetup);
 	if (bitmap.LoadFile(setup->GetSplashImage(), wxBITMAP_TYPE_PNG))
 	{
 		splash = new wxSplashScreen(bitmap,
@@ -73,11 +73,9 @@ bool cApp::OnInit()
 			4000, NULL, -1, wxDefaultPosition, wxDefaultSize,
 			wxBORDER_SIMPLE | wxSTAY_ON_TOP);
 
-
 		::wxSleep(4);
 		splash->Close(true);
 		delete splash;
-		delete setup;
 	}
 #endif
 	

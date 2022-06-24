@@ -182,14 +182,12 @@ void GameSetup::AddInfoToMap(Map& theMap,
 	void(*func)(void* mainwin),
 	bool KeepAfterUse)
 {
-	Item* newItem = new Item(title, desc, weight,props);
-	
+	std::unique_ptr<Item> newItem(new Item(title, desc, weight, props));
 	if (func != nullptr)
 		newItem->f = func;
 	if (KeepAfterUse)
 		newItem->SetKeep(true);
 	theMap.PlaceItemInNode(*newItem, location);
-	delete newItem;
 	
 }
 
@@ -203,24 +201,24 @@ void GameSetup::AddInfoAndConversationToMap(
 	std::string conversation, 
 	void(*func)(void* mainwin))
 {
-Item* newItem = new Item(title, desc, weight, props);
+std::unique_ptr<Item> newItem(new Item(title, desc, weight, props));
 
 if (func != nullptr)
 newItem->f = func;
 newItem->SetConversation(conversation);
 theMap.PlaceItemInNode(*newItem, location);
 
-delete newItem;
+//delete newItem;
 }
 
 
 void GameSetup::AddInfoToPlayer(Player& thePlayer,Map& theMap, std::string title, std::string desc, uint16_t weight, uint16_t location, uint8_t props)
 {
-	Item* newItem = new Item(title, desc, weight, props);
+	std::unique_ptr<Item> newItem(new Item(title, desc, weight, props));
 	// store in the map so the Item can be found when loading
 	AddInfoToMap(theMap, title, desc, weight, props); 
 	thePlayer.AddItemID(newItem->GetID());
-	delete newItem;
+	
 }
 
 std::vector<std::string> GameSetup::Prologue()
@@ -281,7 +279,8 @@ std::vector<std::string> GameSetup::FightDialogue()
 
 //////////////////////////////////////////////////////////////////////////////
 //  functions that are specific to each game.  Used as function pointers passed
-// to AddItemToMap calls as optional function pointers.  Must return void and accept no arguments
+// to AddItemToMap calls as optional function pointers.  Must return void and 
+// accept only the void* mainwin argument
 //////////////////////////////////////////////////////////////////////////////
 
 
@@ -427,9 +426,7 @@ void UseKey(void* mainwin)
 			}
 
 		}
-		
-		
-		
+			
 	}
 	else
 	{
@@ -500,9 +497,6 @@ void DariusConversation(void* mainwin)
 		c->map->Replace(*mnNew);
 
 	}
-		
-		
-	
 	
 }
 

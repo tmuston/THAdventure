@@ -56,6 +56,7 @@ bool Map::Replace(MapNode m)
 {// find a MapNode in the current map that has the same ID, then replace all other data with that from m
 	bool bFound = false;
 	uint16_t FindID = m.GetID();
+	
 	for (uint16_t i = 0; i < GetMapSize(); i++)
 	{
 		if (NodesInMap[i].GetID() == FindID)
@@ -69,6 +70,7 @@ bool Map::Replace(MapNode m)
 		}
 		if (bFound)
 			break;
+		
 	}
 	return bFound;
 }
@@ -119,6 +121,7 @@ bool Map::LoadMap(std::string fName)
 
 	while (file.peek() != EOF && std::getline(file, line))
 	{// read the rest of the file
+
 		bool err = StringToMapNode(line);
 		if (false == err)
 		{
@@ -126,6 +129,7 @@ bool Map::LoadMap(std::string fName)
 
 			return false;
 		}
+
 	}
 
 	file.close();

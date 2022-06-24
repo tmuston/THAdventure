@@ -39,6 +39,7 @@ Player::Player(std::string name)
 	
 	if((name != ""))
 		PlayerName = name;
+	
 }
 
 Player::~Player()

@@ -39,8 +39,12 @@
 #include "cMain.h"
 #include "version.h"
 #include <cstdlib>
+#ifdef _DEBUG
 
-
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif
 
 
 
@@ -145,7 +149,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 			Music->Stop();
 	}
 	else
-		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file
+		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file, so create one
 
 	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 10), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
 	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 70), wxSize(700, 260), wxTE_MULTILINE | wxTE_READONLY);
@@ -221,6 +225,9 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	healthTimer->Start(30000);
 
 	
+#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();
+#endif
 	
 }
 

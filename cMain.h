@@ -55,8 +55,7 @@
 #include "StartDialog.h"
 #include "GameState.h"
 #include "RestartDialog.h"
-
-
+// if debugging memory leaks, add the line #include <vld.h> here, and have Visual Leak detector enabled
 
 // definitions for the window events
 enum
@@ -163,7 +162,7 @@ private:
 	void UpdatePlayerListBox();
 	void OnKeyDown(wxKeyEvent& evt);
 	std::string GetRandomFightPhrase();
-	bool m_bGameRunning;
+	bool m_bGameRunning = false;
 	
 	
 

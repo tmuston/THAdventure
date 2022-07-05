@@ -40,12 +40,14 @@
 
 wxIMPLEMENT_APP(cApp);
 
+
 cApp::cApp()
 {
 }
 
 cApp::~cApp()
 {
+
 }
 
 bool cApp::OnInit()
@@ -87,7 +89,11 @@ bool cApp::OnInit()
 
 int cApp::OnExit()
 {
-	delete checker;
-	checker = nullptr;
+	if (checker != nullptr)
+	{
+	
+		delete checker;
+		checker = nullptr;
+	}
 	return 0;
 }

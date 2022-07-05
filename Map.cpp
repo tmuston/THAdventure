@@ -47,6 +47,7 @@ Map::Map(const Map& obj)
 Map::~Map()
 {
 	//ZeroNodeId();
+	
 }
 void Map::Add(MapNode m)
 {
@@ -134,10 +135,12 @@ bool Map::LoadMap(std::string fName)
 
 	file.close();
 	// add the invisible MapNode, so that items can be hidden until required
-	Nodes* n = new Nodes();
+	//Nodes* n = new Nodes();
+	std::unique_ptr<Nodes> n(new Nodes);
 	MapNode m(INVALID_LOCATION, *n, "Hidden", "Hidden MapNode");
 	this->Add(m);
-	delete n;
+	//delete n;
+	
 	return true;
 }
 

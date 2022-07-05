@@ -39,12 +39,8 @@
 #include "cMain.h"
 #include "version.h"
 #include <cstdlib>
-#ifdef _DEBUG
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#endif
+
 
 
 
@@ -84,6 +80,7 @@ bool gSoundOptions;
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition, wxSize(800, 600), wxDEFAULT_FRAME_STYLE & ~wxRESIZE_BORDER & ~wxMAXIMIZE_BOX)
 {
 	player = new Player("");
+	
 	map = new Map();
 	std::srand(std::time(0));
 	gSoundOptions = false;
@@ -151,7 +148,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	else
 		IniConfig->Write(wxT("SoundOn"), true);  // No entry in ini file, so create one
 
-	txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 10), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
+    txtTitle = new wxTextCtrl(panel, tmID_TITLE, "", wxPoint(150, 10), wxSize(500, 50), wxTE_CENTRE | wxTE_READONLY);
 	txtDesc = new wxTextCtrl(panel, tmID_DESCRIPTION, "", wxPoint(50, 70), wxSize(700, 260), wxTE_MULTILINE | wxTE_READONLY);
 
 	fntTitle = new wxFont(26, wxFONTFAMILY_DECORATIVE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, "Arial");
@@ -224,15 +221,12 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "EGM Game Engine", wxDefaultPosition
 	//  for testing healthTimer->Start(100);
 	healthTimer->Start(30000);
 
-	
-#ifdef _DEBUG
-	_CrtDumpMemoryLeaks();
-#endif
+
 	
 }
 
 cMain::~cMain()
-{ 
+{
 	if (map != nullptr)
 	{
 		delete map;
@@ -256,12 +250,15 @@ cMain::~cMain()
 	}
 	if (loopTimer != nullptr)
 	{
+
 		delete loopTimer;
 		loopTimer = nullptr;
 	}
 	if (healthTimer != nullptr)
 	{
+
 		delete healthTimer;
+
 		healthTimer = nullptr;
 	}
 	if (player != nullptr)
@@ -280,6 +277,7 @@ cMain::~cMain()
 		delete IniConfig;
 		IniConfig = nullptr;
 	}
+
 }
 
 void cMain::OnExit(wxCommandEvent& evt)
@@ -290,6 +288,7 @@ void cMain::OnExit(wxCommandEvent& evt)
 	SetGameRunning(false);
 	
 	Close();
+
 }
 
 void cMain::OnNew(wxCommandEvent& evt)

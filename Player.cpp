@@ -44,6 +44,11 @@ Player::Player(std::string name)
 
 Player::~Player()
 {
+	if (PlayerMap)
+	{
+		
+		PlayerMap = nullptr;
+	}
 }
 
 

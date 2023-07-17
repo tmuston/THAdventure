@@ -36,6 +36,8 @@ PerformanceTimer::PerformanceTimer()
 {
 	using namespace std::chrono;
 	t1 = high_resolution_clock::now();
+	// next line only needed to stop the pedantic compiler from complaining about an uninitialized value of time_span
+	time_span = duration_cast<duration<double>>(t1 - t1);  
 }
 
 PerformanceTimer::~PerformanceTimer()
